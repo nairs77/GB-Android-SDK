@@ -3,7 +3,7 @@ package com.gebros.platform.unity;
 import android.widget.Toast;
 
 import com.gebros.platform.auth.ui.view.AsyncErrorDialog;
-import com.gebros.platform.util.JoypleDeviceUtils;
+import com.gebros.platform.util.GBDeviceUtils;
 
 /**
  * Created by Joycity-Platform on 7/8/16.
@@ -26,19 +26,19 @@ public class ApplicationPlugin extends BasePlugin {
     }
 
     public static String getMCC() {
-        return JoypleDeviceUtils.getMcc();
+        return GBDeviceUtils.getMcc();
     }
 
     public static String getCurrentLanguage() {
-        return JoypleDeviceUtils.getLanguage();
+        return GBDeviceUtils.getLanguage();
     }
 
     public static String getDeviceId() {
-        return JoypleDeviceUtils.getDeviceId();
+        return GBDeviceUtils.getDeviceId();
     }
 
     public static String getDeviceModel() {
-        return JoypleDeviceUtils.DEVICE_MODEL;
+        return GBDeviceUtils.DEVICE_MODEL;
     }
 
 

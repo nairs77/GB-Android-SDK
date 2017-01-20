@@ -1,16 +1,16 @@
 package com.gebros.platform.unity;
 
-import com.gebros.platform.Joyple;
-import com.gebros.platform.JoypleSettings;
-import com.gebros.platform.auth.JoypleAuthManager;
+import com.gebros.platform.GBSdk;
+import com.gebros.platform.GBSettings;
+import com.gebros.platform.auth.GBAuthManager;
 import com.gebros.platform.auth.GBSession;
 import com.gebros.platform.auth.ProfileApi;
-import com.gebros.platform.auth.ui.JoypleProfileViewType;
-import com.gebros.platform.auth.ui.common.JoypleViewEventListener;
+import com.gebros.platform.auth.ui.GBProfileViewType;
+import com.gebros.platform.auth.ui.common.GBViewEventListener;
 import com.gebros.platform.exception.GBException;
 import com.gebros.platform.exception.GBExceptionType;
-import com.gebros.platform.listener.JoypleAuthListener;
-import com.gebros.platform.listener.JoypleProfileListener;
+import com.gebros.platform.listener.GBAuthListener;
+import com.gebros.platform.listener.GBProfileListener;
 import com.gebros.platform.log.GBLog;
 import com.gebros.platform.platform.PlatformType;
 import com.gebros.platform.util.GBValidator;
@@ -42,7 +42,7 @@ public final class AuthorizationPlugin extends BasePlugin {
     }
 
     public static void setAllowedEULA(boolean isAllowed) {
-        //Joyple.getInstance().setAllowedEULA(isAllowed);
+        //GB.getInstance().setAllowedEULA(isAllowed);
     }
 
     public static boolean isOpened() {
@@ -81,10 +81,10 @@ public final class AuthorizationPlugin extends BasePlugin {
         AuthorizationPlugin.getInstance().loginWithCallback(gameObjectName);
     }
 
-    public static void setGameLanguage(int languageType) {
-        JoypleSettings.GameLanguageType type = JoypleSettings.GameLanguageType.valueOf(languageType);
-        Joyple.SetGameLanguage(type);
-    }
+//    public static void setGameLanguage(int languageType) {
+//        GBSettings.GameLanguageType type = GBSettings.GameLanguageType.valueOf(languageType);
+//        GBSdk.SetGameLanguage(type);
+//    }
 
     public static void LoginWithType(int authType, String gameObjectName) {
         PlatformType.AuthType type = PlatformType.AuthType.valueOf(authType);
@@ -130,7 +130,7 @@ public final class AuthorizationPlugin extends BasePlugin {
 */
     public static void ShowViewByType(int viewType) {
         //AuthorizationPlugin.getInstance().
-        JoypleProfileViewType type = JoypleProfileViewType.valueOf(viewType);
+        GBProfileViewType type = GBProfileViewType.valueOf(viewType);
 
         AuthorizationPlugin.getInstance().showProfile(type);
     }
@@ -144,7 +144,7 @@ public final class AuthorizationPlugin extends BasePlugin {
         SessionGameObject = callbackObjectName;
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
-        JoypleAuthManager.Login(getActivity(), mAuthListener);
+        GBAuthManager.Login(getActivity(), mAuthListener);
     }
 
 
@@ -154,7 +154,7 @@ public final class AuthorizationPlugin extends BasePlugin {
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
         try {
-            JoypleAuthManager.LoginWithAuthType(authType, getActivity(), mAuthListener);
+            GBAuthManager.LoginWithAuthType(authType, getActivity(), mAuthListener);
         } catch (GBException e) {
             //TODO : Processing Exception
             e.printStackTrace();
@@ -175,7 +175,7 @@ public final class AuthorizationPlugin extends BasePlugin {
         SessionGameObject = callbackObjectName;
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
-        JoypleAuthManager.Logout(getActivity(), mAuthListener);
+        GBAuthManager.Logout(getActivity(), mAuthListener);
     }
 /*
     private void withdrawWithCallback(String callbackObjectName) {
@@ -188,7 +188,7 @@ public final class AuthorizationPlugin extends BasePlugin {
         //callbackObjectNames.add(callbackObjectName);
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
-        ProfileApi.RequestProfile(new JoypleProfileListener() {
+        ProfileApi.RequestProfile(new GBProfileListener() {
             @Override
             public void onSuccess(JSONObject result) {
                 JSONObject response = new JSONObject();
@@ -282,7 +282,7 @@ public final class AuthorizationPlugin extends BasePlugin {
 
         GBLog.d(TAG + "Call ShowClickWrap!!!");
 
-        JoypleAuthManager.ShowClickWrap(getActivity(), new JoypleViewEventListener() {
+        GBAuthManager.ShowClickWrap(getActivity(), new GBViewEventListener() {
             @Override
             public void onReceiveEvent(JoycityViewEvent event) {
                 GBLog.d(TAG + ", showClickWrap event = %s", event);///
@@ -303,11 +303,11 @@ public final class AuthorizationPlugin extends BasePlugin {
         Joyple.getInstance().showEULA(getActivity());
     }
 */
-    private void showProfile(JoypleProfileViewType aViewType) {
-        JoypleAuthManager.showProfile(getActivity(), aViewType);
+    private void showProfile(GBProfileViewType aViewType) {
+        GBAuthManager.showProfile(getActivity(), aViewType);
     }
 
-    private JoypleAuthListener mAuthListener = new JoypleAuthListener() {
+    private GBAuthListener mAuthListener = new GBAuthListener() {
         @Override
         public void onSuccess(GBSession newSession) {
 

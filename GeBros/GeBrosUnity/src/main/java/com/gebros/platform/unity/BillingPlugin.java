@@ -1,13 +1,13 @@
 package com.gebros.platform.unity;
 
-import com.gebros.platform.JoypleSettings;
+import com.gebros.platform.GBSettings;
 import com.gebros.platform.exception.GBException;
-import com.gebros.platform.listener.JoypleInAppListener;
+import com.gebros.platform.listener.GBInAppListener;
 import com.gebros.platform.log.GBLog;
 import com.gebros.platform.pay.IabPurchase;
 import com.gebros.platform.pay.IabResult;
 import com.gebros.platform.pay.GBInAppItem;
-import com.gebros.platform.pay.JoypleInAppManager;
+import com.gebros.platform.pay.GBInAppManager;
 import com.gebros.platform.platform.PlatformType;
 
 import org.json.JSONException;
@@ -78,7 +78,7 @@ public class BillingPlugin extends BasePlugin {
         //callbackObjectNames.add(gameObjectName);
         callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        JoypleInAppManager.InitInAppService(userKey, new JoypleInAppListener.OnIabSetupFinishedListener() {
+        GBInAppManager.InitInAppService(userKey, new GBInAppListener.OnIabSetupFinishedListener() {
 
             @Override
             public void onSuccess() {
@@ -95,12 +95,12 @@ public class BillingPlugin extends BasePlugin {
     private void queryInventoryItemInfo(ArrayList<String> items, final String gameObjectName) throws GBException{
 
         // TODO: API 지원 여부를 어디서 판단하는게 좋을까?
-        if (JoypleSettings.getMarket() != PlatformType.Market.GOOGLE)
+        if (GBSettings.getMarket() != PlatformType.Market.GOOGLE)
             throw new GBException("Not Supported");
 
         //callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        //JoypleInAppManager.QueryInventory(items, );
+        //GBInAppManager.QueryInventory(items, );
 /*
         JoycityIabService.getInstance().queryInventoryItems(true, items, new JoycityIabService.OnQueryInventoryFinishedListener() {
 
@@ -186,7 +186,7 @@ public class BillingPlugin extends BasePlugin {
         //callbackObjectNames.add(gameObjectName);
         callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        JoypleInAppManager.BuyItem(getActivity(), toUserKey, new GBInAppItem(price, sku, itemInfo, "inapp"), new JoypleInAppListener.OnPurchaseFinishedListener() {
+        GBInAppManager.BuyItem(getActivity(), toUserKey, new GBInAppItem(price, sku, itemInfo, "inapp"), new GBInAppListener.OnPurchaseFinishedListener() {
 
             @Override
             public void onSuccess(IabPurchase purchaseInfo) {
@@ -249,7 +249,7 @@ public class BillingPlugin extends BasePlugin {
         //callbackObjectNames.add(gameObjectName);
         callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        JoypleInAppManager.ReStoreItems(new JoypleInAppListener.OnRestoreItemsFinishedListener() {
+        GBInAppManager.ReStoreItems(new GBInAppListener.OnRestoreItemsFinishedListener() {
             @Override
             public void onSuccess(List<String> paymentKeys) {
                 JSONObject response = new JSONObject();
