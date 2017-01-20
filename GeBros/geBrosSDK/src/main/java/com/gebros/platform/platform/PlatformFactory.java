@@ -1,6 +1,6 @@
 package com.gebros.platform.platform;
 
-import com.joycity.platform.sdk.log.JLog;
+import com.gebros.platform.log.GBLog;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -53,7 +53,7 @@ public class PlatformFactory {
                     return (IPlatformClient)constructor.newInstance(platform);
 
                 case DEFAULT:
-                    constructor = Class.forName("com.joycity.platform.sdk.platform.DefaultPlatformClient").getDeclaredConstructor(Platform.class);
+                    constructor = Class.forName("com.gebros.platform.platform.DefaultPlatformClient").getDeclaredConstructor(Platform.class);
                     constructor.setAccessible(true);
                     return (IPlatformClient)constructor.newInstance(platform);
 
@@ -61,15 +61,15 @@ public class PlatformFactory {
                     return null;
             }
         } catch (ClassNotFoundException e) {
-            JLog.e(e, "Exception = %s", e.getMessage());
+            GBLog.e(e, "Exception = %s", e.getMessage());
         } catch (IllegalAccessException e) {
-            JLog.e(e, "Exception = %s", e.getMessage());
+            GBLog.e(e, "Exception = %s", e.getMessage());
         } catch (InstantiationException e) {
-            JLog.e(e, "Exception = %s", e.getMessage());
+            GBLog.e(e, "Exception = %s", e.getMessage());
         } catch (NoSuchMethodException e) {
-            JLog.e(e, "Exception = %s", e.getMessage());
+            GBLog.e(e, "Exception = %s", e.getMessage());
         } catch (InvocationTargetException e) {
-            JLog.e(e, "Exception = %s", e.getMessage());
+            GBLog.e(e, "Exception = %s", e.getMessage());
         }
 
         return null;

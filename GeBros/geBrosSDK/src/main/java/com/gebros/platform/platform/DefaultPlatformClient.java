@@ -5,7 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import com.joycity.platform.sdk.pay.JoypleInAppItem;
+import com.gebros.platform.pay.GBInAppItem;
 
 /**
  * Created by nairs77@joycity.com on 5/10/16.
@@ -46,7 +46,7 @@ class DefaultPlatformClient extends BasePlatformClient {
 
     }
 
-    public void doPlatformPay(Activity activity, JoypleInAppItem itemInfo, String cpId, IPlatformListener.OnPayListener listener) {
+    public void doPlatformPay(Activity activity, GBInAppItem itemInfo, String cpId, IPlatformListener.OnPayListener listener) {
 
     }
 

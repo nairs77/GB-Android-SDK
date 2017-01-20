@@ -1,6 +1,6 @@
 package com.gebros.platform.platform;
 
-import com.joycity.platform.sdk.auth.LoginResult;
+import com.gebros.platform.auth.LoginResult;
 
 import org.json.JSONObject;
 
@@ -43,7 +43,7 @@ public interface IPlatformListener {
 
         public void onPaySuccess(JSONObject object);
 
-        public void onPayFail(int errorCode, String errorMsg);//JoypleException e);
+        public void onPayFail(int errorCode, String errorMsg);//GBException e);
 
         public void onPayCancel(boolean isUserCancelled);
     }

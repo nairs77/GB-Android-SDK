@@ -13,39 +13,40 @@ public class GBActivityHelper {
     private static final String TAG = GBActivityHelper.class.getCanonicalName();
 
     public static void onActivityCreate(final Activity activity, Bundle savedInstanceState) {
-        //Joyple.instance.getPlatformClient().onActivityCreate(activity, savedInstanceState);
-        Joyple.instance.onActivityCreate(activity, savedInstanceState);
+        GBSdk.Initialize(activity);
+
+        // Session Tracking
     }
 
     public static void onActivityStart(final Activity activity) {
-        Joyple.instance.onActivityStart(activity);
+        GBSdk.instance.onActivityStart(activity);
     }
 
     public static void onActivityStop(final Activity activity) {
-        Joyple.instance.onActivityStop(activity);
+        GBSdk.instance.onActivityStop(activity);
     }
 
     public static void onActivityRestart(final Activity activity) {
-        Joyple.instance.onActivityRestart(activity);
+        GBSdk.instance.onActivityRestart(activity);
     }
 
     public static void onActivityPause(final Activity activity) {
-        Joyple.instance.onActivityPause(activity);
+        GBSdk.instance.onActivityPause(activity);
     }
 
     public static void onActivityResume(final Activity activity) {
-        Joyple.instance.onActivityResume(activity);
+        GBSdk.instance.onActivityResume(activity);
     }
 
     public static void onActivityDestroy(final Activity activity) {
-        Joyple.instance.onActivityDestroy(activity);
+        GBSdk.instance.onActivityDestroy(activity);
     }
 
     public static void onActivityNewIntent(final Activity activity, final Intent intent) {
-        Joyple.instance.onActivityNewIntent(activity, intent);
+        GBSdk.instance.onActivityNewIntent(activity, intent);
     }
 
     public static void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
-        Joyple.instance.onActivityResult(activity, requestCode, resultCode, intent);
+        GBSdk.instance.onActivityResult(activity, requestCode, resultCode, intent);
     }
 }

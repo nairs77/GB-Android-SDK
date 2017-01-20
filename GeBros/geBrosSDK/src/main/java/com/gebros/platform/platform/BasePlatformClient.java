@@ -7,11 +7,10 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.gebros.platform.GBConfig;
-import com.gebros.platform.sdk.JoypleConfig;
-import com.gebros.platform.sdk.auth.JoypleAuthManager;
-import com.gebros.platform.sdk.game.JoypleGameManager;
-import com.gebros.platform.sdk.pay.JoypleInAppItem;
-import com.gebros.platform.sdk.pay.JoypleInAppManager;
+import com.gebros.platform.auth.GBAuthManager;
+//import com.gebros.platform.game.JoypleGameManager;
+import com.gebros.platform.pay.GBInAppItem;
+import com.gebros.platform.pay.GBInAppManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,9 +51,9 @@ public abstract class BasePlatformClient implements IPlatformClient {
 
     public void doPlatformInit(Activity activity, IPlatformListener.OnInitLister listener) {
         //// TODO: 5/17/16 InitAsync
-        JoypleAuthManager.Initialize(this);
-        JoypleInAppManager.Initialize(this);
-        JoypleGameManager.Initialize(this);
+//        JoypleAuthManager.Initialize(this);
+//        JoypleInAppManager.Initialize(this);
+//        JoypleGameManager.Initialize(this);
 
         try {
             JSONObject info = new JSONObject(mMarketInfo);
@@ -72,7 +71,7 @@ public abstract class BasePlatformClient implements IPlatformClient {
 
     public abstract void doPlatformLogout(Activity activity, IPlatformListener.OnAuthListener listener);
 
-    public abstract void doPlatformPay(Activity activity, JoypleInAppItem itemInfo, String cpId, IPlatformListener.OnPayListener listener);
+    public abstract void doPlatformPay(Activity activity, GBInAppItem itemInfo, String cpId, IPlatformListener.OnPayListener listener);
 
     public void doPlatformSubmitExtendData(String extraData, IPlatformListener.OnGameListener listener) {}
 

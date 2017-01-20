@@ -1,19 +1,19 @@
 package com.gebros.platform.unity;
 
-import com.joycity.platform.sdk.Joyple;
-import com.joycity.platform.sdk.event.JoypleEvent;
-import com.joycity.platform.sdk.event.JoypleEventReceiver;
-import com.joycity.platform.sdk.exception.JoypleRuntimeException;
-import com.joycity.platform.sdk.listener.JoypleInitListener;
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.platform.Platform;
-import com.joycity.platform.sdk.platform.PlatformType;
-import com.joycity.platform.sdk.util.JoypleValidator;
+import com.gebros.platform.GBSdk;
+import com.gebros.platform.event.JoypleEvent;
+import com.gebros.platform.event.JoypleEventReceiver;
+import com.gebros.platform.exception.JoypleRuntimeException;
+import com.gebros.platform.listener.JoypleInitListener;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.platform.Platform;
+import com.gebros.platform.platform.PlatformType;
+import com.gebros.platform.util.GBValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//import com.joycity.platform.sdk.permission.JoyplePermissionHelper;
+//import com.gebros.platform.permission.JoyplePermissionHelper;
 
 /**
  * Created by nairs77@joycity.com on 6/15/16.
@@ -30,7 +30,7 @@ public class GBUnityPlugin extends BasePlugin {
             throw new JoypleRuntimeException("Configure information is empty!!!");
         }
 
-        JLog.d(TAG + "platform Info platformInfo = " + platformInfo);
+        GBLog.d(TAG + "platform Info platformInfo = " + platformInfo);
         Platform.Builder builder = null;
         if(PlatformType.valueOf(platform.optInt("platformType")).equals(PlatformType.HUAWEI)) {
             builder = new Platform.Builder(platform.optString("appId"), platform.optString("appKey"))
@@ -67,7 +67,7 @@ public class GBUnityPlugin extends BasePlugin {
      * @param logLevel
      */
     public static void configureWithGameInfo(String clientSecretKey, int gameCode, int marketCode, int logLevel) {
-        if(JoypleValidator.isNullOrEmpty(clientSecretKey))
+        if(GBValidator.isNullOrEmpty(clientSecretKey))
             throw new JoypleRuntimeException("Configure information is empty!!!");
 
         Platform.Builder builder = new Platform.Builder("", "");
@@ -89,7 +89,7 @@ public class GBUnityPlugin extends BasePlugin {
      * @param logLevel
      */
     public static void configureWithGameInfo(String clientSecretKey, int gameCode, String platformInfo, int logLevel) {
-        if(JoypleValidator.isNullOrEmpty(clientSecretKey) || JoypleValidator.isNullOrEmpty(platformInfo))
+        if(GBValidator.isNullOrEmpty(clientSecretKey) || GBValidator.isNullOrEmpty(platformInfo))
             throw new JoypleRuntimeException("Configure information is empty!!!");
 
         JSONObject platform = null;
@@ -99,7 +99,7 @@ public class GBUnityPlugin extends BasePlugin {
             throw new JoypleRuntimeException("Configure information is empty!!!");
         }
 
-        JLog.d(TAG + "platform Info platformInfo = " + platformInfo);
+        GBLog.d(TAG + "platform Info platformInfo = " + platformInfo);
         Platform.Builder builder = null;
         if(PlatformType.valueOf(platform.optInt("platformType")).equals(PlatformType.HUAWEI)) {
             builder = new Platform.Builder(platform.optString("appId"), platform.optString("appKey"))
@@ -125,13 +125,13 @@ public class GBUnityPlugin extends BasePlugin {
 
             @Override
             public void onSuccessEvent(JoypleEvent event, JSONObject json) {
-                JLog.d(TAG + "onSuccessEvent =%s, response = %s", event.name(), json.toString());
+                GBLog.d(TAG + "onSuccessEvent =%s, response = %s", event.name(), json.toString());
                 SendUnityMessage(gameObjectName, ASYNC_RESULT_SUCCESS, json.toString());
             }
 
             @Override
             public void onFailedEvent(JoypleEvent event, int errorCode, String errorMessage) {
-                JLog.d(TAG + "onFailedEvent =%s, code = %d, response = %s", event.name(), errorCode, errorMessage);
+                GBLog.d(TAG + "onFailedEvent =%s, code = %d, response = %s", event.name(), errorCode, errorMessage);
 
                 String errorResponse = MakeErrorResponse(errorCode, errorMessage);
                 SendUnityMessage(gameObjectName, ASYNC_RESULT_SUCCESS, errorResponse);

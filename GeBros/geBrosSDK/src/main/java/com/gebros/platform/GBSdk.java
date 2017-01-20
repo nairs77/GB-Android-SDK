@@ -1,10 +1,7 @@
 package com.gebros.platform;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-
-import com.gebros.platform.account.GBSession;
 import com.gebros.platform.log.GBLog;
 
 /**
@@ -20,8 +17,16 @@ public final class GBSdk {
 
     static final GBSdkImpl instance = new GBSdkImpl();
 
-    public static void initGBSdk(int gameCode, String apiKey, GBLog.LogLevel logLevel) {
-        instance.initialize(gameCode, apiKey, logLevel);
+    static void Initialize(Activity activity) {
+        applicationContext = activity.getApplicationContext();
+        instance.initialize(activity);
     }
 
+    public static void ConfigureSdkWithInfo(Activity activity, int gameCode, String apiKey, GBLog.Mode logLevel) {
+        instance.configureSDKWithGameInfo(activity, gameCode, apiKey, logLevel);
+    }
+
+    public static Context getApplicationContext() {
+        return applicationContext;
+    }
 }

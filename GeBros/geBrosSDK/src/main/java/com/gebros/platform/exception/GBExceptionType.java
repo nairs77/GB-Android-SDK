@@ -9,7 +9,7 @@ public enum GBExceptionType {
 	 * Runtime Error Type
 	 */
 	
-	SESSION_ACTIVE(Response.CLIENT_ON_ERROR, "JoypleSession has been active.", ""),
+	SESSION_ACTIVE(Response.CLIENT_ON_ERROR, "GBSession has been active.", ""),
 	NOT_FOUND_TOKEN(Response.CLIENT_ON_ERROR, "Not found accessToken.", ""),
 	NOT_EXISTS_BODY(Response.CLIENT_ON_ERROR, "Not exists response body", ""),
 	JSON_PARSE_ERROR(Response.CLIENT_ON_ERROR, "JSON parse error.", ""),

@@ -2,8 +2,8 @@ package com.gebros.platform.unity;
 
 import android.widget.Toast;
 
-import com.joycity.platform.sdk.auth.ui.view.AsyncErrorDialog;
-import com.joycity.platform.sdk.util.JoypleDeviceUtils;
+import com.gebros.platform.auth.ui.view.AsyncErrorDialog;
+import com.gebros.platform.util.JoypleDeviceUtils;
 
 /**
  * Created by Joycity-Platform on 7/8/16.

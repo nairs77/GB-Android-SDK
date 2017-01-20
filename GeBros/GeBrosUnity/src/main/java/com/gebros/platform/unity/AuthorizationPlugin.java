@@ -1,19 +1,19 @@
 package com.gebros.platform.unity;
 
-import com.joycity.platform.sdk.Joyple;
-import com.joycity.platform.sdk.JoypleSettings;
-import com.joycity.platform.sdk.auth.JoypleAuthManager;
-import com.joycity.platform.sdk.auth.JoypleSession;
-import com.joycity.platform.sdk.auth.ProfileApi;
-import com.joycity.platform.sdk.auth.ui.JoypleProfileViewType;
-import com.joycity.platform.sdk.auth.ui.common.JoypleViewEventListener;
-import com.joycity.platform.sdk.exception.JoypleException;
-import com.joycity.platform.sdk.exception.JoypleExceptionType;
-import com.joycity.platform.sdk.listener.JoypleAuthListener;
-import com.joycity.platform.sdk.listener.JoypleProfileListener;
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.platform.PlatformType;
-import com.joycity.platform.sdk.util.JoypleValidator;
+import com.gebros.platform.Joyple;
+import com.gebros.platform.JoypleSettings;
+import com.gebros.platform.auth.JoypleAuthManager;
+import com.gebros.platform.auth.GBSession;
+import com.gebros.platform.auth.ProfileApi;
+import com.gebros.platform.auth.ui.JoypleProfileViewType;
+import com.gebros.platform.auth.ui.common.JoypleViewEventListener;
+import com.gebros.platform.exception.GBException;
+import com.gebros.platform.exception.GBExceptionType;
+import com.gebros.platform.listener.JoypleAuthListener;
+import com.gebros.platform.listener.JoypleProfileListener;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.platform.PlatformType;
+import com.gebros.platform.util.GBValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +38,7 @@ public final class AuthorizationPlugin extends BasePlugin {
     }
 
     public static boolean hasToken() {
-        return !JoypleValidator.isNullOrEmpty(JoypleSession.getActiveSession().getAccessToken());
+        return !GBValidator.isNullOrEmpty(GBSession.getActiveSession().getAccessToken());
     }
 
     public static void setAllowedEULA(boolean isAllowed) {
@@ -46,8 +46,8 @@ public final class AuthorizationPlugin extends BasePlugin {
     }
 
     public static boolean isOpened() {
-        if (JoypleSession.getActiveSession() != null)
-            return JoypleSession.getActiveSession().isOpened();
+        if (GBSession.getActiveSession() != null)
+            return GBSession.getActiveSession().isOpened();
         else
             return false;
     }
@@ -63,21 +63,21 @@ public final class AuthorizationPlugin extends BasePlugin {
     }
 
     public static String getAccessToken() {
-        if (JoypleSession.getActiveSession() != null)
-            return JoypleSession.getActiveSession().getAccessToken();
+        if (GBSession.getActiveSession() != null)
+            return GBSession.getActiveSession().getAccessToken();
         else
             return "";
     }
 
     public static String getRefreshToken() {
-        if (JoypleSession.getActiveSession() != null)
-            return JoypleSession.getActiveSession().getRefreshToken();
+        if (GBSession.getActiveSession() != null)
+            return GBSession.getActiveSession().getRefreshToken();
         else
             return "";
     }
 
     public static void Login(String gameObjectName) {
-        JLog.d(TAG + "Login API - %s", gameObjectName);
+        GBLog.d(TAG + "Login API - %s", gameObjectName);
         AuthorizationPlugin.getInstance().loginWithCallback(gameObjectName);
     }
 
@@ -155,7 +155,7 @@ public final class AuthorizationPlugin extends BasePlugin {
 
         try {
             JoypleAuthManager.LoginWithAuthType(authType, getActivity(), mAuthListener);
-        } catch (JoypleException e) {
+        } catch (GBException e) {
             //TODO : Processing Exception
             e.printStackTrace();
         }
@@ -197,14 +197,14 @@ public final class AuthorizationPlugin extends BasePlugin {
                     event_response.put(DATA_KEY, result);
                     response.put(RESULT_KEY, event_response);
                 } catch (JSONException e) {
-                    JLog.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }
 
                 SendUnityMessage(callbackObjectNames.remove(callbackObjectName), ASYNC_RESULT_SUCCESS, response.toString());
             }
 
             @Override
-            public void onFail(JoypleException ex) {
+            public void onFail(GBException ex) {
                 JSONObject response = new JSONObject();
                 JSONObject event_response = new JSONObject();
                 JSONObject error_response = new JSONObject();
@@ -216,7 +216,7 @@ public final class AuthorizationPlugin extends BasePlugin {
                     event_response.put(ERROR_KEY, error_response);
                     response.put(RESULT_KEY, event_response);
                 } catch (JSONException e) {
-                    JLog.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }
 
                 SendUnityMessage(callbackObjectNames.remove(callbackObjectName), ASYNC_RESULT_FAIL, response.toString());
@@ -280,18 +280,18 @@ public final class AuthorizationPlugin extends BasePlugin {
         //callbackObjectNames.add(callbackObjectName);
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
-        JLog.d(TAG + "Call ShowClickWrap!!!");
+        GBLog.d(TAG + "Call ShowClickWrap!!!");
 
         JoypleAuthManager.ShowClickWrap(getActivity(), new JoypleViewEventListener() {
             @Override
             public void onReceiveEvent(JoycityViewEvent event) {
-                JLog.d(TAG + ", showClickWrap event = %s", event);///
+                GBLog.d(TAG + ", showClickWrap event = %s", event);///
                 JSONObject eventResult = new JSONObject();
 
                 try {
                     eventResult.put(EVENT_KEY, JoycityViewEvent.SUCCESS_AGREEMENT);
                 } catch (JSONException e) {
-                    JLog.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }
 
                 SendUnityMessage(callbackObjectNames.remove(callbackObjectName), ASYNC_RESULT_SUCCESS, eventResult.toString());
@@ -309,9 +309,9 @@ public final class AuthorizationPlugin extends BasePlugin {
 
     private JoypleAuthListener mAuthListener = new JoypleAuthListener() {
         @Override
-        public void onSuccess(JoypleSession newSession) {
+        public void onSuccess(GBSession newSession) {
 
-            JLog.d(TAG + "onSuccess - Auth Listener !!!!");
+            GBLog.d(TAG + "onSuccess - Auth Listener !!!!");
             JSONObject response = new JSONObject();
             JSONObject session_response = new JSONObject();
 
@@ -326,9 +326,9 @@ public final class AuthorizationPlugin extends BasePlugin {
         }
 
         @Override
-        public void onFail(JoypleException ex) {
+        public void onFail(GBException ex) {
 
-            JLog.d(TAG + "onFail - Auth Listener !!!!");
+            GBLog.d(TAG + "onFail - Auth Listener !!!!");
 
 
             sessionErrorHandling(ex.getAPIError().getErrorCode(), ex.getAPIError().getDetailError());
@@ -352,17 +352,17 @@ public final class AuthorizationPlugin extends BasePlugin {
 
         @Override
         public void onCancel(boolean isUserCancelled) {
-            JLog.d(TAG + "onCancel - Auth Listener !!!!");
+            GBLog.d(TAG + "onCancel - Auth Listener !!!!");
 
-            sessionErrorHandling(JoypleExceptionType.USER_LOGIN_CANCELED.getErrorCode(), JoypleExceptionType.USER_LOGIN_CANCELED.getErrorMessage());
+            sessionErrorHandling(GBExceptionType.USER_LOGIN_CANCELED.getErrorCode(), GBExceptionType.USER_LOGIN_CANCELED.getErrorMessage());
 /*
             JSONObject response = new JSONObject();
             JSONObject session_response = new JSONObject();
             JSONObject error_response = new JSONObject();
 
             try {
-                error_response.put(API_RESPONSE_ERROR_CODE_KEY, JoypleExceptionType.USER_LOGIN_CANCELED.getErrorCode());
-                error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, JoypleExceptionType.USER_LOGIN_CANCELED.getErrorMessage());
+                error_response.put(API_RESPONSE_ERROR_CODE_KEY, GBExceptionType.USER_LOGIN_CANCELED.getErrorCode());
+                error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, GBExceptionType.USER_LOGIN_CANCELED.getErrorMessage());
                 session_response.put(ERROR_KEY, error_response);
                 response.put(RESULT_KEY, session_response);
             } catch (JSONException e) {
@@ -381,7 +381,7 @@ public final class AuthorizationPlugin extends BasePlugin {
         JSONObject error_response = new JSONObject();
 
         try {
-            session_response.put(SESSION_KEY, JoypleSession.SessionState.ACCESS_FAILED.name());
+            session_response.put(SESSION_KEY, GBSession.SessionState.ACCESS_FAILED.name());
             error_response.put(API_RESPONSE_ERROR_CODE_KEY, errorCode);
             error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, error_msg);
             session_response.put(ERROR_KEY, error_response);

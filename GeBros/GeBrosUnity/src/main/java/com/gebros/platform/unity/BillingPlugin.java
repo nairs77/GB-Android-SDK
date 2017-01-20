@@ -1,14 +1,14 @@
 package com.gebros.platform.unity;
 
-import com.joycity.platform.sdk.JoypleSettings;
-import com.joycity.platform.sdk.exception.JoypleException;
-import com.joycity.platform.sdk.listener.JoypleInAppListener;
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.pay.IabPurchase;
-import com.joycity.platform.sdk.pay.IabResult;
-import com.joycity.platform.sdk.pay.JoypleInAppItem;
-import com.joycity.platform.sdk.pay.JoypleInAppManager;
-import com.joycity.platform.sdk.platform.PlatformType;
+import com.gebros.platform.JoypleSettings;
+import com.gebros.platform.exception.GBException;
+import com.gebros.platform.listener.JoypleInAppListener;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.pay.IabPurchase;
+import com.gebros.platform.pay.IabResult;
+import com.gebros.platform.pay.GBInAppItem;
+import com.gebros.platform.pay.JoypleInAppManager;
+import com.gebros.platform.platform.PlatformType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +59,7 @@ public class BillingPlugin extends BasePlugin {
             String info = itemObject.optJSONObject("item").optString("product_name");
             String toUser = itemObject.optString("to");
 
-            JLog.d(TAG + "sku = %s, price=%s, info = %s, toUser = %s", sku, price, info, toUser);
+            GBLog.d(TAG + "sku = %s, price=%s, info = %s, toUser = %s", sku, price, info, toUser);
 
 
             BillingPlugin.getInstance().buyItemWithInfo(sku, price, info, toUser, gameObjectName);
@@ -92,11 +92,11 @@ public class BillingPlugin extends BasePlugin {
         });
     }
 
-    private void queryInventoryItemInfo(ArrayList<String> items, final String gameObjectName) throws JoypleException{
+    private void queryInventoryItemInfo(ArrayList<String> items, final String gameObjectName) throws GBException{
 
         // TODO: API 지원 여부를 어디서 판단하는게 좋을까?
         if (JoypleSettings.getMarket() != PlatformType.Market.GOOGLE)
-            throw new JoypleException("Not Supported");
+            throw new GBException("Not Supported");
 
         //callbackObjectNames.put(gameObjectName, gameObjectName);
 
@@ -186,7 +186,7 @@ public class BillingPlugin extends BasePlugin {
         //callbackObjectNames.add(gameObjectName);
         callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        JoypleInAppManager.BuyItem(getActivity(), toUserKey, new JoypleInAppItem(price, sku, itemInfo, "inapp"), new JoypleInAppListener.OnPurchaseFinishedListener() {
+        JoypleInAppManager.BuyItem(getActivity(), toUserKey, new GBInAppItem(price, sku, itemInfo, "inapp"), new JoypleInAppListener.OnPurchaseFinishedListener() {
 
             @Override
             public void onSuccess(IabPurchase purchaseInfo) {
@@ -217,7 +217,7 @@ public class BillingPlugin extends BasePlugin {
                     iab_response.put(ERROR_KEY, error_response);
                     response.put(RESULT_KEY, iab_response);
                 } catch (JSONException e) {
-                    JLog.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }
 
                 SendUnityMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_FAIL, response.toString());
@@ -236,7 +236,7 @@ public class BillingPlugin extends BasePlugin {
                     iab_response.put(ERROR_KEY, error_response);
                     response.put(RESULT_KEY, iab_response);
                 } catch (JSONException e) {
-                    JLog.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }
 
                 SendUnityMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_FAIL, response.toString());
@@ -275,7 +275,7 @@ public class BillingPlugin extends BasePlugin {
                     iab_response.put(DATA_KEY, restoreItems);
                     response.put(RESULT_KEY, iab_response);
                 } catch (JSONException e) {
-                    JLog.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }
 
                 SendUnityMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_SUCCESS, response.toString());
@@ -292,7 +292,7 @@ public class BillingPlugin extends BasePlugin {
                     error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, result.getMessage());
                     iab_response.put(ERROR_KEY, error_response);
                 } catch (JSONException e) {
-                    JLog.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }
 
                 SendUnityMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_FAIL, response.toString());

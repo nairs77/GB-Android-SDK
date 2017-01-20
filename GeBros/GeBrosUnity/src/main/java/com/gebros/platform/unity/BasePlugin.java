@@ -2,7 +2,7 @@ package com.gebros.platform.unity;
 
 import android.app.Activity;
 
-import com.joycity.platform.sdk.log.JLog;
+import com.gebros.platform.log.GBLog;
 import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
@@ -46,11 +46,11 @@ public abstract class BasePlugin {
             event_response.put("eventKey", message);
             response.put(RESULT_KEY, event_response);
         } catch (JSONException e) {
-            JLog.d(TAG + "JSONException = %s", e.getMessage());
+            GBLog.d(TAG + "JSONException = %s", e.getMessage());
         }
 
         UnityPlayer.UnitySendMessage("JoypleManager", methodName, response.toString());
-        JLog.d(TAG + " = sendMessage() To Unity = %s %s", methodName, message);
+        GBLog.d(TAG + " = sendMessage() To Unity = %s %s", methodName, message);
     }
 
     static String MakeErrorResponse(int errorCode, String errorMessage) {
@@ -65,7 +65,7 @@ public abstract class BasePlugin {
             event_response.put("error", error_response);
             response.put("result", event_response);
         } catch (JSONException e) {
-            JLog.d(TAG + "JSONException = %s", e.getMessage());
+            GBLog.d(TAG + "JSONException = %s", e.getMessage());
         }
 
         return response.toString();

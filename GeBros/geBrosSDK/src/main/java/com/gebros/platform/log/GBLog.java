@@ -3,8 +3,6 @@ package com.gebros.platform.log;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.joycity.platform.sdk.Joyple;
-
 import java.text.SimpleDateFormat;
 
 /**
@@ -24,15 +22,19 @@ import java.text.SimpleDateFormat;
 
 public class GBLog {
 
-    public enum LogLevel {
-        VERBOSE,
+    public enum Mode {
         DEBUG,
-        INFO,
+        RELEASE
+    };
+
+    enum LogLevel {
+        VERBOSE,
         WARN,
+        INFO,
         ERROR
     };
 
-    private static String TAG = "[JLog]";
+    private static String TAG = "[GBLog]";
     private static volatile boolean DISABLED = false;
 
     public static void setTag(String tagName) {
@@ -60,45 +62,39 @@ public class GBLog {
     }
 
     public static void i(String format, Object... args) {
-        if(DISABLED)
-            return;
         Log.i(TAG, String.format(format, args));
     }
 
     public static void e(Throwable tr, String format, Object... args) {
-        if (DISABLED)
-            return;
         Log.e(TAG, String.format(format, args), tr);
     }
 
 //    static final String SERVER_LOG_URI = JoypleConfig.getContentsServer() + "/logs/client/add";
 
     protected static LogLevel logLevel = LogLevel.VERBOSE;
+    protected static Mode logMode = Mode.RELEASE;
 
     @SuppressLint("SimpleDateFormat")
     public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public static boolean isTestMode() {
-        return (logLevel.ordinal() <= Joyple.LogLevel.TEST.ordinal());
-    }
+//    public static boolean isTestMode() {
+//        return (logLevel.ordinal() <= Joyple.LogLevel.TEST.ordinal());
+//    }
 
     public static boolean isDebug() {
-        return (logLevel.ordinal() <= Joyple.LogLevel.DEBUG.ordinal());
+        return (logMode == Mode.DEBUG) ? true : false;
     }
 
     public static boolean isRelease() {
-        return logLevel.ordinal() == Joyple.LogLevel.RELEASE.ordinal();
+        return (logMode == Mode.RELEASE) ? true : false;
     }
 
     public static LogLevel getLogLevel() {
         return logLevel;
     }
 
-    public static void setLogLevel(LogLevel logLevel) {
-        if(JLog.isRelease())
-            return;
-
-        logLevel = LogLevel.VERBOSE;
+    public static void setLogLevel(Mode mode) {
+        logMode = mode;
     }
 
 }

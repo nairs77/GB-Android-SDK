@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.util.Base64;
 
-import com.gebros.platform.exception.JoypleException;
+import com.gebros.platform.exception.GBException;
 import com.gebros.platform.log.GBLog;
 
 import java.security.MessageDigest;
@@ -77,20 +77,20 @@ public class GBAppUtils {
     }
 
     public static String enCrypt(String param, String cryptkey) throws Exception {
-        if(param == null || cryptkey == null) throw new JoypleException("string : null or keystring : null");
+        if(param == null || cryptkey == null) throw new GBException("string : null or keystring : null");
 
         byte[] xor = XorCrypt(param.getBytes(), cryptkey);
         return byteArrayToHex(xor);
     }
 
     public static String deCrypt(String param, String cryptkey) throws Exception {
-        if(param == null || cryptkey == null) throw new JoypleException("string : null or keystring : null");
+        if(param == null || cryptkey == null) throw new GBException("string : null or keystring : null");
 
         byte[] xor = XorCrypt(hexToByteArray(param), cryptkey);
         return new String(xor, "UTF-8");
     }
 
-    public static byte[] XorCrypt(byte[] bytes, String cryptkey) throws JoypleException {
+    public static byte[] XorCrypt(byte[] bytes, String cryptkey) throws GBException {
         int cryptLength = cryptkey.length();
         byte[] res = new byte[bytes.length];
 

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
 
-import com.joycity.platform.sdk.Joyple;
-import com.joycity.platform.sdk.log.JLog;
+import com.gebros.platform.GBSdk;
+import com.gebros.platform.log.GBLog;
 
 import java.util.List;
 import java.util.Map;
@@ -78,9 +78,9 @@ public final class GBValidator {
     }
 
     public static void sdkInitialized() {
-        if (!Joyple.Initialized()) {
-            // TODO : throw Exception
-        }
+//        if (!GBSdk.Initialized()) {
+//            // TODO : throw Exception
+//        }
     }
 
     public static boolean VaidateApp() {
@@ -95,11 +95,11 @@ public final class GBValidator {
 
 
     public static boolean isValidPermission(Context context, String permissionName) {
-        return JoypleValidator.isValidPermission(context, permissionName, true);
+        return GBValidator.isValidPermission(context, permissionName, true);
     }
 
     public static boolean isValidPermission(Context context, String permissionName, boolean shouldThrow) {
-        JoypleValidator.notNull(context, "context");
+        GBValidator.notNull(context, "context");
 
         if (context.checkCallingOrSelfPermission(permissionName) ==
                 PackageManager.PERMISSION_DENIED) {
@@ -107,7 +107,7 @@ public final class GBValidator {
                 /* TODO : App crash....*/
                 throw new IllegalStateException(permissionName);
             } else {
-                JLog.d("[permission = %s]", permissionName);
+                GBLog.d("[permission = %s]", permissionName);
             }
 
             return false;

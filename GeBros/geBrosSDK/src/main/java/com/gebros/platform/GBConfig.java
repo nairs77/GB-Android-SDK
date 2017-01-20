@@ -3,8 +3,8 @@ package com.gebros.platform;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.platform.PlatformType;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.platform.PlatformType;
 
 import java.util.Date;
 
@@ -37,7 +37,7 @@ public final class GBConfig {
 
 	public GBConfig() {
 		this(
-				Joyple.getApplicationContext().getSharedPreferences(
+				GBSdk.getApplicationContext().getSharedPreferences(
 						CACHED_SETTING_KEY,
 						Context.MODE_PRIVATE)
 		);
@@ -48,11 +48,11 @@ public final class GBConfig {
 		if (!isInstalled()) {
 			// TODO : 처음 앱을 실행(?)
 			// 현재 시간을 installed 시간으로 처리
-			JLog.d("First installed !!!");
+			GBLog.d("First installed !!!");
 		}
 
 		// TODO : APP START TIME
-		JLog.d(TAG + "App Start Time = %s", new Date().toString());
+		GBLog.d(TAG + "App Start Time = %s", new Date().toString());
 
 		return new GBSettings(this);
 	}

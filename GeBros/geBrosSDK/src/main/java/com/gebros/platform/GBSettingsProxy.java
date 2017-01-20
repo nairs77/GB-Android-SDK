@@ -3,8 +3,8 @@ package com.gebros.platform;
 import android.content.Context;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.util.JoypleValidator;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.util.GBValidator;
 
 /**
  * Created by Joycity-Platform on 5/6/16.
@@ -23,8 +23,8 @@ final class GBSettingsProxy {
     GBSettingsProxy(LocalBroadcastManager localBroadcastManager,
                     GBConfig settingCache) {
 
-        JoypleValidator.notNull(localBroadcastManager, "localBroadcastManager");
-        JoypleValidator.notNull(settingCache, "accessTokenCache");
+        GBValidator.notNull(localBroadcastManager, "localBroadcastManager");
+        GBValidator.notNull(settingCache, "accessTokenCache");
 
         this.localBroadcastManager = localBroadcastManager;
         this.mSettingCache = settingCache;
@@ -35,7 +35,7 @@ final class GBSettingsProxy {
         if (instance == null) {
             synchronized (GBSettingsProxy.class) {
                 if (instance == null) {
-                    Context applicationContext = Joyple.getApplicationContext();
+                    Context applicationContext = GBSdk.getApplicationContext();
 
                     LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(
                             applicationContext);
@@ -58,7 +58,7 @@ final class GBSettingsProxy {
             return true;
         }
 
-        JLog.d("[DISASTER....");
+        GBLog.d("[DISASTER....");
 
         return false;
     }

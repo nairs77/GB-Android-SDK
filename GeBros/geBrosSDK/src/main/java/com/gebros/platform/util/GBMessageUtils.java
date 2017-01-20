@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
-import com.joycity.platform.sdk.internal.JR;
+import com.gebros.platform.internal.JR;
 
 import org.json.JSONObject;
 

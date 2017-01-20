@@ -1,7 +1,7 @@
 package com.gebros.platform;
 
-import com.joycity.platform.sdk.platform.PlatformType;
-import com.joycity.platform.sdk.util.JoypleValidator;
+import com.gebros.platform.platform.PlatformType;
+import com.gebros.platform.util.GBValidator;
 
 /**
  * Created by nairs77@joycity.com on 5/6/16.
@@ -117,7 +117,7 @@ public final class GBSettings {
     }
 
     GBConfig getConfig() {
-        JoypleValidator.notNull(mConfig, "ConfigurationError!!");
+        GBValidator.notNull(mConfig, "ConfigurationError!!");
         return mConfig;
     }
 

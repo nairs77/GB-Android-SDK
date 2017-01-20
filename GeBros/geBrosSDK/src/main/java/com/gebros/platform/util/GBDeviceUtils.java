@@ -13,7 +13,7 @@ import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 
 import com.gebros.platform.log.GBLog;
-import com.joycity.platform.sdk.Joyple;
+import com.gebros.platform.GBSdk;
 
 import java.io.File;
 import java.net.Inet4Address;
@@ -70,7 +70,7 @@ public class GBDeviceUtils {
 //			Manifest.permission.ACCESS_WIFI_STATE})
 
 	public static String getDeviceId() {
-		Context context = Joyple.getApplicationContext();
+		Context context = GBSdk.getApplicationContext();
 
 		if (!GBValidator.isValidPermission(context, Manifest.permission.READ_PHONE_STATE)) {
 			GBLog.d(TAG + "Not Declare Permission = %s", Manifest.permission.READ_PHONE_STATE);
@@ -98,7 +98,7 @@ public class GBDeviceUtils {
 				WifiInfo info = m.getConnectionInfo();
 				deviceId = info.getMacAddress();
 			} catch (Exception exception) {
-				JLog.e(exception, "%s", exception.getMessage());
+				GBLog.e(exception, "%s", exception.getMessage());
 			}
 		}
 
@@ -107,7 +107,7 @@ public class GBDeviceUtils {
 	}
 	
 	public static String getMcc() {
-		Context context = Joyple.getApplicationContext();
+		Context context = GBSdk.getApplicationContext();
 		try {
 			TelephonyManager tel = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 			String networkOperator = tel.getSimOperator();
@@ -125,7 +125,7 @@ public class GBDeviceUtils {
 	
 	public static boolean isServiceLocaleKorea() {
 		String mcc = getMcc();
-		if (!JoypleValidator.isNullOrEmpty(mcc)) {
+		if (!GBValidator.isNullOrEmpty(mcc)) {
 			if (mcc.equals("450")) {
 				return true;
 			} else {
@@ -133,7 +133,7 @@ public class GBDeviceUtils {
 			}
 		} else {
 			String currentLanguage = getLanguage();
-			if (!JoypleValidator.isNullOrEmpty(currentLanguage) && currentLanguage.equals("ko")) {
+			if (!GBValidator.isNullOrEmpty(currentLanguage) && currentLanguage.equals("ko")) {
 				return true;
 			} else {
 				return false;
@@ -142,7 +142,7 @@ public class GBDeviceUtils {
 	}
 	
 	public static String getVendor() {
-		Context context = Joyple.getApplicationContext();
+		Context context = GBSdk.getApplicationContext();
 		TelephonyManager manager = null;
 		
 		try {
@@ -157,7 +157,7 @@ public class GBDeviceUtils {
 	}
 	
 	public static String getLocale() {
-		Context context = Joyple.getApplicationContext();
+		Context context = GBSdk.getApplicationContext();
 		TelephonyManager manager = null;
 		
 		try {
@@ -174,7 +174,7 @@ public class GBDeviceUtils {
 	}	
 	
 	public static String getLanguage() {
-		Context context = Joyple.getApplicationContext();
+		Context context = GBSdk.getApplicationContext();
 		
 		String language = context.getResources().getConfiguration().locale.getLanguage();
 		if (language.equals("zh")) {
@@ -223,7 +223,7 @@ public class GBDeviceUtils {
 
 	public static String getGameVersion() {
 		PackageInfo pInfo = null;
-		Context context = Joyple.getApplicationContext();
+		Context context = GBSdk.getApplicationContext();
 		try {
 			pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
 		} catch (PackageManager.NameNotFoundException e) {
@@ -270,15 +270,15 @@ public class GBDeviceUtils {
 //			Manifest.permission.ACCESS_WIFI_STATE})
 	public static String getEntireDeviceInfo() {
 		StringBuilder deviceInfo = new StringBuilder();
-		deviceInfo.append("udid=" + JoypleDeviceUtils.getDeviceId()).append(DEVICE_VALUE_MID_FIX);
+		deviceInfo.append("udid=" + GBDeviceUtils.getDeviceId()).append(DEVICE_VALUE_MID_FIX);
 		deviceInfo.append("mdn=" + "-1").append(DEVICE_VALUE_MID_FIX);
-		deviceInfo.append("os=" + JoypleDeviceUtils.OS_TYPE).append(DEVICE_VALUE_MID_FIX);
-		deviceInfo.append("os-version=" + JoypleDeviceUtils.ANDROID_SDK_VERSION).append(DEVICE_VALUE_MID_FIX);
-		deviceInfo.append("device=" + JoypleDeviceUtils.DEVICE_MODEL).append(DEVICE_VALUE_MID_FIX);
-		deviceInfo.append("rooting=" + (JoypleDeviceUtils.isRooted() ? ROOTED : NOT_ROOTED)).append(DEVICE_VALUE_MID_FIX);
-		deviceInfo.append("carrier=" + JoypleDeviceUtils.getVendor()).append(DEVICE_VALUE_MID_FIX);
-		deviceInfo.append("locale=" + JoypleDeviceUtils.getLocale()).append(DEVICE_VALUE_MID_FIX);
-		deviceInfo.append("language=" + JoypleDeviceUtils.getLanguage());
+		deviceInfo.append("os=" + GBDeviceUtils.OS_TYPE).append(DEVICE_VALUE_MID_FIX);
+		deviceInfo.append("os-version=" + GBDeviceUtils.ANDROID_SDK_VERSION).append(DEVICE_VALUE_MID_FIX);
+		deviceInfo.append("device=" + GBDeviceUtils.DEVICE_MODEL).append(DEVICE_VALUE_MID_FIX);
+		deviceInfo.append("rooting=" + (GBDeviceUtils.isRooted() ? ROOTED : NOT_ROOTED)).append(DEVICE_VALUE_MID_FIX);
+		deviceInfo.append("carrier=" + GBDeviceUtils.getVendor()).append(DEVICE_VALUE_MID_FIX);
+		deviceInfo.append("locale=" + GBDeviceUtils.getLocale()).append(DEVICE_VALUE_MID_FIX);
+		deviceInfo.append("language=" + GBDeviceUtils.getLanguage());
 
 		return deviceInfo.toString();
 	}
@@ -286,7 +286,7 @@ public class GBDeviceUtils {
 
 
 	private static boolean isDeviceId(String deviceId) {
-		return !(JoypleValidator.isNullOrEmpty(deviceId) || deviceId.length() <= BAD_DEVICE_ID_LENGTH || deviceId.equals(BAD_DEVICE_ID_PATTERN) || deviceId.equals(EMPTY_PHONE_NUMBER));
+		return !(GBValidator.isNullOrEmpty(deviceId) || deviceId.length() <= BAD_DEVICE_ID_LENGTH || deviceId.equals(BAD_DEVICE_ID_PATTERN) || deviceId.equals(EMPTY_PHONE_NUMBER));
 	}
 	
 	private static String getDeviceSerialNumber() {

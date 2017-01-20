@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.joycity.platform.sdk.pay.JoypleInAppItem;
+import com.gebros.platform.pay.GBInAppItem;
 
 /**
  * Created by nairs on 2016-05-04.
@@ -29,7 +29,7 @@ public interface IPlatformClient {
 
     //public void queryInventoryItems(ArrayList<String> items, JoypleInAppListener.OnQueryInventoryFinishedListener listener);
 
-    abstract void doPlatformPay(Activity activity, JoypleInAppItem itemInfo, String cpId, IPlatformListener.OnPayListener listener);
+    abstract void doPlatformPay(Activity activity, GBInAppItem itemInfo, String cpId, IPlatformListener.OnPayListener listener);
 
     abstract void doPlatformSubmitExtendData(String extraData, IPlatformListener.OnGameListener listener);
 

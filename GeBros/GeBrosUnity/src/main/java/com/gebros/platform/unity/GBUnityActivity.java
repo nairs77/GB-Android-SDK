@@ -3,15 +3,15 @@ package com.gebros.platform.unity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.joycity.platform.sdk.ActivityResultHelper;
-import com.joycity.platform.sdk.Joyple;
-import com.joycity.platform.sdk.JoypleActivityHelper;
+import com.gebros.platform.ActivityResultHelper;
+import com.gebros.platform.GBSdk;
+import com.gebros.platform.JoypleActivityHelper;
 import com.unity3d.player.UnityPlayerActivity;
 
 /**
  * Created by Joycity-Platform on 6/15/16.
  */
-public class JoypleUnityActivity extends UnityPlayerActivity {
+public class GBUnityActivity extends UnityPlayerActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {

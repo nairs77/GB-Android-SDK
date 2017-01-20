@@ -1,9 +1,9 @@
 package com.gebros.platform.unity;
 
-import com.joycity.platform.sdk.exception.JoypleException;
-import com.joycity.platform.sdk.game.JoypleGameManager;
-import com.joycity.platform.sdk.listener.JoypleGameListener;
-import com.joycity.platform.sdk.log.JLog;
+import com.gebros.platform.exception.GBException;
+import com.gebros.platform.game.JoypleGameManager;
+import com.gebros.platform.listener.JoypleGameListener;
+import com.gebros.platform.log.GBLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,14 +43,14 @@ public final class GamePlugin extends BasePlugin {
                             event_response.put(DATA_KEY, "gameExitSuccess");
                             response.put(RESULT_KEY, event_response);
                         } catch (JSONException e) {
-                            JLog.d(TAG + "JSONException = %s", e.getMessage());
+                            GBLog.d(TAG + "JSONException = %s", e.getMessage());
                         }
 
                         SendUnityMessage(callbackObjectNames.remove(callbackObjectName), ASYNC_RESULT_SUCCESS, response.toString());
                     }
 
                     @Override
-                    public void onFail(JoypleException exception) {
+                    public void onFail(GBException exception) {
                         JSONObject response = new JSONObject();
                         JSONObject error_response = new JSONObject();
 
@@ -59,7 +59,7 @@ public final class GamePlugin extends BasePlugin {
 
                             response.put(RESULT_KEY, error_response);
                         } catch (JSONException e) {
-                            JLog.d(TAG + "JSONException = %s", e.getMessage());
+                            GBLog.d(TAG + "JSONException = %s", e.getMessage());
                         }
 
                         SendUnityMessage(callbackObjectNames.remove(callbackObjectName), ASYNC_RESULT_FAIL, response.toString());
