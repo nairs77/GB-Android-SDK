@@ -48,15 +48,8 @@ public enum PlatformType {
 
     public enum AuthType {
         GUEST(1),
-        NEST(2),
-        JOYPLE(3),
         FACEBOOK(4),
         GOOGLE(5),
-        TWITTER(6),
-        NAVER(7),
-        GOOGLE_PLAY(8),
-        REFRESH_TOKEN(9),
-        JOIN(10),
         CHINA360(11),
         BAIDU(12),
         XIAOMI(13),
@@ -66,8 +59,6 @@ public enum PlatformType {
         HUAWEI(17),
         LENOVO(18),
         MYCARD(21),
-        RETRY_API(99),
-        NONE(100);
 
         private final int loginType;
 
@@ -86,25 +77,9 @@ public enum PlatformType {
                 case 1:
                     return AuthType.GUEST;
                 case 2:
-                    return AuthType.NEST;
-                case 3:
-                    return AuthType.JOYPLE;
-                case 4:
                     return AuthType.FACEBOOK;
-                case 5:
+                case 3:
                     return AuthType.GOOGLE;
-                case 6:
-                    return AuthType.TWITTER;
-                case 7:
-                    return AuthType.NAVER;
-                case 8:
-                    return AuthType.GOOGLE_PLAY;
-                case 9:
-                    return AuthType.REFRESH_TOKEN;
-                case 10:
-                    return AuthType.JOIN;
-                case 99:
-                    return AuthType.RETRY_API;
                 case 11:
                     return AuthType.CHINA360;
                 case 12:
