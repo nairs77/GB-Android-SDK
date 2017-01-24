@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class GBWebClient extends WebViewClient {
 
-    private static final String TAG = "JoypleWebViewClient:";
+    private static final String TAG = "GBWebViewClient:";
     private static final String[] INNER_SERVICE_DOMAIN = {"joycity.com"};
     private static final String MARKET_LINK = "market://details";
 

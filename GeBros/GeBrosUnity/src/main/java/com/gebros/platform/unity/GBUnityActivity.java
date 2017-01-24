@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.gebros.platform.ActivityResultHelper;
 import com.gebros.platform.GBSdk;
-import com.gebros.platform.JoypleActivityHelper;
+import com.gebros.platform.GBActivityHelper;
 import com.unity3d.player.UnityPlayerActivity;
 
 /**
@@ -17,13 +17,13 @@ public class GBUnityActivity extends UnityPlayerActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        Joyple.Initialize(this);
-        JoypleActivityHelper.onActivityCreate(this, bundle);
+        GB.Initialize(this);
+        GBActivityHelper.onActivityCreate(this, bundle);
     }
 
     @Override
     protected void onDestroy() {
-        JoypleActivityHelper.onActivityDestroy(this);
+        GBActivityHelper.onActivityDestroy(this);
         super.onDestroy();
     }
 
@@ -31,32 +31,32 @@ public class GBUnityActivity extends UnityPlayerActivity {
     protected void onPause() {
         super.onPause();
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        JoypleActivityHelper.onActivityPause(this);
+        GBActivityHelper.onActivityPause(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        JoypleActivityHelper.onActivityStop(this);
+        GBActivityHelper.onActivityStop(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        JoypleActivityHelper.onActivityResume(this);
+        GBActivityHelper.onActivityResume(this);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        JoypleActivityHelper.onActivityRestart(this);
+        GBActivityHelper.onActivityRestart(this);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        JoypleActivityHelper.onActivityNewIntent(this, intent);
+        GBActivityHelper.onActivityNewIntent(this, intent);
     }
 
     @Override
@@ -64,12 +64,12 @@ public class GBUnityActivity extends UnityPlayerActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (!ActivityResultHelper.handleOnActivityResult(requestCode, resultCode, data))
-            JoypleActivityHelper.onActivityResult(this, requestCode, resultCode, data);
+            GBActivityHelper.onActivityResult(this, requestCode, resultCode, data);
     }
     /*
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//    //    JoyplePermissionHelper.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+//    //    GBPermissionHelper.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 //    }
     */
 }

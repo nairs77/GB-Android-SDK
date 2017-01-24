@@ -18,7 +18,7 @@ public class JR {
 
     private static final Resources getResources() {
 
-        GBValidator.notNull(GBSdk.getApplicationContext(), "Joyple has been not initialized.");
+        GBValidator.notNull(GBSdk.getApplicationContext(), "GB has been not initialized.");
 
         if (res == null)
             res = GBSdk.getApplicationContext().getResources();

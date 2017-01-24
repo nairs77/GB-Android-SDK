@@ -57,9 +57,9 @@ public class FriendsApi {
                 new ObjectCallback<GBProfile>() {
 
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
+                    public void onComplete(GBProfile GBObject, Response response) {
 
-                        receiver.onSuccessEvent(GBEvent.PROFILE, joypleObject.getInnerJSONObject());
+                        receiver.onSuccessEvent(GBEvent.PROFILE, GBObject.getInnerJSONObject());
 
                         GB.getInstance().isUpdatedAdvertisingId(new JoycityAsyncResultListener(){
 
@@ -113,9 +113,9 @@ public class FriendsApi {
                 new ObjectCallback<GBProfile>() {
 
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
+                    public void onComplete(GBProfile GBObject, Response response) {
 
-                        receiver.onSuccessEvent(GBEvent.PROFILE, joypleObject.getInnerJSONObject());
+                        receiver.onSuccessEvent(GBEvent.PROFILE, GBObject.getInnerJSONObject());
                         if (GB.isIncludeGBPush()) {
                             JoycityNotificationService.getInstance().requestRegisterPushToken(ProfileApi.getLocalUser().getUserKey(), new JoycityEventReceiver() {
 
@@ -157,9 +157,9 @@ public class FriendsApi {
                 new ObjectCallback<GBProfile>() {
 
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
+                    public void onComplete(GBProfile GBObject, Response response) {
 
-                        receiver.onSuccessEvent(GBEvent.PROFILE, joypleObject.getInnerJSONObject());
+                        receiver.onSuccessEvent(GBEvent.PROFILE, GBObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -187,9 +187,9 @@ public class FriendsApi {
                 new ObjectCallback<GBProfile>() {
 
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
+                    public void onComplete(GBProfile GBObject, Response response) {
 
-                        receiver.onSuccessEvent(GBEvent.PROFILE, joypleObject.getInnerJSONObject());
+                        receiver.onSuccessEvent(GBEvent.PROFILE, GBObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -217,9 +217,9 @@ public class FriendsApi {
                 new ObjectCallback<GBProfile>() {
 
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
+                    public void onComplete(GBProfile GBObject, Response response) {
 
-                        receiver.onSuccessEvent(GBEvent.PROFILE, joypleObject.getInnerJSONObject());
+                        receiver.onSuccessEvent(GBEvent.PROFILE, GBObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -247,9 +247,9 @@ public class FriendsApi {
                 new ObjectCallback<GBProfile>() {
 
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
+                    public void onComplete(GBProfile GBObject, Response response) {
 
-                        receiver.onSuccessEvent(GBEvent.PROFILE, joypleObject.getInnerJSONObject());
+                        receiver.onSuccessEvent(GBEvent.PROFILE, GBObject.getInnerJSONObject());
                         if (GB.isIncludeGBPush()) {
                             JoycityNotificationService.getInstance().requestRegisterPushToken(ProfileApi.getLocalUser().getUserKey(), new JoycityEventReceiver() {
 
@@ -291,9 +291,9 @@ public class FriendsApi {
                 new ObjectCallback<GBProfile>() {
 
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
+                    public void onComplete(GBProfile GBObject, Response response) {
 
-                        receiver.onSuccessEvent(GBEvent.PROFILE, joypleObject.getInnerJSONObject());
+                        receiver.onSuccessEvent(GBEvent.PROFILE, GBObject.getInnerJSONObject());
                         if (GB.isIncludeGBPush()) {
                             JoycityNotificationService.getInstance().requestRegisterPushToken(ProfileApi.getLocalUser().getUserKey(), new JoycityEventReceiver() {
 

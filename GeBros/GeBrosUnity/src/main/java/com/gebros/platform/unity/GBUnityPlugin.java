@@ -1,10 +1,10 @@
 package com.gebros.platform.unity;
 
 import com.gebros.platform.GBSdk;
-import com.gebros.platform.event.JoypleEvent;
-import com.gebros.platform.event.JoypleEventReceiver;
-import com.gebros.platform.exception.JoypleRuntimeException;
-import com.gebros.platform.listener.JoypleInitListener;
+import com.gebros.platform.event.GBEvent;
+import com.gebros.platform.event.GBEventReceiver;
+import com.gebros.platform.exception.GBRuntimeException;
+import com.gebros.platform.listener.GBInitListener;
 import com.gebros.platform.log.GBLog;
 import com.gebros.platform.platform.Platform;
 import com.gebros.platform.platform.PlatformType;
@@ -13,7 +13,7 @@ import com.gebros.platform.util.GBValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//import com.gebros.platform.permission.JoyplePermissionHelper;
+//import com.gebros.platform.permission.GBPermissionHelper;
 
 /**
  * Created by nairs77@joycity.com on 6/15/16.
@@ -27,7 +27,7 @@ public class GBUnityPlugin extends BasePlugin {
         try {
             platform = new JSONObject(platformInfo);
         } catch (JSONException e) {
-            throw new JoypleRuntimeException("Configure information is empty!!!");
+            throw new GBRuntimeException("Configure information is empty!!!");
         }
 
         GBLog.d(TAG + "platform Info platformInfo = " + platformInfo);
@@ -47,7 +47,7 @@ public class GBUnityPlugin extends BasePlugin {
                     .AppSecret(platform.optString("appSecret"));
         }
 
-        Joyple.SetActiveMarket(getActivity(), builder.build(), new JoypleInitListener() {
+        GB.SetActiveMarket(getActivity(), builder.build(), new GBInitListener() {
             @Override
             public void onSuccess() {
                 SendUnityMessage(gameObjectName, ASYNC_RESULT_SUCCESS, "");
@@ -68,17 +68,17 @@ public class GBUnityPlugin extends BasePlugin {
      */
     public static void configureWithGameInfo(String clientSecretKey, int gameCode, int marketCode, int logLevel) {
         if(GBValidator.isNullOrEmpty(clientSecretKey))
-            throw new JoypleRuntimeException("Configure information is empty!!!");
+            throw new GBRuntimeException("Configure information is empty!!!");
 
         Platform.Builder builder = new Platform.Builder("", "");
 
         if (marketCode == PlatformType.Market.GOOGLE.getMarketCode())
             builder.PlatformType(PlatformType.DEFAULT);
         else if (marketCode == PlatformType.Market.MYCARD.getMarketCode()) {
-            builder.PlatformType(PlatformType.JOYPLE_MYCARD);
+            builder.PlatformType(PlatformType.GB_MYCARD);
         }
 
-        Joyple.ConfigureSDKInfo(getActivity(), builder.build(), clientSecretKey, gameCode, Joyple.LogLevel.fromInt(logLevel));
+        GB.ConfigureSDKInfo(getActivity(), builder.build(), clientSecretKey, gameCode, GB.LogLevel.fromInt(logLevel));
     }
 
     /**
@@ -90,13 +90,13 @@ public class GBUnityPlugin extends BasePlugin {
      */
     public static void configureWithGameInfo(String clientSecretKey, int gameCode, String platformInfo, int logLevel) {
         if(GBValidator.isNullOrEmpty(clientSecretKey) || GBValidator.isNullOrEmpty(platformInfo))
-            throw new JoypleRuntimeException("Configure information is empty!!!");
+            throw new GBRuntimeException("Configure information is empty!!!");
 
         JSONObject platform = null;
         try {
             platform = new JSONObject(platformInfo);
         } catch (JSONException e) {
-            throw new JoypleRuntimeException("Configure information is empty!!!");
+            throw new GBRuntimeException("Configure information is empty!!!");
         }
 
         GBLog.d(TAG + "platform Info platformInfo = " + platformInfo);
@@ -116,21 +116,21 @@ public class GBUnityPlugin extends BasePlugin {
                     .AppSecret(platform.optString("appSecret"));
         }
 
-        Joyple.ConfigureSDKInfo(getActivity(), builder.build(), clientSecretKey, gameCode, Joyple.LogLevel.values()[logLevel]);
+        GB.ConfigureSDKInfo(getActivity(), builder.build(), clientSecretKey, gameCode, GB.LogLevel.values()[logLevel]);
     }
 
     public static void requestGlobalServerInfo(String branchURL, int gameCode, final String gameObjectName) {
 
-        Joyple.RequestGlobalServerInfo(branchURL, gameCode, new JoypleEventReceiver() {
+        GB.RequestGlobalServerInfo(branchURL, gameCode, new GBEventReceiver() {
 
             @Override
-            public void onSuccessEvent(JoypleEvent event, JSONObject json) {
+            public void onSuccessEvent(GBEvent event, JSONObject json) {
                 GBLog.d(TAG + "onSuccessEvent =%s, response = %s", event.name(), json.toString());
                 SendUnityMessage(gameObjectName, ASYNC_RESULT_SUCCESS, json.toString());
             }
 
             @Override
-            public void onFailedEvent(JoypleEvent event, int errorCode, String errorMessage) {
+            public void onFailedEvent(GBEvent event, int errorCode, String errorMessage) {
                 GBLog.d(TAG + "onFailedEvent =%s, code = %d, response = %s", event.name(), errorCode, errorMessage);
 
                 String errorResponse = MakeErrorResponse(errorCode, errorMessage);
@@ -140,7 +140,7 @@ public class GBUnityPlugin extends BasePlugin {
     }
 
     public static boolean CheckRuntimePermission(String permission) {
-        //return JoyplePermissionHelper.hasPermission(getActivity(), permission);
+        //return GBPermissionHelper.hasPermission(getActivity(), permission);
         return true;
     }
 

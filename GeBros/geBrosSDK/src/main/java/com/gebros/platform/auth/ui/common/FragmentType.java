@@ -5,18 +5,18 @@ package com.gebros.platform.auth.ui.common;
  */
 public enum FragmentType {
     /**
-     *  Joyple UI for Accounts
+     *  GB UI for Accounts
      */
 
     CLICK_WRAP_FRAGMENT(MenuType.LAYER),
     LOGIN_ACCOUNT_FRAGMENT(MenuType.LAYER),
-    JOYPLE_LOGIN_FRAGMENT(MenuType.LAYER),
-    JOYPLE_JOIN_FRAGMENT(MenuType.LAYER),
+    GB_LOGIN_FRAGMENT(MenuType.LAYER),
+    GB_JOIN_FRAGMENT(MenuType.LAYER),
     FIND_PASSWORD_FRAGMENT(MenuType.LAYER),
     FIND_END_PASSWORD_FRAGMENT(MenuType.LAYER),
 
     /**
-     * Joyple UI for contents
+     * GB UI for contents
      */
 
     PROGRESS_BAR(MenuType.LAYER),
@@ -34,9 +34,9 @@ public enum FragmentType {
     PHONEINFO_INFO_FRAGMENT(MenuType.SUB_MENU),
     GAME_QUIT_FRAGMENT(MenuType.SUB_MENU),
 
-    JOYPLE_GAMES_WEBVIEW(MenuType.TOP_MENU),
-    JOYPLE_CUSTOMER_WEBVIEW(MenuType.SUB_MENU),
-    JOYPLE_CLICKWRAP_WEBVIEW(MenuType.SUB_MENU);
+    GB_GAMES_WEBVIEW(MenuType.TOP_MENU),
+    GB_CUSTOMER_WEBVIEW(MenuType.SUB_MENU),
+    GB_CLICKWRAP_WEBVIEW(MenuType.SUB_MENU);
 
     public MenuType menuType;
 

@@ -2,7 +2,8 @@ package com.gebros.platform;
 
 import android.app.Activity;
 import android.content.Context;
-import com.gebros.platform.log.GBLog;
+import com.gebros.platform.log.GBLog.LogLevel;
+import com.gebros.platform.platform.Platform;
 
 /**
  * Created by nairs77 on 2017. 1. 16..
@@ -22,8 +23,8 @@ public final class GBSdk {
         instance.initialize(activity);
     }
 
-    public static void ConfigureSdkWithInfo(Activity activity, int gameCode, String apiKey, GBLog.Mode logLevel) {
-        instance.configureSDKWithGameInfo(activity, gameCode, apiKey, logLevel);
+    public static void ConfigureSdkWithInfo(Activity activity, int gameCode, String apiKey, Platform platform, LogLevel logLevel) {
+        instance.configureSDKWithGameInfo(activity, gameCode, apiKey, platform, logLevel);
     }
 
     public static Context getApplicationContext() {

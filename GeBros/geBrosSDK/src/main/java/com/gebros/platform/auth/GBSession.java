@@ -42,8 +42,8 @@ public final class GBSession implements Parcelable {
 
     /**
      * Create / Update a new Session using the supplied information from previously-obtained or updated information (in SharedPreference)
-     * @param accessToken       the access token string obtained from Joyple (server)
-     * @param refreshToken      the refresh token string obtained from Joyple
+     * @param accessToken       the access token string obtained from GB (server)
+     * @param refreshToken      the refresh token string obtained from GB
      * @param source            an enum indicating how the access token was originally obtained by {@link com.gebros.platform.platform.PlatformType.AuthType}
      *                          if NONE, {@link SessionState READY, CLOSED} or  is assumed. (First access, after Logout)
      * @param last_access       update date when the token is refreshed

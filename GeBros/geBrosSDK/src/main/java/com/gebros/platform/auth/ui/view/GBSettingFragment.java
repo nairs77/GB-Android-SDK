@@ -144,7 +144,7 @@ public class GBSettingFragment extends BaseFragment {
 
             @Override
             public void onClick(View v) {
-                fragmentAware.fragmentDataMove(GBSettingFragment.this, GBCustomerWebFragment.newInstance(GBContentsAPI.JOYPLE_CUSTOMER_WEB_URL), "GBSettingFragment");
+                fragmentAware.fragmentDataMove(GBSettingFragment.this, GBCustomerWebFragment.newInstance(GBContentsAPI.GB_CUSTOMER_WEB_URL), "GBSettingFragment");
             }
         });
 
@@ -152,7 +152,7 @@ public class GBSettingFragment extends BaseFragment {
 
             @Override
             public void onClick(View v) {
-                fragmentAware.fragmentDataMove(GBSettingFragment.this, GBEULAWebFragment.newInstance(GBContentsAPI.JOYPLE_CLICKWRAP_WEB_URL), "GBSettingFragment");
+                fragmentAware.fragmentDataMove(GBSettingFragment.this, GBEULAWebFragment.newInstance(GBContentsAPI.GB_CLICKWRAP_WEB_URL), "GBSettingFragment");
             }
         });
 

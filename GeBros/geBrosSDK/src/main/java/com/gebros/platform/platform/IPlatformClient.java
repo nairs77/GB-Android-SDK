@@ -27,7 +27,7 @@ public interface IPlatformClient {
     abstract void doPlatformLogin(Activity activity, IPlatformListener.OnAuthListener listener);
     abstract void doPlatformLogout(Activity activity, IPlatformListener.OnAuthListener listener);
 
-    //public void queryInventoryItems(ArrayList<String> items, JoypleInAppListener.OnQueryInventoryFinishedListener listener);
+    //public void queryInventoryItems(ArrayList<String> items, GBInAppListener.OnQueryInventoryFinishedListener listener);
 
     abstract void doPlatformPay(Activity activity, GBInAppItem itemInfo, String cpId, IPlatformListener.OnPayListener listener);
 

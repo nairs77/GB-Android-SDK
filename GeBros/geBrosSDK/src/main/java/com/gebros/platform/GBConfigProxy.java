@@ -33,7 +33,7 @@ final class GBConfigProxy {
     }
 /*
     void loadConfigData() {
-        Context context = Joyple.getApplicationContext();
+        Context context = GB.getApplicationContext();
         AssetManager assetManager = context.getAssets();
 
         try {

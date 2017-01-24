@@ -15,12 +15,12 @@ import org.json.JSONObject;
  */
 public class GBMessageUtils {
 
-//	private static final String JOYPLE_ALERT_TITLE = "joyple_alert_title";
+//	private static final String GB_ALERT_TITLE = "GB_alert_title";
 
     public static void alert(Activity activity, int resourceId) {
 
         new AlertDialog.Builder(activity)
-//			.setTitle(JR.string(JOYPLE_ALERT_TITLE))
+//			.setTitle(JR.string(GB_ALERT_TITLE))
                 .setMessage("" + activity.getString(resourceId))
                 .setPositiveButton(android.R.string.ok, null)
                 .setCancelable(false)
@@ -30,7 +30,7 @@ public class GBMessageUtils {
     public static void alert(Activity activity, String message) {
 
         new AlertDialog.Builder(activity)
-//			.setTitle(JR.string(JOYPLE_ALERT_TITLE))
+//			.setTitle(JR.string(GB_ALERT_TITLE))
                 .setMessage("" + message)
                 .setPositiveButton(android.R.string.ok, null)
                 .setCancelable(false)
@@ -40,7 +40,7 @@ public class GBMessageUtils {
     public static void alert(Activity activity, JSONObject json) {
 
         new AlertDialog.Builder(activity)
-//			.setTitle(JR.string(JOYPLE_ALERT_TITLE))
+//			.setTitle(JR.string(GB_ALERT_TITLE))
                 .setMessage("" + json.toString())
                 .setPositiveButton(android.R.string.ok, null)
                 .setCancelable(false)
@@ -50,7 +50,7 @@ public class GBMessageUtils {
     public static void alert(Activity activity, int resourceId, final DialogInterface.OnClickListener listener) {
 
         new AlertDialog.Builder(activity)
-//			.setTitle(JR.string(JOYPLE_ALERT_TITLE))
+//			.setTitle(JR.string(GB_ALERT_TITLE))
                 .setMessage("" + activity.getString(resourceId))
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -65,7 +65,7 @@ public class GBMessageUtils {
     public static void alert(Activity activity, String message, final DialogInterface.OnClickListener listener) {
 
         new AlertDialog.Builder(activity)
-//			.setTitle(JR.string(JOYPLE_ALERT_TITLE))
+//			.setTitle(JR.string(GB_ALERT_TITLE))
                 .setMessage("" + message)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -80,7 +80,7 @@ public class GBMessageUtils {
     public static void alertAvailableCancel(Activity activity, int resourceId, final DialogInterface.OnClickListener listener) {
 
         new AlertDialog.Builder(activity)
-//			.setTitle(JR.string(JOYPLE_ALERT_TITLE))
+//			.setTitle(JR.string(GB_ALERT_TITLE))
                 .setMessage("" + activity.getString(resourceId))
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -99,7 +99,7 @@ public class GBMessageUtils {
     }
 
     public static void alertBadResponse(Activity activity) {
-        alert(activity, JR.string("joyple_alert_server_status"));
+        alert(activity, JR.string("GB_alert_server_status"));
     }
 
     public static void toast(Context context, int resourceId) {

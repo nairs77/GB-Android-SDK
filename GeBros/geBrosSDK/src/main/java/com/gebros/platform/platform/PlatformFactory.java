@@ -53,9 +53,10 @@ public class PlatformFactory {
                     return (IPlatformClient)constructor.newInstance(platform);
 
                 case DEFAULT:
-                    constructor = Class.forName("com.gebros.platform.platform.DefaultPlatformClient").getDeclaredConstructor(Platform.class);
-                    constructor.setAccessible(true);
-                    return (IPlatformClient)constructor.newInstance(platform);
+//                    constructor = Class.forName("com.gebros.platform.platform.DefaultPlatformClient").getDeclaredConstructor(Platform.class);
+//                    constructor.setAccessible(true);
+//                    return (IPlatformClient)constructor.newInstance(platform);
+                    return new DefaultPlatformClient();
 
                 default:
                     return null;

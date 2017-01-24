@@ -36,7 +36,7 @@ public class GBQuitFragment extends BaseFragment {
 
     public GBQuitFragment() {
         fragmentType = FragmentType.GAME_QUIT_FRAGMENT;
-        layoutId = JR.layout("joyple_profile_game_quit");
+        layoutId = JR.layout("GB_profile_game_quit");
     }
 
     @Override
@@ -130,14 +130,14 @@ public class GBQuitFragment extends BaseFragment {
             public void onFail(GBException e) {
                 hideProgress();
                 GBLog.d("callGBQuitAPI exception:::"+e.toString());
-                AsyncErrorDialog dialog = new AsyncErrorDialog(getActivity(), JR.string("joyple_alert_server_status"));
+                AsyncErrorDialog dialog = new AsyncErrorDialog(getActivity(), JR.string("GB_alert_server_status"));
                 dialog.show();
             }
 
             @Override
             public void onCancel(boolean isUserCancelled) {
                 hideProgress();
-                AsyncErrorDialog dialog = new AsyncErrorDialog(getActivity(), JR.string("joyple_alert_server_status"));
+                AsyncErrorDialog dialog = new AsyncErrorDialog(getActivity(), JR.string("GB_alert_server_status"));
                 dialog.show();
             }
         });

@@ -1,34 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/joyple_sample"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.gebros.platform.com.gebros.sample.MainActivity">
+    android:background="#ffffff">
 
-    <android.support.design.widget.AppBarLayout
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Game :"/>
+        <Spinner
+            android:id="@+id/spinner_game"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="#d11f08"
+            android:entries="@array/testapps"
+            android:prompt="@string/spinner_market"
+            android:padding="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Platform :"/>
+        <Spinner
+            android:id="@+id/spinner_platform"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="#d11f08"
+            android:entries="@array/platforms"
+            android:prompt="@string/spinner_market"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Server :"/>
+        <Spinner
+            android:id="@+id/spinner_server"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="#d11f08"
+            android:entries="@array/servers"
+            android:prompt="@string/spinner_market"
+            android:padding="5dp"/>
+
+        <Button
+            android:id="@+id/btn_start_app"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="match_parent"
+            android:text="Start Test"/>
 
-    </android.support.design.widget.AppBarLayout>
+        <TextView
+            android:id="@+id/samaple_version_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dip"
+            android:textColor="#AFDEFE"
+            android:textSize="15sp"
+            android:typeface="serif"
+            android:textStyle="italic"
+            android:text="@string/menu_version_title" />
 
-    <include layout="@layout/content_main" />
+        <TextView
+            android:id="@+id/samaple_version_info_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#AFDEFE"
+            android:textSize="15sp"
+            android:typeface="serif"
+            android:textStyle="italic"/>
+    </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-</android.support.design.widget.CoordinatorLayout>
+</ScrollView>

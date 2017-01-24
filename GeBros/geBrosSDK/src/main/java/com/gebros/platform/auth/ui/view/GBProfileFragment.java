@@ -92,7 +92,7 @@ public class GBProfileFragment extends BaseFragment implements View.OnClickListe
     public GBProfileFragment() {
 
         fragmentType = FragmentType.PROFILE_INFO_FRAGMENT;
-        layoutId = JR.layout("joyple_profile_main");
+        layoutId = JR.layout("GB_profile_main");
         titleRes = JR.string("ui_profile_profile_top_title");
     }
 
@@ -159,7 +159,7 @@ public class GBProfileFragment extends BaseFragment implements View.OnClickListe
 
     private void initialLayout(View view) {
 
-        profileScrollLayout = (ScrollView) view.findViewById(JR.id("joyple_main_contents_fragment"));
+        profileScrollLayout = (ScrollView) view.findViewById(JR.id("GB_main_contents_fragment"));
         profilePhotoIv = (ImageView) view.findViewById(JR.id("profile_image_iv"));
         editProfileView = (GBProfileImgView) view.findViewById(JR.dimen("profile_edit_image_cv"));
 

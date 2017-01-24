@@ -22,13 +22,13 @@ public class GBData {
 		return GBDataHolder.instance;
 	}
 	
-	public <T extends GBObject> void castAndStoreGBObject(T joypleObject) {
-		if(joypleObject instanceof GBProfile)
-			profile = (GBProfile) joypleObject;
-		else if(joypleObject instanceof GBFriends)
-			friends = (GBFriends) joypleObject;
-		else if(joypleObject instanceof GBUsers)
-			searchedUsers = ((GBUsers) joypleObject).getSearchedUsers();
+	public <T extends GBObject> void castAndStoreGBObject(T GBObject) {
+		if(GBObject instanceof GBProfile)
+			profile = (GBProfile) GBObject;
+		else if(GBObject instanceof GBFriends)
+			friends = (GBFriends) GBObject;
+		else if(GBObject instanceof GBUsers)
+			searchedUsers = ((GBUsers) GBObject).getSearchedUsers();
 	}
 	
 	public GBProfile getProfile() {

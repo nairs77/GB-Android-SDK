@@ -49,7 +49,7 @@ public abstract class BasePlugin {
             GBLog.d(TAG + "JSONException = %s", e.getMessage());
         }
 
-        UnityPlayer.UnitySendMessage("JoypleManager", methodName, response.toString());
+        UnityPlayer.UnitySendMessage("GBManager", methodName, response.toString());
         GBLog.d(TAG + " = sendMessage() To Unity = %s %s", methodName, message);
     }
 

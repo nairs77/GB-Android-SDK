@@ -26,7 +26,7 @@ import com.gebros.platform.log.GBLog;
  */
 public class GBProfileActivity extends BaseFragmentPagerActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, FragmentAware {
 
-    public final static String JOYPLE_PROFILE_VIEW_TYPE_KEY = "VIEW_TYPE";
+    public final static String GB_PROFILE_VIEW_TYPE_KEY = "VIEW_TYPE";
 
     public final static int FRAGMENT_PAGE_1_INDEX = 0;
     public final static int FRAGMENT_PAGE_2_INDEX = 1;
@@ -75,11 +75,11 @@ public class GBProfileActivity extends BaseFragmentPagerActivity implements View
         currentFragment = profileFragment;
         Bundle extras = this.getIntent().getExtras();
         if (extras != null) {
-            String extrasData = extras.getString(JOYPLE_PROFILE_VIEW_TYPE_KEY);
+            String extrasData = extras.getString(GB_PROFILE_VIEW_TYPE_KEY);
             if (GBProfileViewType.GBProfileEULA.name().equals(extrasData)) {
                 currentFragment = settingFragment;
                 mViewPager.setCurrentItem(FRAGMENT_PAGE_2_INDEX);
-                fragmentDataMove(currentFragment, GBEULAWebFragment.newInstance(GBContentsAPI.JOYPLE_CLICKWRAP_WEB_URL), "GBSettingFragment");
+                fragmentDataMove(currentFragment, GBEULAWebFragment.newInstance(GBContentsAPI.GB_CLICKWRAP_WEB_URL), "GBSettingFragment");
             } else if (GBProfileViewType.GBProfileSettings.name().equals(extrasData)) {
                 currentFragment = settingFragment;
                 mViewPager.setCurrentItem(FRAGMENT_PAGE_2_INDEX);
@@ -87,7 +87,7 @@ public class GBProfileActivity extends BaseFragmentPagerActivity implements View
                 currentFragment = settingFragment;
                 mViewPager.setCurrentItem(FRAGMENT_PAGE_2_INDEX);
 
-                fragmentDataMove(currentFragment, GBCustomerWebFragment.newInstance(GBContentsAPI.JOYPLE_CUSTOMER_WEB_URL), "JoycitySettingFragment");
+                fragmentDataMove(currentFragment, GBCustomerWebFragment.newInstance(GBContentsAPI.GB_CUSTOMER_WEB_URL), "JoycitySettingFragment");
             }  else if (GBProfileViewType.GBProfileUserInfo.name().equals(extrasData)) {
                 currentFragment = profileFragment;
                 mViewPager.setCurrentItem(FRAGMENT_PAGE_1_INDEX);

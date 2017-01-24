@@ -12,7 +12,7 @@ public class GBRuntimeException extends RuntimeException implements BaseExceptio
 		super(message);
 
 		// TODO : Send Error to Server
-		//JoypleLogger.clientErrorToServer(this);
+		//GBLogger.clientErrorToServer(this);
 	}
 	
 	public GBRuntimeException(String message, Exception e) {
@@ -20,7 +20,7 @@ public class GBRuntimeException extends RuntimeException implements BaseExceptio
 		super(message, e);
 
 		// TODO : Send Error to Server
-		//JoypleLogger.clientErrorToServer(this);
+		//GBLogger.clientErrorToServer(this);
 	}
 	
 	public GBRuntimeException(GBExceptionType errorType) {
@@ -28,7 +28,7 @@ public class GBRuntimeException extends RuntimeException implements BaseExceptio
 		this.errorType = errorType;
 
 		// TODO : Send Error to Server
-		//JoypleLogger.clientErrorToServer(this);
+		//GBLogger.clientErrorToServer(this);
 	}
 	
 	public void setErrorType(GBExceptionType errorType) {

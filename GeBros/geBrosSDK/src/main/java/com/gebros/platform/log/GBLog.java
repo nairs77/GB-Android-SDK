@@ -17,25 +17,16 @@ import java.text.SimpleDateFormat;
  * * <a href="http://developer.android.com/intl/ko/tools/debugging/debugging-log.html"> Debug URL </a>
  */
 
-
-
-
 public class GBLog {
 
-    public enum Mode {
+    public enum LogLevel{
         DEBUG,
-        RELEASE
-    };
-
-    enum LogLevel {
-        VERBOSE,
-        WARN,
-        INFO,
-        ERROR
+        RELEASE,
     };
 
     private static String TAG = "[GBLog]";
     private static volatile boolean DISABLED = false;
+    private static LogLevel logLevel = LogLevel.DEBUG;
 
     public static void setTag(String tagName) {
         TAG = tagName;
@@ -62,39 +53,38 @@ public class GBLog {
     }
 
     public static void i(String format, Object... args) {
+        if(DISABLED)
+            return;
+
         Log.i(TAG, String.format(format, args));
+    }
+
+    public static void w(String format, Object... args) {
+        Log.w(TAG, String.format(format, args));
     }
 
     public static void e(Throwable tr, String format, Object... args) {
         Log.e(TAG, String.format(format, args), tr);
     }
 
-//    static final String SERVER_LOG_URI = JoypleConfig.getContentsServer() + "/logs/client/add";
-
-    protected static LogLevel logLevel = LogLevel.VERBOSE;
-    protected static Mode logMode = Mode.RELEASE;
-
     @SuppressLint("SimpleDateFormat")
     public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-//    public static boolean isTestMode() {
-//        return (logLevel.ordinal() <= Joyple.LogLevel.TEST.ordinal());
-//    }
-
     public static boolean isDebug() {
-        return (logMode == Mode.DEBUG) ? true : false;
+        return (logLevel == LogLevel.DEBUG) ? true : false;
     }
 
-    public static boolean isRelease() {
-        return (logMode == Mode.RELEASE) ? true : false;
-    }
+    public static void setLogLevel(LogLevel level) {
+        logLevel = level;
 
-    public static LogLevel getLogLevel() {
-        return logLevel;
-    }
+        if (level == LogLevel.DEBUG) {
+            // if DEBUG, show VERBOSE, DEBUG, INFO
+            enableLog();
 
-    public static void setLogLevel(Mode mode) {
-        logMode = mode;
+        } else {
+            // RELEASE show WARN, ERROR
+            disableLog();
+        }
     }
 
 }

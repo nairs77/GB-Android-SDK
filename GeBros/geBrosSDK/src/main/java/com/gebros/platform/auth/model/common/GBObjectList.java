@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GBObjectList<T> extends List<T> {
 	
-	abstract public <U extends GBObject> GBObjectList<U> castToAsList(Class<U> JoypleObjectClass);
+	abstract public <U extends GBObject> GBObjectList<U> castToAsList(Class<U> GBObjectClass);
 	abstract public JSONArray getInnerJSONArray();
 	
 }

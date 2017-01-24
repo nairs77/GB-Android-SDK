@@ -53,12 +53,12 @@ public final class AuthorizationPlugin extends BasePlugin {
     }
 
     public static boolean isAllowedEULA() {
-        //return Joyple.getInstance().isAllowedEULA();
+        //return GB.getInstance().isAllowedEULA();
         return true;
     }
 
     public static boolean isAlreadyLogin() {
-        //return Joyple.getInstance().isAlreadyLogin();
+        //return GB.getInstance().isAlreadyLogin();
         return true;
     }
 
@@ -112,7 +112,7 @@ public final class AuthorizationPlugin extends BasePlugin {
         AuthorizationPlugin.getInstance().requestProfileWithCallback(gameObjectName);
     }
 //
-//    public static void ShowJoypleMain() {
+//    public static void ShowGBMain() {
 //        AuthorizationPlugin.getInstance().showMain();
 //    }
 //
@@ -120,8 +120,8 @@ public final class AuthorizationPlugin extends BasePlugin {
         AuthorizationPlugin.getInstance().showClickWrap(gameObjectName);
     }
 /*
-    public static void HideJoypleStart() {
-        Joyple.getInstance().hideJoypleStart();
+    public static void HideGBStart() {
+        GB.getInstance().hideGBStart();
     }
 
     public static void ShowEULA() {
@@ -163,11 +163,11 @@ public final class AuthorizationPlugin extends BasePlugin {
 /*
     private void linkServiceWithCallback(AuthType authType, String callbackObjectName) {
         this.callbackObjectName = callbackObjectName;
-        Joyple.getInstance().linkServiceWithAuthType(authType, thirdConnectServiceCallback);
+        GB.getInstance().linkServiceWithAuthType(authType, thirdConnectServiceCallback);
     }
     private void loginByUI(String callbackObjectName) {
         this.callbackObjectName = callbackObjectName;
-        Joyple.getInstance().loginByUI(UnityPlayer.currentActivity, joypleStatusCallback);
+        GB.getInstance().loginByUI(UnityPlayer.currentActivity, GBStatusCallback);
     }
 */
     private void logoutWithCallback(String callbackObjectName) {
@@ -180,7 +180,7 @@ public final class AuthorizationPlugin extends BasePlugin {
 /*
     private void withdrawWithCallback(String callbackObjectName) {
         this.callbackObjectName = callbackObjectName;
-        Joyple.getInstance().withdraw();
+        GB.getInstance().withdraw();
 
     }
 */
@@ -226,7 +226,7 @@ public final class AuthorizationPlugin extends BasePlugin {
 /*
     private void RequestMergeAccountWithCallback(String userkey, String callbackObjectName) {
         this.callbackObjectName = callbackObjectName;
-        Joyple.getInstance().requestMergeAccount(userkey, new JoycityEventReceiver() {
+        GB.getInstance().requestMergeAccount(userkey, new JoycityEventReceiver() {
 
             @Override
             public void onSuccessEvent(JoycityEvent event, JSONObject json) {
@@ -300,7 +300,7 @@ public final class AuthorizationPlugin extends BasePlugin {
     }
 /*
     private void showEULA() {
-        Joyple.getInstance().showEULA(getActivity());
+        GB.getInstance().showEULA(getActivity());
     }
 */
     private void showProfile(GBProfileViewType aViewType) {

@@ -63,7 +63,7 @@ public class GBGreetingChangeFragment extends BaseFragment {
 
     public GBGreetingChangeFragment() {
         fragmentType = FragmentType.GREETING_CHANGE_FRAGMENT;
-        layoutId = JR.layout("joyple_profile_info_change");
+        layoutId = JR.layout("GB_profile_info_change");
     }
 
     @Override
@@ -116,8 +116,8 @@ public class GBGreetingChangeFragment extends BaseFragment {
     }
 
     private void initialLayout(View view) {
-        greetingChangeTopArea = (RelativeLayout) view.findViewById(JR.id("joyple_profile_info_change_top_ly"));
-        closeBtn = (RelativeLayout) view.findViewById(JR.id("joyple_profile_info_change_close_btn"));
+        greetingChangeTopArea = (RelativeLayout) view.findViewById(JR.id("GB_profile_info_change_top_ly"));
+        closeBtn = (RelativeLayout) view.findViewById(JR.id("GB_profile_info_change_close_btn"));
         closeBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -125,7 +125,7 @@ public class GBGreetingChangeFragment extends BaseFragment {
                 activity.finish();
             }
         });
-        backBtn = (RelativeLayout) view.findViewById(JR.id("joyple_profile_info_change_back_btn"));
+        backBtn = (RelativeLayout) view.findViewById(JR.id("GB_profile_info_change_back_btn"));
         backBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -134,7 +134,7 @@ public class GBGreetingChangeFragment extends BaseFragment {
                 back();
             }
         });
-        contentLayout = (RelativeLayout) view.findViewById(JR.id("joyple_profile_info_change_fragment"));
+        contentLayout = (RelativeLayout) view.findViewById(JR.id("GB_profile_info_change_fragment"));
         contentLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -143,7 +143,7 @@ public class GBGreetingChangeFragment extends BaseFragment {
             }
         });
 
-        contentTextLayout = (RelativeLayout) view.findViewById(JR.id("joyple_profile_info_change_content_ly"));
+        contentTextLayout = (RelativeLayout) view.findViewById(JR.id("GB_profile_info_change_content_ly"));
 
         RelativeLayout.LayoutParams contentTextLy =
                 new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -159,7 +159,7 @@ public class GBGreetingChangeFragment extends BaseFragment {
         contentTextLy.addRule(RelativeLayout.BELOW, greetingChangeTopArea.getId());
         contentTextLayout.setLayoutParams(contentTextLy);
 
-        contentText = (EditText) view.findViewById(JR.id("joyple_profile_info_change_content_et"));
+        contentText = (EditText) view.findViewById(JR.id("GB_profile_info_change_content_et"));
         contentText.setSingleLine(false);
         contentText.setMaxLines(MAX_GREETING_TEXTLINE_LENGTH);
 
@@ -167,12 +167,12 @@ public class GBGreetingChangeFragment extends BaseFragment {
         filters[0] = new ByteLengthFilter(MAX_GREETING_MESSAGE_BYTES, ENCODING_TYPE);
         contentText.setFilters(filters);
 
-        inputCountText = (TextView) view.findViewById(JR.id("joyple_profile_info_change_current_count_tv"));
-        maxCountText = (TextView) view.findViewById(JR.id("joyple_profile_info_change_max_count_tv"));
+        inputCountText = (TextView) view.findViewById(JR.id("GB_profile_info_change_current_count_tv"));
+        maxCountText = (TextView) view.findViewById(JR.id("GB_profile_info_change_max_count_tv"));
         maxCountText.setText(MAX_GREETING_MESSAGE_BYTES+"");
-        errorText = (TextView) view.findViewById(JR.id("joyple_profile_info_error_tv"));
+        errorText = (TextView) view.findViewById(JR.id("GB_profile_info_error_tv"));
 
-        confirmBtn = (RelativeLayout) view.findViewById(JR.id("joyple_profile_info_change_confirm_ly"));
+        confirmBtn = (RelativeLayout) view.findViewById(JR.id("GB_profile_info_change_confirm_ly"));
         confirmBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

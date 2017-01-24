@@ -6,7 +6,7 @@ package com.gebros.platform.auth;
 public enum SessionJoinSource {
     GUEST(1),
     NEST(2),
-    JOYPLE(3),
+    GB(3),
     FACEBOOK(4),
     GOOGLE(5),
     TWITTER(6),

@@ -12,21 +12,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.joycity.platform.sdk.JoypleSettings;
-import com.joycity.platform.sdk.auth.JoypleAuthManager;
-import com.joycity.platform.sdk.auth.JoypleSession;
-import com.joycity.platform.sdk.auth.ProfileApi;
-import com.joycity.platform.sdk.auth.ui.JoypleProfileViewType;
-import com.joycity.platform.sdk.exception.JoypleException;
-import com.joycity.platform.sdk.exception.JoypleExceptionType;
-import com.joycity.platform.sdk.game.JoypleGameManager;
-import com.joycity.platform.sdk.internal.JR;
-import com.joycity.platform.sdk.listener.JoypleAuthListener;
-import com.joycity.platform.sdk.listener.JoypleGameListener;
-import com.joycity.platform.sdk.listener.JoypleProfileListener;
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.pay.JoypleInAppManager;
-import com.joycity.platform.sdk.util.JoypleMessageUtils;
+import com.gebros.platform.GBSettings;
+import com.gebros.platform.auth.GBAuthManager;
+import com.gebros.platform.auth.GBSession;
+import com.gebros.platform.auth.ProfileApi;
+import com.gebros.platform.auth.ui.GBProfileViewType;
+import com.gebros.platform.exception.GBException;
+import com.gebros.platform.exception.GBExceptionType;
+import com.gebros.platform.internal.JR;
+import com.gebros.platform.listener.GBAuthListener;
+import com.gebros.platform.listener.GBGameListener;
+import com.gebros.platform.listener.GBProfileListener;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.pay.GBInAppManager;
+import com.gebros.platform.util.GBMessageUtils;
 
 import org.json.JSONObject;
 
@@ -64,14 +63,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         View loginView = inflater.inflate(R.layout.activity_login, container, false);
 
         mPlatformTitle = (TextView)loginView.findViewById(R.id.login_platform_title);
-        mPlatformTitle.setText(JoypleSettings.getPlatformType().getName());
+        mPlatformTitle.setText(GBSettings.getPlatformType().getName());
         mBtnLogin = (Button)loginView.findViewById(R.id.btn_login);
         mBtnProfile = (Button)loginView.findViewById(R.id.btn_profile);
         mTvUserkey = (TextView) loginView.findViewById(R.id.login_user_key_info_tv);
         mBtnLogin.setOnClickListener(this);
         mBtnProfile.setOnClickListener(this);
 
-        setSessionState(JoypleSession.getActiveSession().getState());
+        setSessionState(GBSession.getActiveSession().getState());
         return loginView;
     }
 
@@ -82,7 +81,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         int clickedViewId = view.getId();
 
         if (clickedViewId == mBtnLogin.getId()) {
-            showProgress();
+            //showProgress();
 
             if (!isLogin)
                 Login();
@@ -90,8 +89,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 Logout();
 
         } else if (clickedViewId == mBtnProfile.getId()) {
-
-            JoypleGameManager.GameExitService(getActivity(), new JoypleGameListener() {
+/*
+            GBGameManager.GameExitService(getActivity(), new GBGameListener() {
                 @Override
                 public void onSuccess() {
                     JLog.d(TAG + " MAIN GameExitService onSuccess:::::");
@@ -104,7 +103,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 }
 
                 @Override
-                public void onFail(JoypleException e) {
+                public void onFail(GBException e) {
                     JLog.d(TAG + " MAIN GameExitService onFail:::::");
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -116,15 +115,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             });
 
            // ShowProfile();
+*/
         }
     }
 
     private void Login() {
-        JoypleAuthManager.Login(getActivity(), new JoypleAuthListener() {
+        GBAuthManager.Login(getActivity(), new GBAuthListener() {
             @Override
-            public void onSuccess(final JoypleSession newSession) {
+            public void onSuccess(final GBSession newSession) {
                 if (newSession.isOpened()) {
-                    JLog.d(TAG + "Session Open.. token = %s", newSession.getAccessToken());
+                    GBLog.d(TAG + "Session Open.. token = %s", newSession.getAccessToken());
                 //    Toast.makeText(getActivity(), "[Login onSuccess]Session Open.. token = "+newSession.getAccessToken(), Toast.LENGTH_LONG).show();
                     setSessionState(newSession.getState());
                     hideProgress();
@@ -136,7 +136,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFail(JoypleException e) {
+            public void onFail(GBException e) {
                 hideProgress();
                 int errorCode = e.getErrorCode();
                 Toast.makeText(getActivity(), "[Login onFail] errorCode = "+errorCode+" , detailError = "+e.getDetailError(), Toast.LENGTH_LONG).show();
@@ -151,9 +151,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void Logout() {
-        JoypleAuthManager.Logout(getActivity(), new JoypleAuthListener() {
+        GBAuthManager.Logout(getActivity(), new GBAuthListener() {
             @Override
-            public void onSuccess(JoypleSession newSession) {
+            public void onSuccess(GBSession newSession) {
                 setSessionState(newSession.getState());
                 hideProgress();
                 Toast.makeText(getActivity(), "[Logout onSuccess]Session state = "+newSession.getState(), Toast.LENGTH_LONG).show();
@@ -162,7 +162,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFail(JoypleException e) {
+            public void onFail(GBException e) {
                 Toast.makeText(getActivity(), "[Logout onFail]errorCode = "+e.getErrorCode()+" , detailError = "+e.getDetailError(), Toast.LENGTH_LONG).show();
             }
 
@@ -176,7 +176,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void GetProfile() {
         showProgress();
 
-        ProfileApi.RequestProfile(new JoypleProfileListener() {
+        ProfileApi.RequestProfile(new GBProfileListener() {
             @Override
             public void onSuccess(JSONObject object) {
                 hideProgress();
@@ -184,27 +184,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 String userKey = ProfileApi.getLocalUser().getUserKey();
                 mTvUserkey.setText(userKey);
 
-                JoypleInAppManager.InitInAppService(userKey, null);
+                GBInAppManager.InitInAppService(userKey, null);
             }
 
             @Override
-            public void onFail(JoypleException e) {
+            public void onFail(GBException e) {
                 hideProgress();
 
-                if (e.getExceptionType() == JoypleExceptionType.SESSION_INVALID)
-                    JoypleMessageUtils.alert(getActivity(), "재로그인이 필요합니다. !!!");
+                if (e.getExceptionType() == GBExceptionType.SESSION_INVALID)
+                    GBMessageUtils.alert(getActivity(), "재로그인이 필요합니다. !!!");
                 else
-                    JoypleMessageUtils.alert(getActivity(), e.getMessage());
+                    GBMessageUtils.alert(getActivity(), e.getMessage());
             }
         });
     }
 
     private void ShowProfile() {
-        JoypleAuthManager.showProfile(getActivity(), JoypleProfileViewType.JoypleProfileUserInfo);
+        GBAuthManager.showProfile(getActivity(), GBProfileViewType.GBProfileUserInfo);
     }
 
-    private void setSessionState(JoypleSession.SessionState state) {
-        if (state == JoypleSession.SessionState.OPEN) {
+    private void setSessionState(GBSession.SessionState state) {
+        if (state == GBSession.SessionState.OPEN) {
             mBtnLogin.setText("로그아웃");
             isLogin = true;
 

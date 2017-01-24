@@ -103,7 +103,7 @@ public class ImageUtils {
             str = strArrAgain[strArrAgain.length-1];
         }
 
-        String key = "joyple-android-sdk";
+        String key = "GB-android-sdk";
         StringBuffer sb = new StringBuffer(str);
 
         int lenStr = str.length();

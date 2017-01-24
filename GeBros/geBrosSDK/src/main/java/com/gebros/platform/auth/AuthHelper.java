@@ -32,6 +32,6 @@ class AuthHelper implements IAuthHelper {
     }
 
     public PlatformType.AuthType getAuthType() {
-        return PlatformType.AuthType.JOYPLE;
+        return PlatformType.AuthType.GUEST;
     }
 }

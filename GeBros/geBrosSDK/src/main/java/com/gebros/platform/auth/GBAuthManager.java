@@ -29,7 +29,7 @@ public class GBAuthManager {
     public static final String TAG = GBAuthManager.class.getCanonicalName();
 
     /**
-     * This function initializes Auth Package in Joyple SDK
+     * This function initializes Auth Package in GB SDK
      *
      * @param client {@link IPlatformClient} object
      */
@@ -49,7 +49,7 @@ public class GBAuthManager {
             mAuthHelper = IAuthHelperFactory.create(client.getAuthType(), mAuthClient);
         } else {
             if (source == SessionJoinSource.NONE) {
-                mAuthHelper = IAuthHelperFactory.create(PlatformType.AuthType.NONE, mAuthClient);
+                mAuthHelper = IAuthHelperFactory.create(PlatformType.AuthType.GUEST, mAuthClient);
 
             } else {
                 // Auto Login
@@ -92,7 +92,7 @@ public class GBAuthManager {
      */
     public static void LoginWithAccountInfo(Activity activity, Map<String, Object> accountInfo, final GBAuthListener listener) throws GBException {
         if (mAuthHelper == null)
-            mAuthHelper = IAuthHelperFactory.create(PlatformType.AuthType.JOYPLE, mAuthClient);
+            mAuthHelper = IAuthHelperFactory.create(PlatformType.AuthType.GOOGLE, mAuthClient);
 
         mAuthHelper.loginWithAccountInfo(activity, accountInfo, listener);
     }
@@ -152,7 +152,7 @@ public class GBAuthManager {
     }
 
     /**
-     * Log the user in with the access token. (already obtained from Joyple)
+     * Log the user in with the access token. (already obtained from GB)
      *
      * @param activity  The activity which is starting the login process (Not used.)
      * @param listener  {@link GBAuthListener}
@@ -211,7 +211,7 @@ public class GBAuthManager {
 
     private static void ShowProfileView(Activity activity) {
         try {
-            Intent intent = new Intent(activity, Class.forName("com.gebros.platform.auth.ui.JoypleProfileActivity"));
+            Intent intent = new Intent(activity, Class.forName("com.gebros.platform.auth.ui.GBProfileActivity"));
 //            activity.startActivityForResult(intent, 15002);
             ActivityResultHelper.startActivityForResult(activity, 15002, intent, new ActivityResultHelper.ActivityResultListener() {
                 @Override
@@ -236,9 +236,11 @@ public class GBAuthManager {
                 return new PlatformAuthHelper(impl);
             } else if (authType == PlatformType.AuthType.GOOGLE) {
                 return new GoogleAuthHelper(impl);
-            } else if (authType == PlatformType.AuthType.JOYPLE ||
-                    authType == PlatformType.AuthType.GUEST) {
+            } else if (authType == PlatformType.AuthType.GUEST) {
                 return new GBAuthHelper(impl);
+            } else if (authType == PlatformType.AuthType.FACEBOOK) {
+                //return new FacebookAuthHelper(impl);
+                return null;
             }
 
             return new PlatformAuthHelper(impl);

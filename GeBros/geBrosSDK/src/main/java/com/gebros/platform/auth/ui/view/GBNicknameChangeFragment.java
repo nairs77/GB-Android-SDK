@@ -65,7 +65,7 @@ public class GBNicknameChangeFragment extends BaseFragment {
     public GBNicknameChangeFragment() {
 
         fragmentType = FragmentType.NICKNAME_CHANGE_FRAGMENT;
-        layoutId = JR.layout("joyple_profile_nickname_change");
+        layoutId = JR.layout("GB_profile_nickname_change");
     }
 
     @Override
@@ -118,8 +118,8 @@ public class GBNicknameChangeFragment extends BaseFragment {
     }
 
     private void initialLayout(View view) {
-        nicknameChangeTopArea = (RelativeLayout) view.findViewById(JR.id("joyple_profile_nickname_change_top_ly"));
-        closeBtn = (RelativeLayout) view.findViewById(JR.id("joyple_profile_nickname_change_close_btn"));
+        nicknameChangeTopArea = (RelativeLayout) view.findViewById(JR.id("GB_profile_nickname_change_top_ly"));
+        closeBtn = (RelativeLayout) view.findViewById(JR.id("GB_profile_nickname_change_close_btn"));
         closeBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -127,7 +127,7 @@ public class GBNicknameChangeFragment extends BaseFragment {
                 activity.finish();
             }
         });
-        backBtn = (RelativeLayout) view.findViewById(JR.id("joyple_profile_nickname_change_back_btn"));
+        backBtn = (RelativeLayout) view.findViewById(JR.id("GB_profile_nickname_change_back_btn"));
         backBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -136,7 +136,7 @@ public class GBNicknameChangeFragment extends BaseFragment {
                 back();
             }
         });
-        contentLayout = (RelativeLayout) view.findViewById(JR.id("joyple_profile_nickname_change_fragment"));
+        contentLayout = (RelativeLayout) view.findViewById(JR.id("GB_profile_nickname_change_fragment"));
         contentLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -145,7 +145,7 @@ public class GBNicknameChangeFragment extends BaseFragment {
             }
         });
 
-        contentTextLayout = (RelativeLayout) view.findViewById(JR.id("joyple_profile_nickname_change_content_ly"));
+        contentTextLayout = (RelativeLayout) view.findViewById(JR.id("GB_profile_nickname_change_content_ly"));
 
         RelativeLayout.LayoutParams contentTextLy =
                 new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -163,7 +163,7 @@ public class GBNicknameChangeFragment extends BaseFragment {
         contentTextLayout.setLayoutParams(contentTextLy);
 
 
-        contentText = (EditText) view.findViewById(JR.id("joyple_profile_nickname_change_content_et"));
+        contentText = (EditText) view.findViewById(JR.id("GB_profile_nickname_change_content_et"));
         contentText.setMaxLines(MAX_NICKNAME_LINE_LENGTH);
         contentText.setSingleLine(true);
         contentText.setHint(JR.string("ui_profile_nickname_label_title"));
@@ -172,12 +172,12 @@ public class GBNicknameChangeFragment extends BaseFragment {
         filters[0] = new ByteLengthFilter(MAX_NICKNAME_BYTES, ENCODING_TYPE);
         contentText.setFilters(filters);
 
-        inputCountText = (TextView) view.findViewById(JR.id("joyple_profile_nickname_change_current_count_tv"));
-        maxCountText = (TextView) view.findViewById(JR.id("joyple_profile_nickname_change_max_count_tv"));
+        inputCountText = (TextView) view.findViewById(JR.id("GB_profile_nickname_change_current_count_tv"));
+        maxCountText = (TextView) view.findViewById(JR.id("GB_profile_nickname_change_max_count_tv"));
         maxCountText.setText(MAX_NICKNAME_BYTES+"");
-        errorText = (TextView) view.findViewById(JR.id("joyple_profile_nickname_error_tv"));
+        errorText = (TextView) view.findViewById(JR.id("GB_profile_nickname_error_tv"));
 
-        confirmBtn = (RelativeLayout) view.findViewById(JR.id("joyple_profile_nickname_change_confirm_ly"));
+        confirmBtn = (RelativeLayout) view.findViewById(JR.id("GB_profile_nickname_change_confirm_ly"));
         confirmBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

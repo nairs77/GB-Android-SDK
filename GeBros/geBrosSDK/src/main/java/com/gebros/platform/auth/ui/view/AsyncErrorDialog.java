@@ -27,7 +27,7 @@ public class AsyncErrorDialog {
         this.activity = activity;
 
         if (toast == null) {
-            toast = Toast.makeText(activity, JR.string("joyple_alert_server_status"), Toast.LENGTH_LONG);
+            toast = Toast.makeText(activity, JR.string("GB_alert_server_status"), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
         }
     }
@@ -70,7 +70,7 @@ public class AsyncErrorDialog {
                 messageResId = JR.string("errorui_login_block_label_title");
                 break;
             case GBException.NETWORK_UNSTABLE_ERROR_CODE:
-                messageResId = JR.string("joyple_alert_network_status");
+                messageResId = JR.string("GB_alert_network_status");
                 break;
             case GBException.ACCOUNTS_CONNECT_EXISTS_GAMEINFO:
             case GBException.ACCOUNTS_CONNECT_SERVICED_ON:

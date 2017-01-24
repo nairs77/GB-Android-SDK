@@ -25,6 +25,8 @@ final class GBSdkImpl {
     public void initialize(Activity activity) {
         GBSettingsProxy.getInstance().loadSettings();
 
+
+
 //        GBAuthManager.Initialize(activity);
 //        GBInAppManager.Initialize(activity);
 /*
@@ -42,22 +44,24 @@ final class GBSdkImpl {
 */
     }
 
-    public void configureSDKWithGameInfo(Activity activity, int gameCode, String clientSecretkey, GBLog.Mode logLevel) {
-        //
+    public void configureSDKWithGameInfo(Activity activity, int gameCode, String clientSecretkey, Platform platform, GBLog.LogLevel logLevel) {
         GBConfig config = GBSettingsProxy.getInstance().getConfig();
         String gameVersion = GBDeviceUtils.getGameVersion();
 
-        config.setSDKInfo("", gameCode, gameVersion, null);
+        config.setSDKInfo("", gameCode, gameVersion, platform.getPlatformType());
 
-        if (logLevel == GBLog.Mode.RELEASE)
+        if (logLevel == GBLog.LogLevel.RELEASE)
             GBLog.disableLog();
         else
             GBLog.enableLog();
 
-        mPlatformClient = PlatformFactory.create(new Platform.Builder("", "").PlatformType(PlatformType.DEFAULT).build());
-        mPlatformClient.doPlatformInit(activity, null);
+        mPlatformClient = PlatformFactory.create(platform);
+    }
 
-//        isInitialized = true;
+    public void configureSDKWithGameInfo(Activity activity, int gameCode, String clientSecretkey, GBLog.LogLevel logLevel) {
+
+        Platform platform = new Platform.Builder(PlatformType.DEFAULT).build();
+        configureSDKWithGameInfo(activity, gameCode, clientSecretkey, platform, logLevel);
     }
 
     public IPlatformClient getPlatformClient() {
@@ -65,7 +69,7 @@ final class GBSdkImpl {
     }
 
     public void onActivityCreate(Activity activity, Bundle savedInstanceState) {
-        //Joyple.instance.getPlatformClient().onActivityCreate(activity, savedInstanceState);
+        //GB.instance.getPlatformClient().onActivityCreate(activity, savedInstanceState);
         if (getPlatformClient() != null)
             getPlatformClient().onActivityCreate(activity, savedInstanceState);
     }

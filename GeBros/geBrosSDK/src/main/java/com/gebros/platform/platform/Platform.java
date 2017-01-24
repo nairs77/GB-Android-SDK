@@ -69,6 +69,10 @@ public class Platform {
             this.appKey = appKey;
         }
 
+        public Builder(PlatformType type) {
+            this.type = type;
+        }
+
         public Builder PlatformType(PlatformType type) {
             this.type = type;
             return this;

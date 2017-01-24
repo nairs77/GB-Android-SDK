@@ -30,7 +30,7 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 //import android.support.annotation.RequiresPermission;
-//import com.joycity.platform.account.internal.JoypleLogger;
+//import com.joycity.platform.account.internal.GBLogger;
 //import com.joycity.platform.account.internal.Logger;
 
 
@@ -61,7 +61,7 @@ public class Request implements AbstractRequest {
 	protected static final String DEVICE_HEADER_KEY = "Device-Info";
 	protected static final String AUTHORIZATION_TYPE = "Bearer";
 	protected static final String DEFAULT_ACCEPT = "application/json";
-	protected static final String USER_AGENT = "joyple/0.8";
+	protected static final String USER_AGENT = "GB/0.8";
 	protected static final String DEFAULT_ACCEPT_ENCODING = "gzip";
 
 	/**
@@ -283,7 +283,7 @@ public class Request implements AbstractRequest {
 //			Manifest.permission.READ_PHONE_STATE,
 //			Manifest.permission.ACCESS_WIFI_STATE})
 	protected void setDeviceResourcesHeaders(HttpURLConnection connection) {
-//		if(!JoypleLogger.isTestMode())
+//		if(!GBLogger.isTestMode())
 //			connection.setRequestProperty(DEVICE_HEADER_KEY, DeviceUtilsManager.getInstance().getEntireDeviceInfo());
 
 		connection.setRequestProperty(DEVICE_HEADER_KEY, GBDeviceUtils.getEntireDeviceInfo());

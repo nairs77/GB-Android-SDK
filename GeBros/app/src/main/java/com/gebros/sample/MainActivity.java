@@ -1,9 +1,8 @@
-package com.hoga.fwsd_xiaomi;
+package com.gebros.sample;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,19 +10,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hoga.fwsd_xiaomi.ui.TextTabActivity;
-import com.joycity.platform.sdk.ActivityResultHelper;
-import com.joycity.platform.sdk.Joyple;
-import com.joycity.platform.sdk.event.JoypleEvent;
-import com.joycity.platform.sdk.event.JoypleEventReceiver;
-import com.joycity.platform.sdk.listener.JoypleInitListener;
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.platform.Platform;
-import com.joycity.platform.sdk.platform.PlatformType;
-import com.joycity.platform.sdk.util.JoypleMessageUtils;
-
-import org.json.JSONObject;
-
+import com.gebros.platform.ActivityResultHelper;
+import com.gebros.platform.GBSdk;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.platform.Platform;
+import com.gebros.platform.platform.PlatformType;
+import com.gebros.platform.util.GBMessageUtils;
 
 public class MainActivity extends Activity implements Spinner.OnItemSelectedListener {
 
@@ -35,25 +27,9 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Joyple.Initialize(this);
 
         initViews();
 
-        Platform.Builder builder = new Platform.Builder("8222038", "hd1PzS22rzfDN1KNFw0Yzlxh")
-                .PlatformType(PlatformType.BAIDU)
-                .AppSecret("H7UDUFHBXMzifbR5urYkc3BWEYXNZUot");
-
-        Joyple.SetActiveMarket(this, builder.build(), new JoypleInitListener() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFail() {
-
-            }
-        });
     }
 
     @Override
@@ -114,7 +90,7 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
         mSpinServerSelector.setOnItemSelectedListener(this);
 
         mTxtVersionInfo = (TextView)findViewById(R.id.samaple_version_info_tv);
-        mTxtVersionInfo.setText(Joyple.VERSION);
+        mTxtVersionInfo.setText(GBSdk.VERSION);
         mBtnStartApp = (Button)findViewById(R.id.btn_start_app);
 
         mBtnStartApp.setOnClickListener(new View.OnClickListener() {
@@ -126,51 +102,52 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
     }
 
     private void startTest() {
-
+        _configureAppTest();
+/*
         final Handler handler = new Handler();
 
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                Joyple.RequestGlobalServerInfo(mServerAddress, mGameCode, new JoypleEventReceiver() {
-                    //"https://joyple-cn-qa.joycityplay.com/gbranch/branch/getzone"
+                GB.RequestGlobalServerInfo(mServerAddress, mGameCode, new GBEventReceiver() {
+                    //"https://GB-cn-qa.joycityplay.com/gbranch/branch/getzone"
                     @Override
-                    public void onSuccessEvent(JoypleEvent event, JSONObject json) {
+                    public void onSuccessEvent(GBEvent event, JSONObject json) {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 _configureAppTest();
-                                JoypleMessageUtils.toast(MainActivity.this, "Connected Server !!!");
+                                GBMessageUtils.toast(MainActivity.this, "Connected Server !!!");
                             }
                         });
                     }
 
                     @Override
-                    public void onFailedEvent(JoypleEvent event, final int errorCode, final String errorMessage) {
+                    public void onFailedEvent(GBEvent event, final int errorCode, final String errorMessage) {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 String errorMsg = String.format("error = %s(%d)", errorMessage, errorCode);
-                                JoypleMessageUtils.toast(MainActivity.this, errorMsg);
+                                GBMessageUtils.toast(MainActivity.this, errorMsg);
                             }
                         });
                     }
                 });
             }
         })).start();
-
+*/
     }
 
     private void _configureAppTest() {
         try {
 
-            //Joyple.ConfigureSDKInfo(this, mCurrentPlatform, "9519d7e94d0b316d8e5122c67aeddfa4", 8887, Joyple.LogLevel.DEBUG);
-            Joyple.ConfigureSDKInfo(this, mCurrentPlatform, mClientSecretKey, mGameCode, Joyple.LogLevel.DEBUG);
+            //GB.ConfigureSDKInfo(this, mCurrentPlatform, "9519d7e94d0b316d8e5122c67aeddfa4", 8887, GB.LogLevel.DEBUG);
+            GBSdk.ConfigureSdkWithInfo(this, mGameCode, mClientSecretKey, mCurrentPlatform,GBLog.LogLevel.DEBUG);
             Intent intent = new Intent(MainActivity.this,TextTabActivity.class);
             startActivity(intent);
         } catch (NullPointerException e) {
-            JLog.d(TAG + " configureAppTest NullPointerException e::::"+e.getMessage()+":::::"+e.toString());
-            JoypleMessageUtils.alert(this, "Oh~ My God, 설정이 안되었어요!!! "+e.getStackTrace());
+            GBLog.d(TAG + " configureAppTest NullPointerException e::::"+e.getMessage()+":::::"+e.toString());
+            GBMessageUtils.alert(this, "Oh~ My God, 설정이 안되었어요!!! "+e.getStackTrace());
         }
     }
 
@@ -179,7 +156,7 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
             mClientSecretKey = "9519d7e94d0b316d8e5122c67aeddfa4";
             mGameCode = 8887;
 
-            Toast.makeText(this, "Start Joyple Sample Test", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Start GB Sample Test", Toast.LENGTH_SHORT).show();
         } else if (selectedPos == 2) {
             mClientSecretKey = "0dd682d7bc4f3fcb9ff62634ba6fe2a3";
             mGameCode = 69;
@@ -222,8 +199,7 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
                     .PayRsaPrivate("MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCw8Vm8Xk2Pse02fJnugrYSEaA4VJCdbF3g7dHq5TIZbXfomTw3J1W6kQpRDzFyhJHiahetMREHdKPXNUDMK5+3DxaOO//teAUpQsLCGPjRFVtYOlXtHt3LRsAJ/CXPZy1HU+LPKbSA+evFk9lW9lGfpBm3SQ5piyDTVMKbn3OpQXvcIgOvjWT2i2ws9FObR3Qx6aR/uK8juticLhZ4fXFY8Zi0N8g/5ZKIkBECBEj3x7BPMexrnDHorSeXgYg/DolN9UXCNz4BADwkGE01faKh9nBHjHxZ1kbj61QYHb7otvFCi8c9tCUpk6NaaFi8MaYbGjEjUbvL8WD7KmSZhtDvAgMBAAECggEASMEEN7rCw3nSYpv7IyHlwSo0KdVDnScItsqyjJXu8pubOS2An+DxlAO9LTVFDKRL47/hulm5ecpQ79U6rnildDyk9pjfE4JNBPkpYWupKzdP1sgtupD9e2682Z4u4ce3y2NHmAy65mlcs2GmdOZVC4IK/NzyKx2EwsBQQHLguM++z9dh7s6lsKvDKEkjOjh/afPNNqYJDzmNWQqIBAm5T+rfw2kkOfrrIMUTTKaZk8UILhafymx1evzEGKRB/oTXFbCjKgJX7pwm5ivTaCQKDuY/4j9ABmLMV8FwlRukhhxWHu0I0ReWPqeavZm/Hne5S+DNAJcEbmT1H8oGhqFsYQKBgQDwUuyL5MbttuODYhmgwatCrBtJNazvp7j1g7dwoMMJ4X9A7wEoZ4WHAvcsje/xfYBovsA6KbnmvWZaYOyzLmiGiSoH9XiXBB66WQzYi51idrui+xViXf1J9qc68Pyxd553hGu7dqyVuFixLTKOgLwuPtMgmV8JG/OQ09u0FCmZ3wKBgQC8fAyhB8Uj/IrtE5WguGtWduOKUfKYK573X2lduMd5F72WQADitylN4huJmzYhqlfi4XaNUgW2BbOCxC1tRMvYFs+pDNPqBWuzV76JhEUtmy+QuwukmBkRpp2YhBEWFth/3iYNcsJxlMMd+tEZyzdgqjhx7jPlriUNny24mW3K8QKBgFQIavYvtO+CN+PE9bkkf0H89D2RKztRpncS653SWOCnnNuTtw/twt8Gxm8p4nDKtY/qw0STOpHYQGXx5lJxM9N3Ot81kkkcA7KdWMSPbST053+B1GRlASBPwwH1KibT8PFRuGoAgTCJGVo6t6bklOiGx0Rq3LROtcg6jGRXeIR5AoGAdbzffq+F3AbjGVjEfNL2adp2JG8wJRIKiOfWv66vG9tSmEp+wyA68uWs4fZMiBcKMzU3guubmapSCftVjQ4Ob3tAWI8kyOh98Fd9NBWlyOlJexT8HuLLthToGN9WdP/sWWOBTaFECQMuJsoIWB5zBzUNcU2kqXJwvuOSAeAFj2ECgYEA4hV3PUuPfo1N8IJafSlns8JsJlf8KXY2FUVYe7rNUoM85no9hLph9LB/GKzOZ3QTxLLuTfkCsXhYk0X9gwKmdmjDToES2Ok4l646W09Lm8Dvdr9wJcHySQ6mS0g5hoStm+dNbJT+X2XzcGo/oZLB7aK52t/xoNmXB/gSmdHt/ow=")
                     .PayRsaPublic("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsPFZvF5Nj7HtNnyZ7oK2EhGgOFSQnWxd4O3R6uUyGW136Jk8NydVupEKUQ8xcoSR4moXrTERB3Sj1zVAzCuftw8Wjjv/7XgFKULCwhj40RVbWDpV7R7dy0bACfwlz2ctR1Pizym0gPnrxZPZVvZRn6QZt0kOaYsg01TCm59zqUF73CIDr41k9otsLPRTm0d0Memkf7ivI7rYnC4WeH1xWPGYtDfIP+WSiJARAgRI98ewTzHsa5wx6K0nl4GIPw6JTfVFwjc+AQA8JBhNNX2iofZwR4x8WdZG4+tUGB2+6LbxQovHPbQlKZOjWmhYvDGmGxoxI1G7y/Fg+ypkmYbQ7wIDAQAB");
         } else {
-            builder = new Platform.Builder("", "")
-                    .PlatformType(PlatformType.DEFAULT);
+            builder = new Platform.Builder(PlatformType.DEFAULT);
         }
 
         if (builder != null)
@@ -235,7 +211,7 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
 
     private void _serverSettings(int pos) {
         if (pos == 1) {
-            mServerAddress = "https://joyple-cn-qa.joycityplay.com/gbranch/branch/getzone";
+            mServerAddress = "https://GB-cn-qa.joycityplay.com/gbranch/branch/getzone";
             Toast.makeText(this, "Start QA Server", Toast.LENGTH_SHORT).show();
         } else if (pos == 2) {
             mServerAddress = "https://gbranchrev.jc.hogacn.com/branch/getzone";

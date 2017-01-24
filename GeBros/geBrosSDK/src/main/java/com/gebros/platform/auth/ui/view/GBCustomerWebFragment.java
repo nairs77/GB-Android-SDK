@@ -53,8 +53,8 @@ public class GBCustomerWebFragment extends BaseFragment {
 
     public GBCustomerWebFragment() {
 
-        fragmentType = FragmentType.JOYPLE_CUSTOMER_WEBVIEW;
-        layoutId = JR.layout("joyple_webview");
+        fragmentType = FragmentType.GB_CUSTOMER_WEBVIEW;
+        layoutId = JR.layout("GB_webview");
     }
 
     public static GBCustomerWebFragment newInstance(String url) {
@@ -103,23 +103,23 @@ public class GBCustomerWebFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-        topArea = (RelativeLayout) rootView.findViewById(JR.id("joyple_wv_top_ly"));
+        topArea = (RelativeLayout) rootView.findViewById(JR.id("GB_wv_top_ly"));
         topArea.setVisibility(View.VISIBLE);
-        titleText = (TextView) rootView.findViewById(JR.id("joyple_wv_title_tv"));
+        titleText = (TextView) rootView.findViewById(JR.id("GB_wv_title_tv"));
         titleText.setText(JR.string("ui_setting_customer_label_title"));
-        closeBtn = (RelativeLayout) rootView.findViewById(JR.id("joyple_wv_close_btn"));
+        closeBtn = (RelativeLayout) rootView.findViewById(JR.id("GB_wv_close_btn"));
         closeBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(moveData.equals("JoyplePasswordFindFragment")) {
+                if(moveData.equals("GBPasswordFindFragment")) {
                     back();
                     return;
                 }
                 activity.finish();
             }
         });
-        backBtn = (RelativeLayout) rootView.findViewById(JR.id("joyple_wv_back_btn"));
+        backBtn = (RelativeLayout) rootView.findViewById(JR.id("GB_wv_back_btn"));
         backBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -146,7 +146,7 @@ public class GBCustomerWebFragment extends BaseFragment {
         Map<String, String> headerInfo = new HashMap<String, String>();
         headerInfo.put(Request.AUTHORIZATION_HEADER_KEY, Request.createAuthorizationHeaderValues(authorizationValues));
 
-        gbWebView = (WebView) rootView.findViewById(JR.id("joyple_wv"));
+        gbWebView = (WebView) rootView.findViewById(JR.id("GB_wv"));
         gbWebView.loadUrl(url, headerInfo);
         gbWebView.clearCache(true);
         gbWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);

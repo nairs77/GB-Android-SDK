@@ -29,8 +29,8 @@ import java.util.Map;
 
 public interface GBObject {
 
-    public <T extends GBObject> T cast(Class<T> joypleObjectClass);
-    public <T extends GBObject> T getInnerObject(Class<T> joypleObjectClass);
+    public <T extends GBObject> T cast(Class<T> GBObjectClass);
+    public <T extends GBObject> T getInnerObject(Class<T> GBObjectClass);
     public Map<String, Object> asMap();
     public JSONObject getInnerJSONObject();
     public GBAPIError getAPIError();
@@ -56,16 +56,16 @@ public interface GBObject {
 			return create(json, GBObject.class);
 		}
 
-		public static <T> GBObjectList<T> createList(JSONArray array, Class<T> joypleObjectClass) {
-            return new GBObjectListImpl<T>(array, joypleObjectClass);
+		public static <T> GBObjectList<T> createList(JSONArray array, Class<T> GBObjectClass) {
+            return new GBObjectListImpl<T>(array, GBObjectClass);
         }
 
-        public static <T> GBObjectList<T> createList(Class<T> joypleObjectClass) {
-            return createList(new JSONArray(), joypleObjectClass);
+        public static <T> GBObjectList<T> createList(Class<T> GBObjectClass) {
+            return createList(new JSONArray(), GBObjectClass);
         }
 
-		public static <T extends GBObject> T create(JSONObject json, Class<T> joypleObjectClass) {
-			return createGBObjectProxy(joypleObjectClass, json);
+		public static <T extends GBObject> T create(JSONObject json, Class<T> GBObjectClass) {
+			return createGBObjectProxy(GBObjectClass, json);
 		}
 
 		private static <T extends GBObject> T createGBObjectProxy(Class<T> gbObjectClass, JSONObject state) {
@@ -82,13 +82,13 @@ public interface GBObject {
 		private static Map<String, Object> createGBObjectProxyForMap(JSONObject state) {
 
         	Class<?>[] interfaces = new Class[]{Map.class};
-			GBObjectProxy joypleObjectProxy = new GBObjectProxy(state, Map.class);
+			GBObjectProxy GBObjectProxy = new GBObjectProxy(state, Map.class);
 
             @SuppressWarnings("unchecked")
-			Map<String, Object> joypleObject = (Map<String, Object>) Proxy
-                    .newProxyInstance(GBObjectProxy.class.getClassLoader(), interfaces, joypleObjectProxy);
+			Map<String, Object> GBObject = (Map<String, Object>) Proxy
+                    .newProxyInstance(GBObjectProxy.class.getClassLoader(), interfaces, GBObjectProxy);
 
-            return joypleObject;
+            return GBObject;
         }
 
 		/**
@@ -118,14 +118,14 @@ public interface GBObject {
 			private static final String SETPROPERTY_METHOD = "setProperty";
 			private static final String REMOVEPROPERTY_METHOD = "removeProperty";
 			private static final String GETINNERJSONOBJECT_METHOD = "getInnerJSONObject";
-			private static final String GETINNERJOYPLE_OBJECT_METHOD = "getInnerObject";
+			private static final String GETINNERGB_OBJECT_METHOD = "getInnerObject";
 			private static final String GET_ERROR_INFO = "getAPIError";
 
-			private final Class<?> joypleObjectClass;
+			private final Class<?> GBObjectClass;
 
-			public GBObjectProxy(JSONObject state, Class<?> JoypleObjectClass) {
+			public GBObjectProxy(JSONObject state, Class<?> GBObjectClass) {
 				super(state);
-				this.joypleObjectClass = JoypleObjectClass;
+				this.GBObjectClass = GBObjectClass;
 			}
 
 			@Override
@@ -134,8 +134,8 @@ public interface GBObject {
 				try {
 
 					return String.format(
-							"JoypleObject={\nJoypleObjectClass:\"%s\", \nstate:%s}",
-							joypleObjectClass.getSimpleName(), state.toString(1));
+							"GBObject={\nGBObjectClass:\"%s\", \nstate:%s}",
+							GBObjectClass.getSimpleName(), state.toString(1));
 
 				} catch (JSONException e) {
 					return null;
@@ -152,9 +152,9 @@ public interface GBObject {
 				} else if (declaringClass == Map.class) {
 					return proxyMapMethods(method, args);
 				} else if (declaringClass == GBObject.class) {
-					return proxyJoypleObjectMethods(proxy, method, args);
+					return proxyGBObjectMethods(proxy, method, args);
 				} else if (GBObject.class.isAssignableFrom(declaringClass)) {
-					return proxyJoypleObjectGettersAndSetters(method, args);
+					return proxyGBObjectGettersAndSetters(method, args);
 				}
 
 				return throwUnexpectedMethodSignature(method);
@@ -211,12 +211,12 @@ public interface GBObject {
 			 * @throws JSONException
 			 */
 
-			private final Object proxyJoypleObjectMethods(Object proxy, Method method, Object[] args) throws JSONException {
+			private final Object proxyGBObjectMethods(Object proxy, Method method, Object[] args) throws JSONException {
 
 				String methodName = method.getName();
-				if (methodName.equals(GETINNERJOYPLE_OBJECT_METHOD)) {
+				if (methodName.equals(GETINNERGB_OBJECT_METHOD)) {
 
-					//Inner JoypleObject
+					//Inner GBObject
 					@SuppressWarnings("unchecked")
 					Class<? extends GBObject> gbObjectClass = (Class<? extends GBObject>) args[0];
 
@@ -224,22 +224,22 @@ public interface GBObject {
 						throw new GBRuntimeException(GBExceptionType.ANNOTATIONS_INVALID);
 
 					InnerObject objectNameOverride = gbObjectClass.getAnnotation(InnerObject.class);
-					String joypleObjectName = objectNameOverride.value();
+					String GBObjectName = objectNameOverride.value();
 
-					return Factory.createGBObjectProxy(gbObjectClass, this.state.optJSONObject(Response.API_RESULT_KEY).optJSONObject(joypleObjectName));
+					return Factory.createGBObjectProxy(gbObjectClass, this.state.optJSONObject(Response.API_RESULT_KEY).optJSONObject(GBObjectName));
 
 				}else if (methodName.equals(CAST_METHOD)) {
 
 					@SuppressWarnings("unchecked")
-					Class<? extends GBObject> joypleObjectClass = (Class<? extends GBObject>) args[0];
+					Class<? extends GBObject> GBObjectClass = (Class<? extends GBObject>) args[0];
 
-					// JoypleObject
-					if (joypleObjectClass != null && joypleObjectClass.isAssignableFrom(this.joypleObjectClass)) {
+					// GBObject
+					if (GBObjectClass != null && GBObjectClass.isAssignableFrom(this.GBObjectClass)) {
 						return proxy;
 					}
 
 					// SubObject
-					return Factory.createGBObjectProxy(joypleObjectClass, this.state.optJSONObject(Response.API_RESULT_KEY));
+					return Factory.createGBObjectProxy(GBObjectClass, this.state.optJSONObject(Response.API_RESULT_KEY));
 
 				} else if (methodName.equals(GETINNERJSONOBJECT_METHOD)) {
 					InvocationHandler handler = Proxy.getInvocationHandler(proxy);
@@ -267,7 +267,7 @@ public interface GBObject {
 				return throwUnexpectedMethodSignature(method);
 			}
 
-			private final Object proxyJoypleObjectGettersAndSetters(Method method, Object[] args)
+			private final Object proxyGBObjectGettersAndSetters(Method method, Object[] args)
 					throws JSONException {
 
 				String methodName = method.getName();
@@ -278,11 +278,11 @@ public interface GBObject {
 				String key = propertyNameOverride != null ? propertyNameOverride.value()
 						: convertCamelCaseToLowercaseWithUnderscores(methodName.substring(3));
 
-				// If it's a get or a set on a JoypleObject-derived class, we can
+				// If it's a get or a set on a GBObject-derived class, we can
 				// handle it.
 				if (parameterCount == 0) {
 
-					// Has to be a getter. ASSUMPTION: The JoypleObject-derived
+					// Has to be a getter. ASSUMPTION: The GBObject-derived
 					// class has been verified
 					Object value = this.state.opt(key);
 					Class<?> expectedType = method.getReturnType();
@@ -299,7 +299,7 @@ public interface GBObject {
 
 				} else if (parameterCount == 1) {
 
-					// Has to be a setter. ASSUMPTION: The JoypleObject-derived
+					// Has to be a setter. ASSUMPTION: The GBObject-derived
 					// class has been verified
 					Object value = args[0];
 
@@ -374,21 +374,21 @@ public interface GBObject {
 
             if (GBObject.class.isAssignableFrom(expectedType)) {
                 @SuppressWarnings("unchecked")
-				Class<? extends GBObject> joypleObjectClass = (Class<? extends GBObject>) expectedType;
+				Class<? extends GBObject> GBObjectClass = (Class<? extends GBObject>) expectedType;
 
-                // We need a JoypleObject, but we don't have one.
+                // We need a GBObject, but we don't have one.
                 if (JSONObject.class.isAssignableFrom(valueType)) {
-                    // We can wrap a JSONObject as a JoypleObject.
+                    // We can wrap a JSONObject as a GBObject.
                     @SuppressWarnings("unchecked")
-                    U result = (U) createGBObjectProxy(joypleObjectClass, (JSONObject) value);
+                    U result = (U) createGBObjectProxy(GBObjectClass, (JSONObject) value);
                     return result;
                 } else if (GBObject.class.isAssignableFrom(valueType)) {
-                    // We can cast a JoypleObject-derived class to another JoypleObject-derived class.
+                    // We can cast a GBObject-derived class to another GBObject-derived class.
                     @SuppressWarnings("unchecked")
-                    U result = (U) ((GBObject) value).cast(joypleObjectClass);
+                    U result = (U) ((GBObject) value).cast(GBObjectClass);
                     return result;
                 } else {
-                    throw new RuntimeException("Can't create JoypleObject from " + valueType.getName());
+                    throw new RuntimeException("Can't create GBObject from " + valueType.getName());
                 }
 
             } else if (Iterable.class.equals(expectedType) || Collection.class.equals(expectedType)
@@ -462,11 +462,11 @@ public interface GBObject {
         private static Object getUnderlyingJSONObject(Object obj) {
             Class<?> objClass = obj.getClass();
             if (GBObject.class.isAssignableFrom(objClass)) {
-				GBObject joypleObject = (GBObject) obj;
-                return joypleObject.getInnerJSONObject();
+				GBObject GBObject = (GBObject) obj;
+                return GBObject.getInnerJSONObject();
             } else if (GBObjectList.class.isAssignableFrom(objClass)) {
-				GBObjectList<?> joypleObjectList = (GBObjectList<?>) obj;
-                return joypleObjectList.getInnerJSONArray();
+				GBObjectList<?> GBObjectList = (GBObjectList<?>) obj;
+                return GBObjectList.getInnerJSONArray();
             }
             return obj;
         }
@@ -533,7 +533,7 @@ public interface GBObject {
 
             @Override
             public String toString() {
-                return String.format("JoypleObjectList{itemType=%s, state=%s}", itemType.getSimpleName(), state);
+                return String.format("GBObjectList{itemType=%s, state=%s}", itemType.getSimpleName(), state);
             }
 
             @Override
@@ -603,7 +603,7 @@ public interface GBObject {
 
                     return createList(state, gbObjectClass);
                 } else {
-                    throw new GBRuntimeException("Can't cast JoypleObjectCollection of non-JoypleObject type " + itemType);
+                    throw new GBRuntimeException("Can't cast GBObjectCollection of non-GBObject type " + itemType);
                 }
             }
 

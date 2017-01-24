@@ -1,8 +1,8 @@
 package com.gebros.platform.unity;
 
 import com.gebros.platform.exception.GBException;
-import com.gebros.platform.game.JoypleGameManager;
-import com.gebros.platform.listener.JoypleGameListener;
+import com.gebros.platform.game.GBGameManager;
+import com.gebros.platform.listener.GBGameListener;
 import com.gebros.platform.log.GBLog;
 
 import org.json.JSONException;
@@ -24,7 +24,7 @@ public final class GamePlugin extends BasePlugin {
     }
 
     public static void SubmitExtendData(String extraData, String gameObjectName) {
-        JoypleGameManager.SubmitExtendDataGameService(extraData, null);
+        GBGameManager.SubmitExtendDataGameService(extraData, null);
     }
 
     public static void GameExit(String gameObjectName) {
@@ -34,7 +34,7 @@ public final class GamePlugin extends BasePlugin {
     private void GameExitCallback(final String callbackObjectName) {
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
-        JoypleGameManager.GameExitService(getActivity(), new JoypleGameListener() {
+        GBGameManager.GameExitService(getActivity(), new GBGameListener() {
                     @Override
                     public void onSuccess() {
                         JSONObject response = new JSONObject();

@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.gebros.platform.GBConfig;
 import com.gebros.platform.auth.GBAuthManager;
-//import com.gebros.platform.game.JoypleGameManager;
+//import com.gebros.platform.game.GBGameManager;
 import com.gebros.platform.pay.GBInAppItem;
 import com.gebros.platform.pay.GBInAppManager;
 
@@ -37,7 +37,7 @@ public abstract class BasePlatformClient implements IPlatformClient {
         return PlatformType.DEFAULT;
     }
 
-    public PlatformType.AuthType getAuthType() { return PlatformType.AuthType.JOYPLE; }
+    public PlatformType.AuthType getAuthType() { return PlatformType.AuthType.GOOGLE; }
 
     public void setMarketInfo(String marketInfo) {
         mMarketInfo = marketInfo;
@@ -51,20 +51,9 @@ public abstract class BasePlatformClient implements IPlatformClient {
 
     public void doPlatformInit(Activity activity, IPlatformListener.OnInitLister listener) {
         //// TODO: 5/17/16 InitAsync
-//        JoypleAuthManager.Initialize(this);
-//        JoypleInAppManager.Initialize(this);
-//        JoypleGameManager.Initialize(this);
-
-        try {
-            JSONObject info = new JSONObject(mMarketInfo);
-            int appMode = info.optJSONObject("result").optJSONObject("market_info").optInt("service_status");
-            mDebugMode = (appMode == 1) ? true : false;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (mDebugMode) {}
+        GBAuthManager.Initialize(this);
+        GBInAppManager.Initialize(this);
+//        GBGameManager.Initialize(this);
     }
 
     public abstract void doPlatformLogin(Activity activity, IPlatformListener.OnAuthListener listener);

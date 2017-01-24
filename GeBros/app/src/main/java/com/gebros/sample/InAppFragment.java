@@ -13,15 +13,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.joycity.platform.sdk.JoypleSettings;
-import com.joycity.platform.sdk.auth.ProfileApi;
-import com.joycity.platform.sdk.listener.JoypleInAppListener;
-import com.joycity.platform.sdk.log.JLog;
-import com.joycity.platform.sdk.pay.IabPurchase;
-import com.joycity.platform.sdk.pay.IabResult;
-import com.joycity.platform.sdk.pay.JoypleInAppItem;
-import com.joycity.platform.sdk.pay.JoypleInAppManager;
-import com.joycity.platform.sdk.util.JoypleMessageUtils;
+import com.gebros.platform.GBSettings;
+import com.gebros.platform.auth.ProfileApi;
+import com.gebros.platform.listener.GBInAppListener;
+import com.gebros.platform.log.GBLog;
+import com.gebros.platform.pay.GBInAppItem;
+import com.gebros.platform.pay.GBInAppManager;
+import com.gebros.platform.pay.IabPurchase;
+import com.gebros.platform.pay.IabResult;
+import com.gebros.platform.util.GBMessageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +33,16 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
 
     private static final String TAG = InAppFragment.class.getSimpleName();
 
-    private List<JoypleInAppItem> items = new ArrayList<JoypleInAppItem>()
+    private List<GBInAppItem> items = new ArrayList<GBInAppItem>()
 
     {
         {
-            add(new JoypleInAppItem("0.55", "com.hoga.fwsd.30_gem", "30Gem", "inapp"));
-            add(new JoypleInAppItem("1.00", "com.hoga.fwsd.50_gem", "50Gem", "inapp"));
-            add(new JoypleInAppItem("1.50", "com.hoga.fwsd.100_gem", "100Gem", "inapp"));
-            add(new JoypleInAppItem("1.55", "com.hoga.fwsd.300_gem", "300Gem", "inapp"));
-            add(new JoypleInAppItem("1.99", "com.hoga.fwsd.500_gem", "500Gem", "inapp"));
-            add(new JoypleInAppItem("1", "com.hoga.fwsd.1000_gem", "1000Gem", "inapp"));
+            add(new GBInAppItem("0.55", "com.hoga.fwsd.30_gem", "30Gem", "inapp"));
+            add(new GBInAppItem("1.00", "com.hoga.fwsd.50_gem", "50Gem", "inapp"));
+            add(new GBInAppItem("1.50", "com.hoga.fwsd.100_gem", "100Gem", "inapp"));
+            add(new GBInAppItem("1.55", "com.hoga.fwsd.300_gem", "300Gem", "inapp"));
+            add(new GBInAppItem("1.99", "com.hoga.fwsd.500_gem", "500Gem", "inapp"));
+            add(new GBInAppItem("1", "com.hoga.fwsd.1000_gem", "1000Gem", "inapp"));
         }
     };
 
@@ -69,7 +69,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inAppView = inflater.inflate(R.layout.activity_inapp, container, false);
 
-        String platformName = JoypleSettings.getPlatformType().getName();
+        String platformName = GBSettings.getPlatformType().getName();
         mPlatformTitle = (TextView)inAppView.findViewById(R.id.login_platform_title);
         mPlatformTitle.setText(platformName);
 
@@ -78,7 +78,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
 
         List<String> itemList = new ArrayList<String>();
         itemList.add("Name (product id : com.hoga.fwsd.xxx) - Price");
-        for (JoypleInAppItem item : items) {
+        for (GBInAppItem item : items) {
             itemList.add(item.getItemName() + "(" + item.getSku() + ")" + "-" + item.getPrice() + "RMB");
         }
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, itemList);
@@ -97,7 +97,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
 
         if (clickedViewId == mBtnBuyItem.getId()) {
             RestoreItems();
-            JoypleInAppManager.InitInAppService(ProfileApi.getLocalUser().getUserKey(), new JoypleInAppListener.OnIabSetupFinishedListener() {
+            GBInAppManager.InitInAppService(ProfileApi.getLocalUser().getUserKey(), new GBInAppListener.OnIabSetupFinishedListener() {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(getActivity(), "[InitInAppService onSuccess]", Toast.LENGTH_LONG).show();
@@ -129,38 +129,38 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
 
 
     private void BuyItem() {
-        JLog.d(TAG + " BuyItem::::::::::");
-        JoypleMessageUtils.toast(getActivity(), "자~~ 구매 합니다.");
-        JoypleInAppManager.BuyItem(getActivity(), "", mCurrentItem, new JoypleInAppListener.OnPurchaseFinishedListener() {
+        GBLog.d(TAG + " BuyItem::::::::::");
+        GBMessageUtils.toast(getActivity(), "자~~ 구매 합니다.");
+        GBInAppManager.BuyItem(getActivity(), "", mCurrentItem, new GBInAppListener.OnPurchaseFinishedListener() {
             @Override
             public void onSuccess(IabPurchase purchaseInfo) {
-                JLog.d(TAG + "PurchaseInfo = %s", purchaseInfo.getPaymentKey());
-                JoypleMessageUtils.alert(getActivity(), String.format("Success !! \n paymentKey = %s", purchaseInfo.getPaymentKey()));
+                GBLog.d(TAG + "PurchaseInfo = %s", purchaseInfo.getPaymentKey());
+                GBMessageUtils.alert(getActivity(), String.format("Success !! \n paymentKey = %s", purchaseInfo.getPaymentKey()));
                 Toast.makeText(getActivity(), "[BuyItem onSuccess]purchaseInfo = "+purchaseInfo.getPaymentKey(), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFail(IabResult result) {
-                JLog.d(TAG + "Purchasing Failed!!! Error Code = %d , message = %s", result.getResponse(), result.getMessage());
+                GBLog.d(TAG + "Purchasing Failed!!! Error Code = %d , message = %s", result.getResponse(), result.getMessage());
                 Toast.makeText(getActivity(), "[BuyItem onFail]errorCode = " + result.getResponse()+" , errorMsd = " + result.getMessage(), Toast.LENGTH_LONG).show();
-            //    JoypleMessageUtils.alert(getActivity(), String.format("Purchasing Failed!!! Error Code (%d), message = %s", result.getResponse(), result.getMessage()));
+            //    GBMessageUtils.alert(getActivity(), String.format("Purchasing Failed!!! Error Code (%d), message = %s", result.getResponse(), result.getMessage()));
             }
 
             @Override
             public void onCancel(boolean isUserCancelled) {
-                JoypleMessageUtils.alert(getActivity(), String.format("Purchasing Failed!!!User Cancelled::"+isUserCancelled));
+                GBMessageUtils.alert(getActivity(), String.format("Purchasing Failed!!!User Cancelled::"+isUserCancelled));
                 Toast.makeText(getActivity(), "[BuyItem onCancel]isUserCancelled = "+isUserCancelled, Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void RestoreItems() {
-        JLog.d(TAG + " RestoreItems::::::::::");
-        JoypleMessageUtils.toast(getActivity(), "구매 전에 복구 데이터 부터 확인 합니다!!!");
-        JoypleInAppManager.ReStoreItems(new JoypleInAppListener.OnRestoreItemsFinishedListener() {
+        GBLog.d(TAG + " RestoreItems::::::::::");
+        GBMessageUtils.toast(getActivity(), "구매 전에 복구 데이터 부터 확인 합니다!!!");
+        GBInAppManager.ReStoreItems(new GBInAppListener.OnRestoreItemsFinishedListener() {
             @Override
             public void onSuccess(final List<String> paymentKeys) {
-                JLog.d(TAG + "Restore items = %s", paymentKeys.toString());
+                GBLog.d(TAG + "Restore items = %s", paymentKeys.toString());
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -174,7 +174,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        JoypleMessageUtils.alert(getActivity(), result.getMessage());
+                        GBMessageUtils.alert(getActivity(), result.getMessage());
                         Toast.makeText(getActivity(), "[RestoreItems onFail]errorCode = "+result.getResponse() + " , errorMsg = " + result.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
@@ -186,5 +186,5 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
     private TextView mPlatformTitle;
     private Button mBtnBuyItem;
     private Spinner mSpItems;
-    private JoypleInAppItem mCurrentItem;
+    private GBInAppItem mCurrentItem;
 }

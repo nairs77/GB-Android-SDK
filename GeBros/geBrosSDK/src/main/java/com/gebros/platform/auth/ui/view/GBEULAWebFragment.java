@@ -45,7 +45,7 @@ public class GBEULAWebFragment extends BaseFragment {
     private TextView titleText;
     private RelativeLayout backBtn;
 
-    private WebView joypleWebView;
+    private WebView GBWebView;
     private String url;
     private ValueCallback<Uri> fileUploadMessage;
 
@@ -53,8 +53,8 @@ public class GBEULAWebFragment extends BaseFragment {
 
     public GBEULAWebFragment() {
 
-        fragmentType = FragmentType.JOYPLE_CLICKWRAP_WEBVIEW;
-        layoutId = JR.layout("joyple_webview");
+        fragmentType = FragmentType.GB_CLICKWRAP_WEBVIEW;
+        layoutId = JR.layout("GB_webview");
     }
 
     public static GBEULAWebFragment newInstance(String url) {
@@ -93,23 +93,23 @@ public class GBEULAWebFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-        topArea = (RelativeLayout) rootView.findViewById(JR.id("joyple_wv_top_ly"));
+        topArea = (RelativeLayout) rootView.findViewById(JR.id("GB_wv_top_ly"));
         topArea.setVisibility(View.VISIBLE);
-        titleText = (TextView) rootView.findViewById(JR.id("joyple_wv_title_tv"));
+        titleText = (TextView) rootView.findViewById(JR.id("GB_wv_title_tv"));
         titleText.setText(JR.string("ui_setting_clickwrap_label_title"));
-        closeBtn = (RelativeLayout) rootView.findViewById(JR.id("joyple_wv_close_btn"));
+        closeBtn = (RelativeLayout) rootView.findViewById(JR.id("GB_wv_close_btn"));
         closeBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(moveData.equals("JoyplePasswordFindFragment")) {
+                if(moveData.equals("GBPasswordFindFragment")) {
                     back();
                     return;
                 }
                 activity.finish();
             }
         });
-        backBtn = (RelativeLayout) rootView.findViewById(JR.id("joyple_wv_back_btn"));
+        backBtn = (RelativeLayout) rootView.findViewById(JR.id("GB_wv_back_btn"));
         backBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -135,17 +135,17 @@ public class GBEULAWebFragment extends BaseFragment {
         Map<String, String> headerInfo = new HashMap<String, String>();
         headerInfo.put(Request.AUTHORIZATION_HEADER_KEY, Request.createAuthorizationHeaderValues(authorizationValues));
 
-        joypleWebView = (WebView) rootView.findViewById(JR.id("joyple_wv"));
-        joypleWebView.loadUrl(url, headerInfo);
-        joypleWebView.clearCache(true);
-        joypleWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        GBWebView = (WebView) rootView.findViewById(JR.id("GB_wv"));
+        GBWebView.loadUrl(url, headerInfo);
+        GBWebView.clearCache(true);
+        GBWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
-        WebSettings webSettings = joypleWebView.getSettings();
+        WebSettings webSettings = GBWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(false);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
-        joypleWebView.setWebViewClient(new GBWebClient(activity, new GBWebClient.WebEventListener() {
+        GBWebView.setWebViewClient(new GBWebClient(activity, new GBWebClient.WebEventListener() {
 
             @Override
             public void onPageStarted() {
@@ -155,11 +155,11 @@ public class GBEULAWebFragment extends BaseFragment {
             @Override
             public void onPageFinished() {
                 hideProgress();
-                joypleWebView.scrollTo(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45, getResources().getDisplayMetrics()));
+                GBWebView.scrollTo(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45, getResources().getDisplayMetrics()));
             }
         }));
 
-        joypleWebView.setWebChromeClient(new WebChromeClient() {
+        GBWebView.setWebChromeClient(new WebChromeClient() {
 
             @Override
             public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {

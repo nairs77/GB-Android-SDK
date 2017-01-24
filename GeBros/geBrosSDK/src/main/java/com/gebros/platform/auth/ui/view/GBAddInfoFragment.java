@@ -38,7 +38,7 @@ public class GBAddInfoFragment extends BaseFragment implements View.OnClickListe
 
     private static final int GENDER_MEN = 1;
     private static final int GENDER_WOMEN = 2;
-    private static final String PRE_FRAGMENT_NAME = "JoypleAddInfoFragment";
+    private static final String PRE_FRAGMENT_NAME = "GBAddInfoFragment";
 
     private boolean isMen = false;
     private boolean isSexChecked = false;
@@ -240,7 +240,7 @@ public class GBAddInfoFragment extends BaseFragment implements View.OnClickListe
             String birth = values[0];
             gender = values[1];
             preFragmentName = values[2];
-            if(preFragmentName.equals("JoypleEmailEnrollFragment")) {
+            if(preFragmentName.equals("GBEmailEnrollFragment")) {
                 backBtn.setVisibility(View.GONE);
                 titleText.setText(JR.string("ui_enroll2_addinfo_top_title"));
                 enrollBtnText.setText(JR.string("ui_enroll2_confirm_btn_title"));

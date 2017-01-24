@@ -68,7 +68,7 @@ final class GBAuthImpl {
                 GBAccountAPI.DISCONNECT_URI,
                 new ObjectCallback<GBObject>() {
                     @Override
-                    public void onComplete(GBObject joypleObject, Response response) {
+                    public void onComplete(GBObject GBObject, Response response) {
                         GBSession newSession = GBSession.clearSession();
 
                         GBSession.getActiveSession().setCurrentActiveSession(newSession);
@@ -92,7 +92,7 @@ final class GBAuthImpl {
                 GBAccountAPI.WITHDRAW_URI,
                 new ObjectCallback<GBObject>() {
                     @Override
-                    public void onComplete(GBObject joypleObject, Response response) {
+                    public void onComplete(GBObject GBObject, Response response) {
 
                         GBSession.getActiveSession().setCurrentActiveSession(GBSession.clearSession());
                         listener.onSuccess(GBSession.clearSession());
@@ -180,8 +180,8 @@ final class GBAuthImpl {
                 GBContentsAPI.PROFILE_URI,
                 new ObjectCallback<GBProfile>() {
                     @Override
-                    public void onComplete(GBProfile joypleObject, Response response) {
-                        listener.onSuccess(joypleObject.getInnerJSONObject());
+                    public void onComplete(GBProfile GBObject, Response response) {
+                        listener.onSuccess(GBObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -204,9 +204,9 @@ final class GBAuthImpl {
                 new ObjectCallback<GBFriends>() {
 
                     @Override
-                    public void onComplete(GBFriends joypleObject, Response response) {
-                        //receiver.onSuccessEvent(GBEvent.FRIENDS, joypleObject.getInnerJSONObject());
-                        listener.onSuccess(joypleObject.getInnerJSONObject());
+                    public void onComplete(GBFriends GBObject, Response response) {
+                        //receiver.onSuccessEvent(GBEvent.FRIENDS, GBObject.getInnerJSONObject());
+                        listener.onSuccess(GBObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -307,9 +307,9 @@ final class GBAuthImpl {
                 new ObjectCallback<GBUsers>() {
 
                     @Override
-                    public void onComplete(GBUsers joypleObject, Response response) {
-                        //receiver.onSuccessEvent(GBEvent.SEARCH_USERS, joypleObject.getInnerJSONObject());
-                        listener.onSuccess(joypleObject.getInnerJSONObject());
+                    public void onComplete(GBUsers GBObject, Response response) {
+                        //receiver.onSuccessEvent(GBEvent.SEARCH_USERS, GBObject.getInnerJSONObject());
+                        listener.onSuccess(GBObject.getInnerJSONObject());
                     }
 
                     @Override

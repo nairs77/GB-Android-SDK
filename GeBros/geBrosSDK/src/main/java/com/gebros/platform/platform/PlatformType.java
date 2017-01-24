@@ -7,15 +7,15 @@ import java.util.Set;
  * Created by nairs77@joycity.com on 5/6/16.
  */
 public enum PlatformType {
-    DEFAULT("Joyple", EnumSet.of(AuthType.FACEBOOK, AuthType.GOOGLE, AuthType.GUEST), Market.GOOGLE, 0),
-    JOYPLE_ONESTORE("Joyple", EnumSet.of(AuthType.FACEBOOK, AuthType.GOOGLE, AuthType.GUEST ), Market.ONESTORE, Market.ONESTORE.getMarketCode()),
+    DEFAULT("GB", EnumSet.of(AuthType.FACEBOOK, AuthType.GOOGLE, AuthType.GUEST), Market.GOOGLE, 0),
+    GB_ONESTORE("GB", EnumSet.of(AuthType.FACEBOOK, AuthType.GOOGLE, AuthType.GUEST ), Market.ONESTORE, Market.ONESTORE.getMarketCode()),
     CHINA360 ("China360", EnumSet.of(AuthType.CHINA360), Market.CHINA360, Market.CHINA360.getMarketCode()),
     BAIDU ("Baidu", EnumSet.of(AuthType.BAIDU), Market.BAIDU, Market.BAIDU.getMarketCode()),
     XIAOMI ("Xiaomi", EnumSet.of(AuthType.XIAOMI), Market.XIAOMI, Market.XIAOMI.getMarketCode()),
     UC ("UC", EnumSet.of(AuthType.UC), Market.UC, Market.UC.getMarketCode()),
     WANDOUJIA ("Wandoujia", EnumSet.of(AuthType.WANDOUJIA), Market.WANDOUJIA, Market.WANDOUJIA.getMarketCode()),
     HUAWEI ("Huawei", EnumSet.of(AuthType.HUAWEI), Market.HUAWEI, Market.HUAWEI.getMarketCode()),
-    JOYPLE_MYCARD ("Joyple", EnumSet.of(AuthType.FACEBOOK, AuthType.GOOGLE, AuthType.GUEST ), Market.MYCARD, Market.MYCARD.getMarketCode());
+    GB_MYCARD ("GB", EnumSet.of(AuthType.FACEBOOK, AuthType.GOOGLE, AuthType.GUEST ), Market.MYCARD, Market.MYCARD.getMarketCode());
 
     private final String name;
     private final Set<AuthType> authTypeSet;
@@ -48,8 +48,8 @@ public enum PlatformType {
 
     public enum AuthType {
         GUEST(1),
-        FACEBOOK(4),
-        GOOGLE(5),
+        FACEBOOK(2),
+        GOOGLE(3),
         CHINA360(11),
         BAIDU(12),
         XIAOMI(13),
@@ -58,7 +58,7 @@ public enum PlatformType {
         CHINA4399(16),
         HUAWEI(17),
         LENOVO(18),
-        MYCARD(21),
+        MYCARD(21);
 
         private final int loginType;
 

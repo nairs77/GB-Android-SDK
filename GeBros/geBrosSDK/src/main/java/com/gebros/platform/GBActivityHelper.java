@@ -14,6 +14,7 @@ public class GBActivityHelper {
 
     public static void onActivityCreate(final Activity activity, Bundle savedInstanceState) {
         GBSdk.Initialize(activity);
+        GBSdk.instance.onActivityCreate(activity, savedInstanceState);
 
         // Session Tracking
     }

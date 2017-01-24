@@ -15,9 +15,9 @@ public interface GBFriendsInfo extends GBObject {
 	
 	/**
 	 * 0: 주소록 기반 친구 관계
-	 * 1: 게스트 로그인을 통한 관계  *joyple
+	 * 1: 게스트 로그인을 통한 관계  *GB
 	 * 2: 네스트 친구 관계
-	 * 3: 이메일 계정 친구 관계 *joyple
+	 * 3: 이메일 계정 친구 관계 *GB
 	 * 4: 페이스북 친구 관계
 	 */
 	

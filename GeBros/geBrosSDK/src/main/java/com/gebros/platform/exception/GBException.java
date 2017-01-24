@@ -100,12 +100,12 @@ public class GBException extends Exception implements BaseException {
             }
 
             @Override
-            public <T extends GBObject> T cast(Class<T> joypleObjectClass) {
+            public <T extends GBObject> T cast(Class<T> GBObjectClass) {
                 return null;
             }
 
             @Override
-            public <T extends GBObject> T getInnerObject(Class<T> joypleObjectClass) {
+            public <T extends GBObject> T getInnerObject(Class<T> GBObjectClass) {
                 return null;
             }
 
@@ -186,7 +186,7 @@ public class GBException extends Exception implements BaseException {
                 errorStr = GBSdk.getApplicationContext().getResources().getString(JR.string("errorui_login_block_label_title"));
                 break;
             case NETWORK_UNSTABLE_ERROR_CODE:
-                errorStr = GBSdk.getApplicationContext().getResources().getString(JR.string("joyple_alert_network_status"));
+                errorStr = GBSdk.getApplicationContext().getResources().getString(JR.string("GB_alert_network_status"));
                 break;
             case LOGIN_GOOGLE_AUTH_ERROR_CODE:
             case LOGIN_CN360_AUTH_ERROR_CODE:
@@ -242,7 +242,7 @@ public class GBException extends Exception implements BaseException {
                 messageResId = JR.string("errorui_login_block_label_title");
                 break;
             case NETWORK_UNSTABLE_ERROR_CODE:
-                messageResId = JR.string("joyple_alert_network_status");
+                messageResId = JR.string("GB_alert_network_status");
                 break;
             case LOGIN_GOOGLE_AUTH_ERROR_CODE:
             case LOGIN_CN360_AUTH_ERROR_CODE:
@@ -254,7 +254,7 @@ public class GBException extends Exception implements BaseException {
                 messageResId = JR.string("errorui_account_connected_label_title");
                 break;
             default:
-                messageResId = JR.string("joyple_alert_server_status");
+                messageResId = JR.string("GB_alert_server_status");
         }
         return messageResId;
     }

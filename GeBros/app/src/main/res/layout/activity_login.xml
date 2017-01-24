@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/platform_title"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/login_platform_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_command_ly"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/platform_title"
+            android:gravity="center">
+
+            <!-- Login Button -->
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/menu_login" />
+
+            <Button
+                android:id="@+id/btn_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_login"
+                android:layout_margin="5dip"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/menu_main_profile"
+                android:visibility="gone"/>
+
+            <!-- Show Profile UI -->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_key_ly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_command_ly"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/login_user_key_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:textColor="#AFDEFE"
+                android:textSize="15sp"
+                android:typeface="serif"
+                android:textStyle="italic"
+                android:text="@string/menu_user_key_title" />
+
+            <TextView
+                android:id="@+id/login_user_key_info_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#AFDEFE"
+                android:textSize="15sp"
+                android:typeface="serif"
+                android:textStyle="italic"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public interface GBAppResponse {
 
 	/**
-	 * JoypleObject callback for app resource
+	 * GBObject callback for app resource
 	 * 
 	 */
 	

@@ -12,8 +12,8 @@ public class GBContentsAPI {
     /**
      * TODO : 고객센터 URI 변경 필요
      */
-    public static final String JOYPLE_CUSTOMER_WEB_URL = "http://fw.hogacn.com/support/faq";
-    public static final String JOYPLE_CLICKWRAP_WEB_URL = "http://fw.hogacn.com/policy/stipulation";
+    public static final String GB_CUSTOMER_WEB_URL = "http://fw.hogacn.com/support/faq";
+    public static final String GB_CLICKWRAP_WEB_URL = "http://fw.hogacn.com/policy/stipulation";
 
     public static final String PROFILE_URI = GBSettings.getContentsServer() + "/users/info";
 

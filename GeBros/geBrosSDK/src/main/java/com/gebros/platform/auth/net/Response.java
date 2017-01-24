@@ -59,7 +59,7 @@ public class Response {
 	protected String responseBody;				// API response body
 	protected JSONObject state; 				// API body convert to JSON
 	protected GBAPIError apiError;			// API error status
-	protected GBObject joypleObject; 		// Converted API Object
+	protected GBObject gbObject; 		// Converted API Object
 	protected GBException exception;		// Client error
 	
 	public static Response fromHttpConnection(Request request, HttpURLConnection connection) throws IOException {
@@ -151,13 +151,13 @@ public class Response {
 	
 	static Response createResponseFromString(Request request, HttpURLConnection connection, String responseBody) throws GBException, IOException {
 		
-		GBObject joypleObject = GBObject.Factory.create(createJsonFromBody(responseBody)).cast(GBObject.class);
-		return createReponseFromObject(request, connection, joypleObject);
+		GBObject gbObject = GBObject.Factory.create(createJsonFromBody(responseBody)).cast(GBObject.class);
+		return createReponseFromObject(request, connection, gbObject);
 	}
 	
-	static Response createReponseFromObject(Request request, HttpURLConnection connection, GBObject joypleObject) {
+	static Response createReponseFromObject(Request request, HttpURLConnection connection, GBObject GBObject) {
 		
-		Integer status = (Integer) joypleObject.getProperty(Response.API_RETURN_CODE);
+		Integer status = (Integer) GBObject.getProperty(Response.API_RETURN_CODE);
 		status = (status == null ? Response.API_ON_FAILED : status);
 		
 		/**
@@ -170,17 +170,17 @@ public class Response {
 			
 			// API On Success
 			return new Builder(request, connection)
-					.joypleObject(joypleObject)
-					.state(joypleObject.getInnerJSONObject())
+					.GBObject(GBObject)
+					.state(GBObject.getInnerJSONObject())
 					.status(status).build();
 			
 		} else {
 			
 			// API On Error
 			return new Builder(request, connection)
-					.joypleObject(joypleObject)
+					.GBObject(GBObject)
 					.status(status)
-					.apiError(joypleObject.getAPIError()).build();
+					.apiError(GBObject.getAPIError()).build();
 		}
 	}
 	
@@ -216,7 +216,7 @@ public class Response {
 		private int status = API_ON_FAILED;
 		private String responseBody;
 		private JSONObject state;
-		private GBObject joypleObject; 		
+		private GBObject GBObject;
 		private GBException exception = null;
 		private GBAPIError apiError = null;
 
@@ -241,8 +241,8 @@ public class Response {
 			state = val; return this;
 		}
 		
-		public Builder joypleObject(GBObject val) {
-			joypleObject = val; return this;
+		public Builder GBObject(GBObject val) {
+			GBObject = val; return this;
 		}
 		
 		public Builder exception(GBException e) {
@@ -266,7 +266,7 @@ public class Response {
 		responseBody = builder.responseBody;
 		status = builder.status;
 		state = builder.state;
-		joypleObject = builder.joypleObject;
+		gbObject = builder.GBObject;
 		exception = builder.exception;
 		apiError = builder.apiError;		
 	}
@@ -292,11 +292,11 @@ public class Response {
 	}
 
 	public GBObject getGBObject() {
-		return joypleObject;
+		return gbObject;
 	}
 
-	public void setGBObject(GBObject joypleObject) {
-		this.joypleObject = joypleObject;
+	public void setGBObject(GBObject gbObject) {
+		this.gbObject = gbObject;
 	}
 
 	public HttpURLConnection getConnection() {
@@ -339,7 +339,7 @@ public class Response {
 		
 		if(responseCode == Response.HTTP_OK) {
 			sb.append("\nAPI returnCode:").append(status);
-			sb.append("\nGBObject state:").append((joypleObject == null ? "NULL" : joypleObject.toString()));
+			sb.append("\nGBObject state:").append((gbObject == null ? "NULL" : gbObject.toString()));
 		}
 		
 		if(apiError != null) {		
