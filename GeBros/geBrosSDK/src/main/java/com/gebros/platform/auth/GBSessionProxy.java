@@ -65,7 +65,7 @@ final class GBSessionProxy {
             return true;
         }
 
-        GBLog.d("[DISASTER....");
+        GBLog.i("[DISASTER]....");
 
         return false;
     }
