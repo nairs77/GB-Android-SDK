@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.Map;
 
 /**
- * Created by nairs77@joycity.com on 2016-05-12.
+ * Created by gebros.nairs77@gmail.com on 2016-05-12.
  */
 public class GBException extends Exception implements BaseException {
 

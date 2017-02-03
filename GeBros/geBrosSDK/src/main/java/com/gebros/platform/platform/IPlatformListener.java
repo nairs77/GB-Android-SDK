@@ -5,7 +5,7 @@ import com.gebros.platform.auth.LoginResult;
 import org.json.JSONObject;
 
 /**
- * Created by Joycity-Platform on 5/10/16.
+ * Created by gebros.nairs77@gmail.com on 5/10/16.
  */
 public interface IPlatformListener {
     /**

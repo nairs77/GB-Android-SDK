@@ -1,10 +1,11 @@
 package com.gebros.platform;
 
+import com.gebros.platform.pay.Market;
 import com.gebros.platform.platform.PlatformType;
 import com.gebros.platform.util.GBValidator;
 
 /**
- * Created by nairs77@joycity.com on 5/6/16.
+ * Created by gebros.nairs77@gmail.com on 5/6/16.
  *
  * in order to operate SDK, we maintained (create, update and delete)
  */
@@ -94,7 +95,7 @@ public final class GBSettings {
 
     public static PlatformType getPlatformType() { return getCurrentSettings().getConfig().getPlatformType(); }
 
-    public static PlatformType.Market getMarket() { return getCurrentSettings().getConfig().getMarket(); }
+    public static Market getMarket() { return getCurrentSettings().getConfig().getMarket(); }
 
     public static int getGameCode() {
         return getCurrentSettings().getConfig().getGameCode();

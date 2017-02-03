@@ -5,7 +5,7 @@ import com.gebros.platform.exception.GBException;
 import org.json.JSONObject;
 
 /**
- * Created by nairs77@joycity.com on 2016-05-15.
+ * Created by gebros.nairs77@gmail.com on 2016-05-15.
  */
 
 public interface GBProfileListener {

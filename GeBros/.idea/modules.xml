@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GeBros.iml" filepath="$PROJECT_DIR$/GeBros.iml" />
+      <module fileurl="file://$PROJECT_DIR$/account-kit-sdk-4.19.0/account-kit-sdk-4.19.0.iml" filepath="$PROJECT_DIR$/account-kit-sdk-4.19.0/account-kit-sdk-4.19.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/auth/auth.iml" filepath="$PROJECT_DIR$/auth/auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook-android-sdk-4.19.0/facebook-android-sdk-4.19.0.iml" filepath="$PROJECT_DIR$/facebook-android-sdk-4.19.0/facebook-android-sdk-4.19.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/geBrosSDK/geBrosSDK.iml" filepath="$PROJECT_DIR$/geBrosSDK/geBrosSDK.iml" />
     </modules>
   </component>

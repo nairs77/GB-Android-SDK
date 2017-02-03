@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.facebook.FacebookSdk;
 /**
  * Created by nairs77 on 2017. 1. 17..
  */
@@ -18,6 +19,7 @@ public class GBApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
+                FacebookSdk.sdkInitialize(activity);
                 GBActivityHelper.onActivityCreate(activity, bundle);
             }
 

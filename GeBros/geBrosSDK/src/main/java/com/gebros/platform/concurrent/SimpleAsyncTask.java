@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 
 /**
- * Created by nairs77@joycity.com on 6/8/16.
+ * Created by gebros.nairs77@gmail.com on 6/8/16.
  */
 public class SimpleAsyncTask<Result> {
 

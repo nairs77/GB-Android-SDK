@@ -14,7 +14,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by nairs77@joycity.com on 5/18/16.
+ * Created by gebros.nairs77@gmail.com on 5/18/16.
  */
 public class GBAppUtils {
 

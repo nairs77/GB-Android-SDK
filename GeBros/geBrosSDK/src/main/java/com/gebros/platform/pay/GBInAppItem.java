@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by nairs77@joycity.com on 5/17/16.
+ * Created by gebros.nairs77@gmail.com on 5/17/16.
  */
 public class GBInAppItem {
 

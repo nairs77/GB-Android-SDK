@@ -283,12 +283,12 @@ final class GBInAppImpl {
     private void getMarketInfo(JSONObject object) {
         JSONObject marketInfoObj = object.optJSONObject("market_info");
         //int marketCode = Joycity.getMarketCode();
-        PlatformType.Market market = GBSettings.getMarket();
+        Market market = GBSettings.getMarket();
 
         if(marketInfoObj != null) {
             String key = GBSettings.getClientSecret();
             mInAppMode = marketInfoObj.optInt(SERVICE_STATUS);
-            if(market == PlatformType.Market.GOOGLE) {
+            if(market == Market.GOOGLE) {
                 gPublicKey = marketInfoObj.optString("public_key");
                 //gPackageName = marketInfoObj.optString("package_name");
                 try {
@@ -297,7 +297,7 @@ final class GBInAppImpl {
                 } catch (Exception e) {
                     GBLog.d(TAG + "exception: "+e);
                 }
-            } else if(market == PlatformType.Market.ONESTORE) {
+            } else if(market == Market.ONESTORE) {
                 tAppId = marketInfoObj.optString("appid");
                 tApiVersion = marketInfoObj.optString("api_version");
                 GBLog.d(TAG + " receiveEvent: XORtAppId: "+tAppId+" XORtAppVersion: "+tApiVersion);
@@ -308,7 +308,7 @@ final class GBInAppImpl {
                     GBLog.d(TAG + "exception: "+e);
                 }
                 GBLog.d(TAG + " receiveEvent: decryptTAppId: "+tAppId+" decryptAppVersion:"+tApiVersion);
-            } else if(market == PlatformType.Market.NAVER) {
+            } else if(market == Market.NAVER) {
                 nAppCode = marketInfoObj.optString("appCode");
                 nIapKey = marketInfoObj.optString("iapKey");
                 nPublicKey = marketInfoObj.optString("publicKey");
@@ -319,7 +319,7 @@ final class GBInAppImpl {
                 } catch (Exception e) {
                     GBLog.d(TAG + "exception: "+e);
                 }
-            } else if (market == PlatformType.Market.MYCARD) {
+            } else if (market == Market.MYCARD) {
                 myCardFacID = marketInfoObj.optString("factoryId");
                 myCardServiceID = marketInfoObj.optString("factoryServiceId");
                 try {
@@ -329,9 +329,9 @@ final class GBInAppImpl {
                     GBLog.d(TAG + "exception: " + e);
                 }
                 myCardRequestURL = marketInfoObj.optString("weburl");
-            } else if (market == PlatformType.Market.CHINA360 || market == PlatformType.Market.UC) {
+            } else if (market == Market.CHINA360 || market == Market.UC) {
                 mNotifyCallbackURL = marketInfoObj.optString(CALLBACK_URL_PARAMETER_KEY);
-            } else if (market == PlatformType.Market.BAIDU) {
+            } else if (market == Market.BAIDU) {
 
             }
         }

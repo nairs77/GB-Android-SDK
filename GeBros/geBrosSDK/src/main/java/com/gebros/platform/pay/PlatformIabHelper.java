@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * Created by Joycity-Platform on 5/20/16.
+ * Created by gebros.nairs77@gmail.com on 5/20/16.
  */
 class PlatformIabHelper implements IIabHelper {
 

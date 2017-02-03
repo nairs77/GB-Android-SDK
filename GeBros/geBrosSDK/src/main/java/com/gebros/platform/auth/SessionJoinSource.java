@@ -1,7 +1,7 @@
 package com.gebros.platform.auth;
 
 /**
- * Created by Joycity-Platform on 5/11/16.
+ * Created by  on 5/11/16.
  */
 public enum SessionJoinSource {
     GUEST(1),

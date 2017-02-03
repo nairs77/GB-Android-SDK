@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.gebros.platform.auth.AuthType;
 import com.gebros.platform.pay.GBInAppItem;
 
 /**
@@ -19,7 +20,7 @@ public interface IPlatformClient {
 
     abstract PlatformType getType();
 
-    abstract PlatformType.AuthType getAuthType();
+    abstract AuthType getAuthType();
 
     abstract void doPlatformActive(Activity activity, IPlatformListener.OnInitLister listener);
     abstract void doPlatformInit(Activity activity, IPlatformListener.OnInitLister listener);

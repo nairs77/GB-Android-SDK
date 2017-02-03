@@ -9,13 +9,12 @@ import com.gebros.platform.platform.PlatformType;
 import java.util.Map;
 
 /**
- * Created by nairs77@joycity.com on 5/23/16.
+ * Created by gebros.nairs77@gmail.com on 5/23/16.
  */
 
 interface IAuthHelper {
 
     /**
-     *
      *
      * @param activity
      * @param listener
@@ -43,5 +42,5 @@ interface IAuthHelper {
      *
      * @return
      */
-    public PlatformType.AuthType getAuthType();
+    public AuthType getAuthType();
 }

@@ -9,7 +9,7 @@ import com.gebros.platform.log.GBLog;
 import com.gebros.platform.util.GBValidator;
 
 /**
- * Created by Joycity-Platform on 5/10/16.
+ * Created by gebros.nairs77@gmail.com on 5/10/16.
  */
 final class GBSessionProxy {
 
@@ -17,7 +17,7 @@ final class GBSessionProxy {
 
     static final String ACCESS_TOKEN_KEY = "accessToken";
     static final String REFRESH_TOKEN_KEY = "refreshToken";
-    static final String SESSION_SOURCE_KEY = "session_source";
+    static final String SESSION_AUTH_TYPE_KEY = "auth_type";
     static final String SESSION_ACCESS_KEY = "last_access";
 
     private static volatile GBSessionProxy instance;

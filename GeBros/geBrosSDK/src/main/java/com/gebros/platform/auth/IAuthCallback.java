@@ -1,7 +1,7 @@
 package com.gebros.platform.auth;
 
 /**
- * Created by Joycity-Platform on 5/24/16.
+ * Created by gebros.nairs77@gmail.com on 5/24/16.
  */
 interface IAuthCallback {
 

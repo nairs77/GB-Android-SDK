@@ -1,7 +1,7 @@
 package com.gebros.platform.concurrent;
 
 /**
- * Created by Joycity-Platform on 6/8/16.
+ * Created by gebros.nairs77@gmail.com on 6/8/16.
  */
 public interface ISimpleAsyncTask {
 

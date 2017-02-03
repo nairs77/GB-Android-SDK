@@ -5,7 +5,7 @@ import com.gebros.platform.exception.GBException;
 import org.json.JSONObject;
 
 /**
- * Created by Joycity-Platform on 6/22/16.
+ * Created by gebros.nairs77@gmail.com on 6/22/16.
  */
 public interface GBFriendsListener {
 

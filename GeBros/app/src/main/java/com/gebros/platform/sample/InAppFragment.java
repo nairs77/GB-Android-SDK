@@ -1,4 +1,4 @@
-package com.gebros.sample;
+package com.gebros.platform.sample;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Joycity-Platform on 5/30/16.
+ * Created by gebros.nairs77@gmail.com on 5/30/16.
  */
 public class InAppFragment extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 

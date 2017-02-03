@@ -5,7 +5,7 @@ import org.json.JSONObject;
 /**
  *
  *
- * @author by nairs77@joycity.com on 5/12/16.
+ * @author by gebros.nairs77@gmail.com on 5/12/16.
  */
 public class LoginResult { //implements IResult {
 

@@ -58,7 +58,7 @@ final class GBAuthImpl {
         return mClient;
     }
 
-    public void requestWithAuthType(final PlatformType.AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
+    public void requestWithAuthType(final AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
         authorize(authType, accessToken, uID, listener);
     }
 
@@ -107,7 +107,7 @@ final class GBAuthImpl {
 
         GBRequest.requestAPI(request);
     }
-
+/*
     public void autoLogin(final GBAuthListener listener) {
         Map<String, Object> accountInfo = new HashMap<String, Object>();
         accountInfo.put(MCC_PARAM_KEY, GBDeviceUtils.getMcc());
@@ -136,8 +136,8 @@ final class GBAuthImpl {
         GBLog.i(TAG + " authorizationCallback !!!!!!!!!!!!!!!!!!!!!!!!!!"+GBSession.getActiveSession().getSource());
         GBRequest.requestAPI(request);
     }
-
-    public void authorize(final PlatformType.AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
+*/
+    public void authorize(final AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
         Map<String, Object> accountInfo = new HashMap<String, Object>();
         accountInfo.put(LOGIN_SNS_ACCESS_TOKEN, accessToken);
         accountInfo.put(MCC_PARAM_KEY, GBDeviceUtils.getMcc());
@@ -148,12 +148,12 @@ final class GBAuthImpl {
         authorize(authType, accountInfo, listener);
     }
 
-    public void authorize(final PlatformType.AuthType authType, Map<String, Object> accountInfo, final GBAuthListener listener) {
+    public void authorize(final AuthType authType, Map<String, Object> accountInfo, final GBAuthListener listener) {
         Request request = GBRequest.getAuthorizationRequest(GBAccountAPI.AUTHENTICATION_URI, accountInfo, new ObjectCallback<GBToken>() {
 
             @Override
             public void onComplete(GBToken tokens, Response response) {
-                GBSession newSession = doUpdateSession(tokens, SessionJoinSource.valueOf(authType.getLoginType()));
+                GBSession newSession = doUpdateSession(tokens, AuthType.valueOf(authType.getLoginType()));
                 listener.onSuccess(newSession);
                 GBLog.d("token = %s", newSession.getAccessToken());
             }
@@ -167,7 +167,7 @@ final class GBAuthImpl {
             }
 
         });
-        GBLog.i(TAG + " authorizationCallback !!!!!!!!!!!!!!!!!!!!!!!!!!"+GBSession.getActiveSession().getSource());
+        GBLog.i(TAG + " authorizationCallback !!!!!!!!!!!!!!!!!!!!!!!!!!"+GBSession.getActiveSession().getAuthType());
         GBLog.i(TAG + " authorizationCallback authType!!!!!!!!!!!!!!!!!!!!!!!!!!"+authType.toString());
         GBRequest.requestAPI(request);
     }
@@ -333,10 +333,10 @@ final class GBAuthImpl {
 
 
 
-    private GBSession doUpdateSession(GBToken tokens, SessionJoinSource source) {
+    private GBSession doUpdateSession(GBToken tokens, AuthType authType) {
         GBSession newSession = new GBSession(tokens.getAccessToken(),
                 tokens.getRefreshToken(),
-                source,
+                authType,
                 new Date(),
                 GBSession.SessionState.OPEN);
 

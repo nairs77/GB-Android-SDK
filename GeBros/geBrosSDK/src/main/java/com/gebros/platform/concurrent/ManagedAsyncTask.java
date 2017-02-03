@@ -28,7 +28,7 @@ import android.os.AsyncTask;
 // InternalAsyncTask class
 
 /**
- * @author nairs77@joycity.com
+ * @author gebros.nairs77@gmail.com
  *
  */
 public abstract class ManagedAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {

@@ -6,7 +6,7 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by nairs77@joycity.com on 5/2/16.
+ * Created by gebros.nairs77@gmail.com on 5/2/16.
  *
  * 1: Log.v - debugging color black , and any messages will be output, where v represents the verbose verbose mean, usually is Log.v ("", "");
  * 2: Log.d - the output color is blue , the only output debug debugging meaning, but he would output the upper filter up through of DDMS Logcat label to select.

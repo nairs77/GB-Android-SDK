@@ -16,7 +16,7 @@ import org.json.JSONObject;
 //import com.gebros.platform.permission.GBPermissionHelper;
 
 /**
- * Created by nairs77@joycity.com on 6/15/16.
+ * Created by gebros.nairs77@gmail.com on 6/15/16.
  */
 public class GBUnityPlugin extends BasePlugin {
 

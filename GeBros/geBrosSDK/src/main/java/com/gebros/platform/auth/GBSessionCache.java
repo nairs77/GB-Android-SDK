@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by Joycity-Platform on 5/10/16.
+ * Created by gebros.nairs77@gmail.com on 5/10/16.
  */
 class GBSessionCache {
 
@@ -69,7 +69,7 @@ class GBSessionCache {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(GBSessionProxy.ACCESS_TOKEN_KEY, "");
             jsonObject.put(GBSessionProxy.REFRESH_TOKEN_KEY, "");
-            jsonObject.put(GBSessionProxy.SESSION_SOURCE_KEY, SessionJoinSource.NONE);
+            jsonObject.put(GBSessionProxy.SESSION_AUTH_TYPE_KEY, AuthType.NONE);
             jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, 0);
 
             return GBSession.createFromJSONObject(jsonObject);

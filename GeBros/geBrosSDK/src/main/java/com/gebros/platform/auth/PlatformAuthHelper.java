@@ -11,7 +11,7 @@ import com.gebros.platform.platform.IPlatformListener;
 import com.gebros.platform.platform.PlatformType;
 
 /**
- * Created by nairs77@joycity.com on 5/24/16.
+ * Created by gebros.nairs77@gmail.com on 5/24/16.
  */
 
 class PlatformAuthHelper extends AuthHelper {
@@ -25,7 +25,7 @@ class PlatformAuthHelper extends AuthHelper {
     }
 
     @Override
-    public PlatformType.AuthType getAuthType() {
+    public AuthType getAuthType() {
         return mClient.getAuthType();
     }
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by nairs77@joycity.com on 30/05/2016
+ * Created by gebros.nairs77@gmail.com on 30/05/2016
  */
 public class FragmentText extends Fragment {
     @Override

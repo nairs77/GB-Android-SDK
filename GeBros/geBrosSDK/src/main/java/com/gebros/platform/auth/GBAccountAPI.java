@@ -3,7 +3,7 @@ package com.gebros.platform.auth;
 import com.gebros.platform.GBSettings;
 
 /**
- * Created by Joycity-Platform on 5/13/16.
+ * Created by gebros.nairs77@gmail.com on 5/13/16.
  */
 public class GBAccountAPI {
     /**

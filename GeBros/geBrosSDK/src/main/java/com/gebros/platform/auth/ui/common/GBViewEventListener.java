@@ -1,7 +1,7 @@
 package com.gebros.platform.auth.ui.common;
 
 /**
- * Created by Joycity-Platform on 7/20/16.
+ * Created by gebros.nairs77@gmail.com on 7/20/16.
  */
 public interface GBViewEventListener {
 

@@ -5,10 +5,11 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import com.gebros.platform.auth.AuthType;
 import com.gebros.platform.pay.GBInAppItem;
 
 /**
- * Created by nairs77@joycity.com on 5/10/16.
+ * Created by gebros.nairs77@gmail.com on 5/10/16.
  */
 class DefaultPlatformClient extends BasePlatformClient {
 
@@ -23,7 +24,7 @@ class DefaultPlatformClient extends BasePlatformClient {
         return PlatformType.DEFAULT;
     }
 
-    public PlatformType.AuthType getAuthType() { return PlatformType.AuthType.GOOGLE; }
+    public AuthType getAuthType() { return AuthType.GOOGLE; }
 
     @Override
     public void doPlatformActive(Activity activity, IPlatformListener.OnInitLister listener) {

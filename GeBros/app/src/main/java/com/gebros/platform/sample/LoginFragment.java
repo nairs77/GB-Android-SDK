@@ -1,4 +1,4 @@
-package com.gebros.sample;
+package com.gebros.platform.sample;
 
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gebros.platform.GBSettings;
+import com.gebros.platform.auth.AuthType;
 import com.gebros.platform.auth.GBAuthManager;
 import com.gebros.platform.auth.GBSession;
 import com.gebros.platform.auth.ProfileApi;
@@ -21,7 +22,6 @@ import com.gebros.platform.exception.GBException;
 import com.gebros.platform.exception.GBExceptionType;
 import com.gebros.platform.internal.JR;
 import com.gebros.platform.listener.GBAuthListener;
-import com.gebros.platform.listener.GBGameListener;
 import com.gebros.platform.listener.GBProfileListener;
 import com.gebros.platform.log.GBLog;
 import com.gebros.platform.pay.GBInAppManager;
@@ -30,7 +30,7 @@ import com.gebros.platform.util.GBMessageUtils;
 import org.json.JSONObject;
 
 /**
- * Created by nairs77@joycity.com on 5/30/16.
+ * Created by gebros.nairs77@gmail.com on 5/30/16.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
@@ -120,7 +120,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void Login() {
-        GBAuthManager.Login(getActivity(), new GBAuthListener() {
+        GBAuthManager.LoginWithAuthType(getActivity(), AuthType.FACEBOOK, new GBAuthListener() {
             @Override
             public void onSuccess(final GBSession newSession) {
                 if (newSession.isOpened()) {

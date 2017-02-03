@@ -8,7 +8,7 @@ import com.gebros.platform.exception.GBException;
 import java.util.List;
 
 /**
- * Created by Joycity-Platform on 6/7/16.
+ * Created by gebros.nairs77@gmail.com on 6/7/16.
  */
 public class MyCardIabHelper implements IIabHelper {
 

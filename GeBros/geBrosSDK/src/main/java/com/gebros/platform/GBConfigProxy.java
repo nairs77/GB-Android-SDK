@@ -3,7 +3,7 @@ package com.gebros.platform;
 import java.util.Properties;
 
 /**
- * Created by Joycity-Platform on 5/6/16.
+ * Created by gebros.nairs77@gmail.com on 5/6/16.
  */
 final class GBConfigProxy {
 

@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by nairs77@joycity.com on 6/20/16.
+ * Created by gebros.nairs77@gmail.com on 6/20/16.
  */
 public class BillingPlugin extends BasePlugin {
 

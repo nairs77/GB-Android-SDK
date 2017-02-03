@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by nairs77@joycity.com on 5/12/16.
+ * Created by gebros.nairs77@gmail.com on 5/12/16.
  */
 public class GBInAppManager {
 
@@ -95,7 +95,7 @@ public class GBInAppManager {
 
                 StringBuilder sb = new StringBuilder(extraData);
 
-                if (GBSettings.getMarket() == PlatformType.Market.MYCARD) {
+                if (GBSettings.getMarket() == Market.MYCARD) {
                     sb.append(",");
                     sb.append(json.optString(GBInAppImpl.AUTH_CODE_PARAMETER_KEY));
                 }
@@ -289,7 +289,7 @@ public class GBInAppManager {
 
     private static class PlatformIabHelperFactory {
 
-        static PlatformIabHelper create(PlatformType.Market market) {
+        static PlatformIabHelper create(Market market) {
 
 /*
             if (market == PlatformType.Market.CHINA360) {
@@ -306,12 +306,12 @@ public class GBInAppManager {
                 return new HuaweiIabHelper(GBSdk.getApplicationContext(), inAppImpl);
             }
 */
-            if (market == PlatformType.Market.GOOGLE) {
+            if (market == Market.GOOGLE) {
                 return null;
                //return new GoogleIabHelper(GBSdk.getApplicationContext(), inAppImpl.getGooglePublicKey());
-            } else if (market == PlatformType.Market.ONESTORE) {
+            } else if (market == Market.ONESTORE) {
 
-            } else if (market == PlatformType.Market.MYCARD) {
+            } else if (market == Market.MYCARD) {
 
             }
 

@@ -12,7 +12,7 @@ import com.gebros.platform.util.GBValidator;
 import java.util.List;
 
 /**
- * Created by nairs77@joycity.com on 5/19/16.
+ * Created by gebros.nairs77@gmail.com on 5/19/16.
  */
 public class ProfileApi {
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.gebros.platform.log.GBLog;
+import com.gebros.platform.pay.Market;
 import com.gebros.platform.platform.PlatformType;
 
 import java.util.Date;
@@ -116,7 +117,7 @@ public final class GBConfig {
 		return mGameInfo.platformType;
 	}
 
-	public PlatformType.Market getMarket() { return mGameInfo.platformType.getMarket(); }
+	public Market getMarket() { return mGameInfo.platformType.getMarket(); }
 
 	public String getPlatformName() {
 		return mGameInfo.platformType.getName();

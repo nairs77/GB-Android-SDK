@@ -5,7 +5,7 @@ import com.gebros.platform.auth.net.Response;
 /**
  * GBObject callback interface that refers to ResponseCallback
  *
- * @author nairs77@joycity.com
+ * @author gebros.nairs77@gmail.com
  */
 
 public interface ObjectCallback<T> {

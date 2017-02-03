@@ -6,7 +6,7 @@ import com.gebros.platform.auth.ui.view.AsyncErrorDialog;
 import com.gebros.platform.util.GBDeviceUtils;
 
 /**
- * Created by Joycity-Platform on 7/8/16.
+ * Created by gebros.nairs77@gmail.com on 7/8/16.
  */
 public class ApplicationPlugin extends BasePlugin {
     private static final class ApplicationPluginHolder {

@@ -3,15 +3,8 @@
     <string name="app_name_360"> Hello 360!</string>
     <string name="app_name_baidu"> Hello Baidu!</string>
     <string name="app_name_xiaomi"> Hello Xiaomi!</string>
-    <!-- <string name="app_id">281233457648</string> -->
-    <string name="joyple_facebook_application_id">422219637897995</string>
-    <string name="joyple_naver_oauth_client_id">qr0Hhz4ZUStSo_mqoP7Q</string>
-    <string name="joyple_naver_oauth_client_secret">fJpz9vxIvD</string>
-    <string name="joyple_naver_oauth_client_callback_url">com.jce.sample.action.NAVER_LOGIN</string>
-    <string name="joyple_naver_oauth_client_name">조이시티 플랫폼</string>
-    <string name="joyple_twitter_oauth_consumer_key">dUUU0vcYYodbmvsE6nWwTaRRA</string>
-    <string name="joyple_twitter_oauth_consumer_secret">EUdwIN0UmfSvxPzMMqf71Wr8FFzcpjBx6p5OBcPAxKm9vQbe9b</string>
-
+    <string name="facebook_application_id">379212652436292</string>
+    <string name="label_facebook_login">Facebook Login</string>
     <string name="app_closed">조이시티 연동 샘플 앱을 종료하시겠습니까?</string>
     <string name="menu_profile">내정보 API</string>
     <string name="menu_payment">결제 하기</string>

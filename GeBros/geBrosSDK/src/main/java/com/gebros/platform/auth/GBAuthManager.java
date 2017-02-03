@@ -19,7 +19,7 @@ import com.gebros.platform.util.GBDeviceUtils;
 import java.util.Map;
 
 /**
- * Created by nairs77@joycity.com on 5/9/16.
+ * Created by gebros.nairs77@gmail.com on 7/1/17.
  */
 public class GBAuthManager {
 
@@ -37,25 +37,30 @@ public class GBAuthManager {
         mAuthClient = new GBAuthImpl();
         mAuthClient.initialize(client);
 
+
+/*
         GBSession lastSession = GBSession.getActiveSession();
         SessionJoinSource source = lastSession.getSource();
 
-        if (client.getAuthType() == PlatformType.AuthType.CHINA360 ||
-                client.getAuthType() == PlatformType.AuthType.BAIDU ||
-                client.getAuthType() == PlatformType.AuthType.XIAOMI ||
-                client.getAuthType() == PlatformType.AuthType.UC ||
-                client.getAuthType() == PlatformType.AuthType.WANDOUJIA ||
-                client.getAuthType() == PlatformType.AuthType.HUAWEI) {
+        if (client.getAuthType() == AuthType.CHINA360 ||
+                client.getAuthType() == AuthType.BAIDU ||
+                client.getAuthType() == AuthType.XIAOMI ||
+                client.getAuthType() == AuthType.UC ||
+                client.getAuthType() == AuthType.WANDOUJIA ||
+                client.getAuthType() == AuthType.HUAWEI) {
             mAuthHelper = IAuthHelperFactory.create(client.getAuthType(), mAuthClient);
         } else {
             if (source == SessionJoinSource.NONE) {
-                mAuthHelper = IAuthHelperFactory.create(PlatformType.AuthType.GUEST, mAuthClient);
+                mAuthHelper = IAuthHelperFactory.create(AuthType.GUEST, mAuthClient);
 
             } else {
                 // Auto Login
-                mAuthHelper = IAuthHelperFactory.create(PlatformType.AuthType.valueOf(source.getId()), mAuthClient);
+                mAuthHelper = IAuthHelperFactory.create(AuthType.valueOf(source.getId()), mAuthClient);
             }
         }
+*/
+
+        //GBAccountStore.getInstance().
     }
 
 
@@ -67,16 +72,16 @@ public class GBAuthManager {
      */
 
     public static void Login(@NonNull Activity activity, final GBAuthListener listener) {
+        AuthType authType = GBSession.getActiveSession().getAuthType();
 
-        SessionJoinSource source = GBSession.getActiveSession().getSource();
 
-        if (source == SessionJoinSource.NONE ||
-                source == SessionJoinSource.CHINA360 ||
-                source == SessionJoinSource.BAIDU ||
-                source == SessionJoinSource.XIAOMI ||
-                source == SessionJoinSource.UC ||
-                source == SessionJoinSource.WANDOUJIA ||
-                source == SessionJoinSource.HUAWEI) {
+        if (authType == AuthType.NONE ||
+                authType == AuthType.CHINA360 ||
+                authType == AuthType.BAIDU ||
+                authType == AuthType.XIAOMI ||
+                authType == AuthType.UC ||
+                authType == AuthType.WANDOUJIA ||
+                authType == AuthType.HUAWEI) {
             PlatformLogin(activity, listener);
         } else {
             AutoLogin(activity, listener);
@@ -92,7 +97,7 @@ public class GBAuthManager {
      */
     public static void LoginWithAccountInfo(Activity activity, Map<String, Object> accountInfo, final GBAuthListener listener) throws GBException {
         if (mAuthHelper == null)
-            mAuthHelper = IAuthHelperFactory.create(PlatformType.AuthType.GOOGLE, mAuthClient);
+            mAuthHelper = IAuthHelperFactory.create(AuthType.GOOGLE, mAuthClient);
 
         mAuthHelper.loginWithAccountInfo(activity, accountInfo, listener);
     }
@@ -107,13 +112,36 @@ public class GBAuthManager {
      * @throws GBException
      */
 
-    public static void LoginWithAuthType(PlatformType.AuthType authType, Activity activity, final GBAuthListener listener) throws GBException {
-        if (mAuthHelper != null)
-            throw new GBException("Already exist AuthHelper!!!");
+    public static void LoginWithAuthType(Activity activity, AuthType authType, final GBAuthListener listener) {
 
         mAuthHelper = IAuthHelperFactory.create(authType, mAuthClient);
         mAuthHelper.login(activity, listener);
     }
+
+//    public static void LoginWithAuthType(Activity activity, AuthType authType, final GBAuthListener listener) {
+//        IAuthService theService = GBAccountStore.getInstance().getServiceWithAuthType(authType);
+//        IAuthAccount localAccount = theService.getServiceAccount();
+//
+//        if (localAccount != null) {
+//            localAccount.login(activity, new IAuthListener() {
+//                @Override
+//                public void onSuccess(IAuthAccount newAccount) {
+//
+//                    GBAccountStore.getInstance().registerAccount(newAccount, true);
+//
+//                    listener.onSuccess(null);
+//                }
+//
+//                @Override
+//                public void onFail(GBException e) {
+//
+//                }
+//            });
+//        }
+//
+//    }
+
+
 
     /**
      * Log the user in with SNS Token obtained from Authentication system.
@@ -123,7 +151,7 @@ public class GBAuthManager {
      * @param uID           the user id string obtained from Authentication system (etc. Xiaomi)
      * @param listener      {@link GBAuthListener}
      */
-    public static void LoginWithAuthType(final PlatformType.AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
+    public static void LoginWithAuthType(final AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
         mAuthClient.requestWithAuthType(authType, accessToken, uID, listener);
     }
 
@@ -159,7 +187,7 @@ public class GBAuthManager {
      */
 
     static void AutoLogin(Activity activity, GBAuthListener listener) {
-        mAuthClient.autoLogin(listener);
+        //mAuthClient.autoLogin(listener);
     }
 
     /**
@@ -226,21 +254,20 @@ public class GBAuthManager {
 
     private static class IAuthHelperFactory {
 
-        static IAuthHelper create(PlatformType.AuthType authType, GBAuthImpl impl) {
-            if (authType == PlatformType.AuthType.CHINA360 ||
-                    authType == PlatformType.AuthType.BAIDU ||
-                    authType == PlatformType.AuthType.XIAOMI ||
-                    authType == PlatformType.AuthType.UC ||
-                    authType == PlatformType.AuthType.WANDOUJIA ||
-                    authType == PlatformType.AuthType.HUAWEI) {
+        static IAuthHelper create(AuthType authType, GBAuthImpl impl) {
+            if (authType == AuthType.CHINA360 ||
+                    authType == AuthType.BAIDU ||
+                    authType == AuthType.XIAOMI ||
+                    authType == AuthType.UC ||
+                    authType == AuthType.WANDOUJIA ||
+                    authType == AuthType.HUAWEI) {
                 return new PlatformAuthHelper(impl);
-            } else if (authType == PlatformType.AuthType.GOOGLE) {
+            } else if (authType == AuthType.GOOGLE) {
                 return new GoogleAuthHelper(impl);
-            } else if (authType == PlatformType.AuthType.GUEST) {
+            } else if (authType == AuthType.GUEST) {
                 return new GBAuthHelper(impl);
-            } else if (authType == PlatformType.AuthType.FACEBOOK) {
-                //return new FacebookAuthHelper(impl);
-                return null;
+            } else if (authType == AuthType.FACEBOOK) {
+                return new FacebookAuthHelper(impl);
             }
 
             return new PlatformAuthHelper(impl);

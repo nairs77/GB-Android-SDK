@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by nairs77@joycity.com on 6/15/16.
+ * Created by gebros.nairs77@gmail.com on 6/15/16.
  */
 
 public final class AuthorizationPlugin extends BasePlugin {
@@ -87,7 +87,7 @@ public final class AuthorizationPlugin extends BasePlugin {
 //    }
 
     public static void LoginWithType(int authType, String gameObjectName) {
-        PlatformType.AuthType type = PlatformType.AuthType.valueOf(authType);
+        AuthType type = AuthType.valueOf(authType);
         AuthorizationPlugin.getInstance().loginWithCallback(type, gameObjectName);
     }
 /*
@@ -148,7 +148,7 @@ public final class AuthorizationPlugin extends BasePlugin {
     }
 
 
-    private void loginWithCallback(PlatformType.AuthType authType, String callbackObjectName) {
+    private void loginWithCallback(AuthType authType, String callbackObjectName) {
         //callbackObjectNames.add(callbackObjectName);
         SessionGameObject = callbackObjectName;
         callbackObjectNames.put(callbackObjectName, callbackObjectName);

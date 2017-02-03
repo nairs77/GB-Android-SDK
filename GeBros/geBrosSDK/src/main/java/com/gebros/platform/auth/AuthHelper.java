@@ -9,7 +9,7 @@ import com.gebros.platform.platform.PlatformType;
 import java.util.Map;
 
 /**
- * Created by Joycity-Platform on 5/24/16.
+ * Created by gebros.nairs77@gmail.com on 5/24/16.
  */
 class AuthHelper implements IAuthHelper {
 
@@ -31,7 +31,7 @@ class AuthHelper implements IAuthHelper {
         mImpl.requestLogout(listener);
     }
 
-    public PlatformType.AuthType getAuthType() {
-        return PlatformType.AuthType.GUEST;
+    public AuthType getAuthType() {
+        return AuthType.GUEST;
     }
 }

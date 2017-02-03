@@ -6,7 +6,7 @@ import com.gebros.platform.GBSdk;
 import com.gebros.platform.util.GBValidator;
 
 /**
- * Created by nairs77@joycity.com on 5/13/16.
+ * Created by gebros.nairs77@gmail.com on 5/13/16.
  */
 
 

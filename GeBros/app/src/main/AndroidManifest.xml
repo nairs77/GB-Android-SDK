@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gebros.sample">
+    package="com.gebros.platform.sample">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:name="com.gebros.platform.GBApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.gebros.platform.sample.MainActivity"
             android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode"
             android:label="@string/app_name">
             <intent-filter>
@@ -19,9 +19,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TextTabActivity"
+        <activity android:name="com.gebros.platform.sample.TextTabActivity"
             android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode">
         </activity>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name="com.facebook.PermissionSelectActivity"/>
+
+        <!--<activity android:label="@string/label_account_kit_login"-->
+            <!--android:name="com.accountkit.AccountKitLoginActivity"/>-->
+
+        <!--<activity-->
+            <!--android:name="com.accountkit.ErrorActivity"-->
+            <!--android:label="@string/action_bar_title_hello" />-->
+
+        <!--<activity-->
+            <!--android:name="com.accountkit.CodeActivity"-->
+            <!--android:label="@string/action_bar_title_hello" />-->
+
+        <!--<activity-->
+            <!--android:name="com.accountkit.TokenActivity"-->
+            <!--android:label="@string/action_bar_title_hello" />-->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id" />
+
     </application>
 
 </manifest>

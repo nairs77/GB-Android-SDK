@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.net.ssl.SSLContext;
 
 /**
- * @author nairs77@joycity.com
+ * @author gebros.nairs77@gmail.com
  *
  */
 abstract class OKHttpTemplate {

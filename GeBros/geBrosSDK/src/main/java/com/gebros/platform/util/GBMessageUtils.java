@@ -11,7 +11,7 @@ import com.gebros.platform.internal.JR;
 import org.json.JSONObject;
 
 /**
- * Created by nairs77@joycity.com on 5/24/16.
+ * Created by gebros.nairs77@gmail.com on 5/24/16.
  */
 public class GBMessageUtils {
 

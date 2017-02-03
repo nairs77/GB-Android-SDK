@@ -9,7 +9,7 @@ import com.gebros.platform.GBActivityHelper;
 import com.unity3d.player.UnityPlayerActivity;
 
 /**
- * Created by Joycity-Platform on 6/15/16.
+ * Created by gebros.nairs77@gmail.com on 6/15/16.
  */
 public class GBUnityActivity extends UnityPlayerActivity {
 

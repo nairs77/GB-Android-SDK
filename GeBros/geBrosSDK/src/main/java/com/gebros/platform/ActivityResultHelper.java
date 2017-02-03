@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by nairs77@joycity.com on 5/23/16.
+ * Created by gebros.nairs77@gmail.com on 5/23/16.
  */
 public class ActivityResultHelper {
 

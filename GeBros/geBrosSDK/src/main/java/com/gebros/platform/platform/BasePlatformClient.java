@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.gebros.platform.GBConfig;
+import com.gebros.platform.auth.AuthType;
 import com.gebros.platform.auth.GBAuthManager;
 //import com.gebros.platform.game.GBGameManager;
 import com.gebros.platform.pay.GBInAppItem;
@@ -16,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by Joycity-Platform on 6/22/16.
+ * Created by gebros.nairs77@gmail.com on 6/22/16.
  */
 public abstract class BasePlatformClient implements IPlatformClient {
 
@@ -37,7 +38,7 @@ public abstract class BasePlatformClient implements IPlatformClient {
         return PlatformType.DEFAULT;
     }
 
-    public PlatformType.AuthType getAuthType() { return PlatformType.AuthType.GOOGLE; }
+    public AuthType getAuthType() { return AuthType.GOOGLE; }
 
     public void setMarketInfo(String marketInfo) {
         mMarketInfo = marketInfo;

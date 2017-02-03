@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @author nairs77@joycity.com
+ * @author gebros.nairs77@gmail.com
  *
  */
 public class JSONRequestRunner extends RequestRunner<JSONObject> {

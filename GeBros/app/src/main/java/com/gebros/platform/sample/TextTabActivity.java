@@ -1,4 +1,4 @@
-package com.gebros.sample;
+package com.gebros.platform.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

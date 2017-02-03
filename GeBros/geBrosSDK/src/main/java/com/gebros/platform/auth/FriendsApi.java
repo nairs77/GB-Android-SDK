@@ -8,7 +8,7 @@ import com.gebros.platform.listener.GBFriendsListener;
 import java.util.List;
 
 /**
- * Created by nairs77@joycity.com on 6/22/16.
+ * Created by gebros.nairs77@gmail.com on 6/22/16.
  */
 public class FriendsApi {
 

@@ -1,7 +1,7 @@
 package com.gebros.platform.pay;
 
 /**
- * Created by nairs77@joycity.com on 5/20/16.
+ * Created by gebros.nairs77@gmail.com on 5/20/16.
  */
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -5,7 +5,7 @@ import com.gebros.platform.exception.GBException;
 
 
 /**
- * Created by nairs77@joycity.com on 2016-05-04.
+ * Created by gebros.nairs77@gmail.com on 2016-05-04.
  */
 public interface GBAuthListener {
 

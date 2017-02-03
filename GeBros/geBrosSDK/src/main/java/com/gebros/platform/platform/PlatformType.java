@@ -1,10 +1,12 @@
 package com.gebros.platform.platform;
 
 import java.util.EnumSet;
+import com.gebros.platform.auth.AuthType;
+import com.gebros.platform.pay.Market;
 import java.util.Set;
 
 /**
- * Created by nairs77@joycity.com on 5/6/16.
+ * Created by gebros.nairs77@gmail.com on 5/6/16.
  */
 public enum PlatformType {
     DEFAULT("GB", EnumSet.of(AuthType.FACEBOOK, AuthType.GOOGLE, AuthType.GUEST), Market.GOOGLE, 0),
@@ -45,7 +47,7 @@ public enum PlatformType {
     public String toString() {
         return name;
     }
-
+/*
     public enum AuthType {
         GUEST(1),
         FACEBOOK(2),
@@ -97,7 +99,8 @@ public enum PlatformType {
             }
         }
     };
-
+*/
+/*
     public enum Market {
         GOOGLE(1, 1),
         APPLE(2, 0),
@@ -130,7 +133,7 @@ public enum PlatformType {
             return marketType;
         }
     };
-
+*/
     public static PlatformType getPlatformType(String platformName) {
         PlatformType[] values = PlatformType.values();
         for (PlatformType authProviderType : values) {

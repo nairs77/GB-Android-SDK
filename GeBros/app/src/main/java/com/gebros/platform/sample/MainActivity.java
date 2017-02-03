@@ -1,4 +1,4 @@
-package com.gebros.sample;
+package com.gebros.platform.sample;
 
 import android.app.Activity;
 import android.content.Intent;
