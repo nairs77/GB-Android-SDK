@@ -16,6 +16,7 @@ import com.gebros.platform.platform.IPlatformClient;
 import com.gebros.platform.platform.PlatformType;
 import com.gebros.platform.util.GBDeviceUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -177,6 +178,10 @@ public class GBAuthManager {
         // TODO: Request Delete Account
         //mAuthClient.requestWithdraw(listener);
         mAuthHelper.logout(listener);
+    }
+
+    public static void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mAuthHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

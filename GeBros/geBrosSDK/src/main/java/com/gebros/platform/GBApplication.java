@@ -16,10 +16,12 @@ public class GBApplication extends Application {
         super.onCreate();
         //GBSdk.appActivate(this);
 
+        //FacebookSdk.sdkInitialize(getApplicationContext());
+
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
-                FacebookSdk.sdkInitialize(activity);
+
                 GBActivityHelper.onActivityCreate(activity, bundle);
             }
 

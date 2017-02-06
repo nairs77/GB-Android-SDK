@@ -12,10 +12,10 @@ public interface ObjectCallback<T> {
 
 	/**
 	 *
-	 * @param GBObject
+	 * @param gbObject
 	 * @param response
      */
-	abstract public void onComplete(T GBObject, Response response);
+	abstract public void onComplete(T gbObject, Response response);
 
 	/**
 	 *

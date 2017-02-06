@@ -7,7 +7,7 @@ import org.json.JSONObject;
  *
  * @author by gebros.nairs77@gmail.com on 5/12/16.
  */
-public class LoginResult { //implements IResult {
+public class LoginResult {
 
     boolean success;
     int errorCode;

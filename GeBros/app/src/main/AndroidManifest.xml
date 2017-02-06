@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gebros.platform.sample">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,10 +24,8 @@
             android:configChanges="fontScale|orientation|keyboardHidden|locale|navigation|screenSize|uiMode">
         </activity>
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name="com.facebook.FacebookLoginActivity"
+            android:label="@string/app_name"/>
         <activity android:name="com.facebook.PermissionSelectActivity"/>
 
         <!--<activity android:label="@string/label_account_kit_login"-->
@@ -44,6 +43,7 @@
             <!--android:name="com.accountkit.TokenActivity"-->
             <!--android:label="@string/action_bar_title_hello" />-->
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id" />
+        <meta-data android:name="com.facebook.sdk.ApplicationName" android:value="@string/app_name" />
 
     </application>
 

@@ -17,8 +17,13 @@ final class GBSessionProxy {
 
     static final String ACCESS_TOKEN_KEY = "accessToken";
     static final String REFRESH_TOKEN_KEY = "refreshToken";
-    static final String SESSION_AUTH_TYPE_KEY = "auth_type";
+//    static final String SESSION_AUTH_TYPE_KEY = "auth_type";
     static final String SESSION_ACCESS_KEY = "last_access";
+    static final String SESSION_STATE_KEY = "state";
+
+    static final String ACCOUNT_SEQ_KEY = "ACCOUNT_SEQ";
+    static final String SESSION_AUTH_TYPE_KEY = "CHANNEL_TYPE";
+    static final String SESSION_USER_INFO = "CHANNEL_USER_ID";
 
     private static volatile GBSessionProxy instance;
 

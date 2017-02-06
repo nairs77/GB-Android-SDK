@@ -45,7 +45,7 @@ public class GBEULAWebFragment extends BaseFragment {
     private TextView titleText;
     private RelativeLayout backBtn;
 
-    private WebView GBWebView;
+    private WebView gbWebView;
     private String url;
     private ValueCallback<Uri> fileUploadMessage;
 
@@ -127,7 +127,8 @@ public class GBEULAWebFragment extends BaseFragment {
 
         String[] authorizationValues = {
                 GBSettings.getClientSecret(),
-                GBSession.getActiveSession().getAccessToken(),
+                "",
+                //GBSession.getActiveSession().getAccessToken(),
                 "",
                 ""
         };
@@ -135,17 +136,17 @@ public class GBEULAWebFragment extends BaseFragment {
         Map<String, String> headerInfo = new HashMap<String, String>();
         headerInfo.put(Request.AUTHORIZATION_HEADER_KEY, Request.createAuthorizationHeaderValues(authorizationValues));
 
-        GBWebView = (WebView) rootView.findViewById(JR.id("GB_wv"));
-        GBWebView.loadUrl(url, headerInfo);
-        GBWebView.clearCache(true);
-        GBWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        gbWebView = (WebView) rootView.findViewById(JR.id("GB_wv"));
+        gbWebView.loadUrl(url, headerInfo);
+        gbWebView.clearCache(true);
+        gbWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
-        WebSettings webSettings = GBWebView.getSettings();
+        WebSettings webSettings = gbWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(false);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
-        GBWebView.setWebViewClient(new GBWebClient(activity, new GBWebClient.WebEventListener() {
+        gbWebView.setWebViewClient(new GBWebClient(activity, new GBWebClient.WebEventListener() {
 
             @Override
             public void onPageStarted() {
@@ -155,11 +156,11 @@ public class GBEULAWebFragment extends BaseFragment {
             @Override
             public void onPageFinished() {
                 hideProgress();
-                GBWebView.scrollTo(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45, getResources().getDisplayMetrics()));
+                gbWebView.scrollTo(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 45, getResources().getDisplayMetrics()));
             }
         }));
 
-        GBWebView.setWebChromeClient(new WebChromeClient() {
+        gbWebView.setWebChromeClient(new WebChromeClient() {
 
             @Override
             public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {

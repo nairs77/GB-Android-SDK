@@ -30,6 +30,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:cardview-v7:24.2.1'
     testCompile 'junit:junit:4.12'
-    compile project(':account-kit-sdk-4.19.0')
-    compile project(':facebook-android-sdk-4.19.0')
+    //    compile project(':account-kit-sdk-4.19.0')
+    provided project(':facebook-android-sdk-4.19.0')
+    provided project(':play-services-auth-9.6.1')
 }

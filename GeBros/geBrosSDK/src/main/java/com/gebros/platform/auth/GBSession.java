@@ -21,11 +21,14 @@ public final class GBSession implements Parcelable {
     public static final String EXTRA_OLD_ACCESS_TOKEN = "com.gebros.platform.EXTRA_OLD_ACCESS_TOKEN";
     public static final String EXTRA_NEW_ACCESS_TOKEN = "com.gebros.platform.EXTRA_NEW_ACCESS_TOKEN";
 
-    private final String accessToken;
-    private final String refreshToken;
-    private final AuthType authType;
-    private final Date last_access;
-    private final SessionState state;
+//    private final String accessToken;
+//    private final String refreshToken;
+    private final AuthType mAuthType;
+    private final Date mLastAccessTime;
+    private final SessionState mState;
+
+    private final String mUserKey;
+    private final String mUserInfo;
 
     public enum SessionState {
         NONE,
@@ -41,20 +44,11 @@ public final class GBSession implements Parcelable {
 
     // TODO : Check Annotation library
 
-    /**
-     * Create / Update a new Session using the supplied information from previously-obtained or updated information (in SharedPreference)
-     * @param accessToken       the access token string obtained from GB (server)
-     * @param refreshToken      the refresh token string obtained from GB
-     * @param authType            an enum indicating how the access token was originally obtained by {@link com.gebros.platform.platform.auth.AuthType}
-     *                          if NONE, {@link SessionState READY, CLOSED} or  is assumed. (First access, after Logout)
-     * @param last_access       update date when the token is refreshed
-     * @param state             Session State {@link SessionState}
-     */
     GBSession(
             @Nullable
-            final String accessToken,
+            final String userKey,
             @Nullable
-            final String refreshToken,
+            final String userInfo,
             @NonNull
             final AuthType authType,
             @Nullable
@@ -62,28 +56,33 @@ public final class GBSession implements Parcelable {
             @Nullable
             final SessionState state
     ) {
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-        this.authType = authType;
-        this.last_access = last_access != null ? last_access : new Date(0);
-        this.state = state;
+        this.mUserKey = userKey;
+        this.mUserInfo = userInfo;
+        this.mAuthType = authType;
+        this.mLastAccessTime = last_access != null ? last_access : new Date(0);
+        this.mState = state;
     }
 
     GBSession(Parcel parcel) {
-        this.accessToken = parcel.readString();
-        this.refreshToken = parcel.readString();
-        this.authType = AuthType.valueOf(parcel.readString());
-        this.last_access = new Date(parcel.readLong());
-        this.state = SessionState.valueOf(parcel.readString());
+        this.mUserKey = parcel.readString();
+        this.mUserInfo = parcel.readString();
+        this.mAuthType = AuthType.valueOf(parcel.readString());
+        this.mLastAccessTime = new Date(parcel.readLong());
+        this.mState = SessionState.valueOf(parcel.readString());
     }
 
     JSONObject toJSONObject() throws JSONException {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put(GBSessionProxy.ACCESS_TOKEN_KEY, this.accessToken);
-        jsonObject.put(GBSessionProxy.REFRESH_TOKEN_KEY, this.refreshToken);
-        jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, last_access.getTime());
-        jsonObject.put(GBSessionProxy.SESSION_AUTH_TYPE_KEY, authType.name());
+        jsonObject.put(GBSessionProxy.ACCOUNT_SEQ_KEY, this.mUserKey);
+        jsonObject.put(GBSessionProxy.SESSION_USER_INFO, this.mUserInfo);
+        jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, this.mLastAccessTime.getTime());
+        jsonObject.put(GBSessionProxy.SESSION_AUTH_TYPE_KEY, mAuthType.getLoginType());
+
+        if (mAuthType == AuthType.NONE)
+            jsonObject.put(GBSessionProxy.SESSION_STATE_KEY, SessionState.NONE);
+        else
+            jsonObject.put(GBSessionProxy.SESSION_STATE_KEY, SessionState.READY);
 
         return jsonObject;
     }
@@ -103,51 +102,28 @@ public final class GBSession implements Parcelable {
     }
 
     public static GBSession clearSession() {
-        return new GBSession(null, null, AuthType.NONE, new Date(), GBSession.SessionState.CLOSED);
+        return new GBSession(null, null, AuthType.NONE, new Date(), GBSession.SessionState.NONE);
     }
 
-    /**
-     * Gets the string representing the access token.
-     *
-     * @return the string representing the access token
-     */
-    public String getAccessToken() {
-        return this.accessToken;
+    public String getUserKey() {
+        return this.mUserKey;
     }
 
-    /**
-     * Gets the string representing the refresh token.
-     *
-     * @return the string representing the refresh token
-     */
-    public String getRefreshToken() {
-        return this.refreshToken;
-    }
-
-
-    /**
-     * Gets the date at which the access token expires.
-     *
-     * @return the expiration date of the token
-     */
-//    public Date getExpires() {
-//        return this.expires;
-//    }
-
+    public String getUserInfo() { return this.mUserInfo; }
     /**
      * Gets the {@link SessionJoinSource} indicating how this access token was obtained.
      *
      * @return the enum indicating how the access token was obtained
      */
     public AuthType getAuthType() {
-        return authType;
+        return mAuthType;
     }
 
     /**
      * Get the {@link SessionState} indicating how this session state was set
      * @return the enum indicating how the session state was obtained
      */
-    public SessionState getState() { return state; };
+    public SessionState getState() { return mState; };
 
 
     /**
@@ -156,20 +132,20 @@ public final class GBSession implements Parcelable {
      * @return
      */
     public boolean isOpened() {
-        return (state == SessionState.OPEN) ? true : false;
+        return (mState == SessionState.OPEN) ? true : false;
     }
 
 
     static GBSession createFromJSONObject(JSONObject jsonObject) throws JSONException {
-        String accessToken = jsonObject.getString(GBSessionProxy.ACCESS_TOKEN_KEY);
-        String refreshToken = jsonObject.getString(GBSessionProxy.REFRESH_TOKEN_KEY);
-        AuthType authType = AuthType.valueOf(jsonObject.getString(GBSessionProxy.SESSION_AUTH_TYPE_KEY));
+        String userKey = jsonObject.getString(GBSessionProxy.ACCOUNT_SEQ_KEY);
+        String userInfo = jsonObject.getString(GBSessionProxy.SESSION_USER_INFO);
+        AuthType authType = AuthType.valueOf(jsonObject.getInt(GBSessionProxy.SESSION_AUTH_TYPE_KEY));
         Date lastRefresh = new Date(jsonObject.getLong(GBSessionProxy.SESSION_ACCESS_KEY));
-        SessionState state = SessionState.READY;
+        SessionState state = SessionState.valueOf(jsonObject.getString(GBSessionProxy.SESSION_STATE_KEY));
 
         return new GBSession(
-                accessToken,
-                refreshToken,
+                userKey,
+                userInfo,
                 authType,
                 lastRefresh,
                 state);
@@ -184,10 +160,9 @@ public final class GBSession implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.accessToken);
-        dest.writeString(this.refreshToken);
-        dest.writeString(this.authType.name());
-        dest.writeLong(this.last_access.getTime());
+        dest.writeString(this.mUserKey);
+        dest.writeString(this.mAuthType.name());
+        dest.writeLong(this.mLastAccessTime.getTime());
     }
 
     public static final Parcelable.Creator<GBSession> CREATOR = new Parcelable.Creator() {

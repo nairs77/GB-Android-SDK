@@ -36,15 +36,18 @@ final class GBAuthImpl {
 
     private static final String TAG = GBAuthImpl.class.getCanonicalName();
 
-    private static final String LOGIN_TYPE_PARAM_KEY = "login_type";
-    private static final String MCC_PARAM_KEY = "mcc";
-    private static final String LOGIN_SNS_KEY = "sns_key";
-    private static final String LOGIN_SNS_ACCESS_TOKEN = "sns_access_token";
-    private static final String LOGIN_ID_PARAM_KEY = "uid";
-    private static final String LOGIN_BY_MARKET_TYPE = "market";
-    private static final String JOIN_EMAIL_PARAM_KEY = "email";
-    private static final String PW_PARAM_KEY = "pw";
-    private static final String JOIN_DEVICE_COLLECT_STATE = "device_collect_state";
+//    private static final String LOGIN_TYPE_PARAM_KEY = "login_type";
+//    private static final String MCC_PARAM_KEY = "mcc";
+//    private static final String LOGIN_SNS_KEY = "sns_key";
+//    private static final String LOGIN_SNS_ACCESS_TOKEN = "sns_access_token";
+//    private static final String LOGIN_ID_PARAM_KEY = "uid";
+//    private static final String LOGIN_BY_MARKET_TYPE = "market";
+//    private static final String JOIN_EMAIL_PARAM_KEY = "email";
+//    private static final String PW_PARAM_KEY = "pw";
+//    private static final String JOIN_DEVICE_COLLECT_STATE = "device_collect_state";
+
+    public static final String CHNNEL_KEY = "channel";
+    public static final String CHANNEL_ID_KEY = "channelID";
 
     private static IPlatformClient mClient;
 
@@ -68,7 +71,7 @@ final class GBAuthImpl {
                 GBAccountAPI.DISCONNECT_URI,
                 new ObjectCallback<GBObject>() {
                     @Override
-                    public void onComplete(GBObject GBObject, Response response) {
+                    public void onComplete(GBObject jbObject, Response response) {
                         GBSession newSession = GBSession.clearSession();
 
                         GBSession.getActiveSession().setCurrentActiveSession(newSession);
@@ -92,7 +95,7 @@ final class GBAuthImpl {
                 GBAccountAPI.WITHDRAW_URI,
                 new ObjectCallback<GBObject>() {
                     @Override
-                    public void onComplete(GBObject GBObject, Response response) {
+                    public void onComplete(GBObject jbObject, Response response) {
 
                         GBSession.getActiveSession().setCurrentActiveSession(GBSession.clearSession());
                         listener.onSuccess(GBSession.clearSession());
@@ -139,11 +142,16 @@ final class GBAuthImpl {
 */
     public void authorize(final AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
         Map<String, Object> accountInfo = new HashMap<String, Object>();
+/*
         accountInfo.put(LOGIN_SNS_ACCESS_TOKEN, accessToken);
         accountInfo.put(MCC_PARAM_KEY, GBDeviceUtils.getMcc());
         accountInfo.put(LOGIN_ID_PARAM_KEY, uID);
         accountInfo.put(LOGIN_TYPE_PARAM_KEY, authType.getLoginType());
         accountInfo.put(LOGIN_BY_MARKET_TYPE, GBSettings.getMarket().getMarketType());
+*/
+        accountInfo.put(CHNNEL_KEY, authType.getLoginType());
+        accountInfo.put(CHANNEL_ID_KEY, uID);
+        accountInfo.put("gameCode", 1);
 
         authorize(authType, accountInfo, listener);
     }
@@ -153,9 +161,12 @@ final class GBAuthImpl {
 
             @Override
             public void onComplete(GBToken tokens, Response response) {
-                GBSession newSession = doUpdateSession(tokens, AuthType.valueOf(authType.getLoginType()));
+                //GBSession newSession = doUpdateSession(tokens, AuthType.valueOf(authType.getLoginType()));
+                GBSession newSession = _doUpdateSession(response.getState());
+                GBSession.getActiveSession().setCurrentActiveSession(newSession);
+
                 listener.onSuccess(newSession);
-                GBLog.d("token = %s", newSession.getAccessToken());
+                GBLog.d("token = %s", newSession.getUserKey());
             }
 
             @Override
@@ -180,8 +191,8 @@ final class GBAuthImpl {
                 GBContentsAPI.PROFILE_URI,
                 new ObjectCallback<GBProfile>() {
                     @Override
-                    public void onComplete(GBProfile GBObject, Response response) {
-                        listener.onSuccess(GBObject.getInnerJSONObject());
+                    public void onComplete(GBProfile jbObject, Response response) {
+                        listener.onSuccess(jbObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -204,9 +215,9 @@ final class GBAuthImpl {
                 new ObjectCallback<GBFriends>() {
 
                     @Override
-                    public void onComplete(GBFriends GBObject, Response response) {
+                    public void onComplete(GBFriends jbObject, Response response) {
                         //receiver.onSuccessEvent(GBEvent.FRIENDS, GBObject.getInnerJSONObject());
-                        listener.onSuccess(GBObject.getInnerJSONObject());
+                        listener.onSuccess(jbObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -307,9 +318,9 @@ final class GBAuthImpl {
                 new ObjectCallback<GBUsers>() {
 
                     @Override
-                    public void onComplete(GBUsers GBObject, Response response) {
+                    public void onComplete(GBUsers jbObject, Response response) {
                         //receiver.onSuccessEvent(GBEvent.SEARCH_USERS, GBObject.getInnerJSONObject());
-                        listener.onSuccess(GBObject.getInnerJSONObject());
+                        listener.onSuccess(jbObject.getInnerJSONObject());
                     }
 
                     @Override
@@ -331,19 +342,18 @@ final class GBAuthImpl {
         GBRequest.requestAPI(request);
     }
 
+    private GBSession _doUpdateSession(JSONObject jsonObject) {
 
+        try {
+            jsonObject.put(GBSessionProxy.SESSION_STATE_KEY, GBSession.SessionState.OPEN);
+            jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, new Date().getTime());
+            return GBSession.createFromJSONObject(jsonObject);
 
-    private GBSession doUpdateSession(GBToken tokens, AuthType authType) {
-        GBSession newSession = new GBSession(tokens.getAccessToken(),
-                tokens.getRefreshToken(),
-                authType,
-                new Date(),
-                GBSession.SessionState.OPEN);
-
-        GBSession.getActiveSession().setCurrentActiveSession(newSession);
-
-        return newSession;
+        } catch (JSONException e) {
+            return null;
+        }
     }
+
 
     private void doExpireSession() {
         GBSession.getActiveSession().setCurrentActiveSession(GBSession.clearSession());

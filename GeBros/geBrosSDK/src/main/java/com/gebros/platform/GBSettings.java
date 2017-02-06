@@ -67,8 +67,8 @@ public final class GBSettings {
 
     }
 
-    static String ACCOUNTS_SERVER = "";
-    static String CONTENTS_SERVER = "";
+    static String ACCOUNTS_SERVER = "http://52.192.103.46:8000";
+    static String CONTENTS_SERVER = "http://52.192.103.46:8000";
     static String PUSH_SERVER = "";
     static String IAB_SERVER ="";
     static String COMMON_API_SERVER ="";

@@ -9,6 +9,8 @@ import com.gebros.platform.util.GBValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by gebros.nairs77@gmail.com on 5/10/16.
  */
@@ -67,11 +69,11 @@ class GBSessionCache {
     private GBSession getDefaultSession() {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(GBSessionProxy.ACCESS_TOKEN_KEY, "");
-            jsonObject.put(GBSessionProxy.REFRESH_TOKEN_KEY, "");
-            jsonObject.put(GBSessionProxy.SESSION_AUTH_TYPE_KEY, AuthType.NONE);
-            jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, 0);
-
+            jsonObject.put(GBSessionProxy.ACCOUNT_SEQ_KEY, "");
+            jsonObject.put(GBSessionProxy.SESSION_USER_INFO, "");
+            jsonObject.put(GBSessionProxy.SESSION_AUTH_TYPE_KEY, AuthType.NONE.getLoginType());
+            jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, new Date(0).getTime());
+            jsonObject.put(GBSessionProxy.SESSION_STATE_KEY, GBSession.SessionState.NONE);
             return GBSession.createFromJSONObject(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();

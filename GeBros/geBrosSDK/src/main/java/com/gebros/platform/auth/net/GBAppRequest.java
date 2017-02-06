@@ -56,11 +56,11 @@ public class GBAppRequest {
 		ObjectCallback<GBObject> wrappedCallback = new ObjectCallback<GBObject>() {
 
 			@Override
-			public void onComplete(GBObject GBObject, Response response) {
+			public void onComplete(GBObject jbObject, Response response) {
 				
 				try {
 					
-					appResponse.onComplete(GBObject.getInnerJSONObject().optJSONObject(Response.API_RESULT_KEY), response);
+					appResponse.onComplete(jbObject.getInnerJSONObject().optJSONObject(Response.API_RESULT_KEY), response);
 
 				} catch (JSONException e) {
 					throw new GBRuntimeException(TAG  + "JSON Parse Error.");

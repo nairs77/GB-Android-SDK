@@ -1,2 +1,2 @@
-include ':app', ':auth', ':geBrosSDK', ':account-kit-sdk-4.19.0', ':facebook-android-sdk-4.19.0'
+include ':app', ':geBrosSDK', ':account-kit-sdk-4.19.0', ':facebook-android-sdk-4.19.0', ':play-services-auth-9.6.1'
 //include ':GeBrosUnity'

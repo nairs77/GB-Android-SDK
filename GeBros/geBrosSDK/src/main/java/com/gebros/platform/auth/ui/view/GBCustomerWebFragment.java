@@ -138,7 +138,8 @@ public class GBCustomerWebFragment extends BaseFragment {
 
         String[] authorizationValues = {
                 GBSettings.getClientSecret(),
-                GBSession.getActiveSession().getAccessToken(),
+                "",
+//                GBSession.getActiveSession().getAccessToken(),
                 "",
                 ""
         };

@@ -270,7 +270,7 @@ public class GBDeviceUtils {
 //			Manifest.permission.ACCESS_WIFI_STATE})
 	public static String getEntireDeviceInfo() {
 		StringBuilder deviceInfo = new StringBuilder();
-		deviceInfo.append("udid=" + GBDeviceUtils.getDeviceId()).append(DEVICE_VALUE_MID_FIX);
+//		deviceInfo.append("udid=" + GBDeviceUtils.getDeviceId()).append(DEVICE_VALUE_MID_FIX);
 		deviceInfo.append("mdn=" + "-1").append(DEVICE_VALUE_MID_FIX);
 		deviceInfo.append("os=" + GBDeviceUtils.OS_TYPE).append(DEVICE_VALUE_MID_FIX);
 		deviceInfo.append("os-version=" + GBDeviceUtils.ANDROID_SDK_VERSION).append(DEVICE_VALUE_MID_FIX);

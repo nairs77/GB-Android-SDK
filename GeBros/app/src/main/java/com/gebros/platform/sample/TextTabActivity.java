@@ -1,11 +1,14 @@
 package com.gebros.platform.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.gebros.platform.auth.GBAuthManager;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -19,6 +22,12 @@ public class TextTabActivity extends AppCompatActivity implements MaterialTabLis
     ViewPagerAdapter adapter;
 
     String[] titles = {"Account", "InApp", "Others"};
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        GBAuthManager.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

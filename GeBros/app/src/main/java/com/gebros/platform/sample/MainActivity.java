@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
 import com.gebros.platform.ActivityResultHelper;
 import com.gebros.platform.GBSdk;
 import com.gebros.platform.log.GBLog;

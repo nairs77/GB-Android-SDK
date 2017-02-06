@@ -10,7 +10,7 @@ public class GBAccountAPI {
      * Authentication resources API paths
      */
 
-    public static final String AUTHENTICATION_URI = GBSettings.getAccountServer() + "/session/login";
+    public static final String AUTHENTICATION_URI = GBSettings.getAccountServer() + "/Login";
     public static final String REISSUED_URI = GBSettings.getAccountServer() + "/session/auto-login";
     public static final String DISCONNECT_URI = GBSettings.getAccountServer() + "/session/logout";
     public static final String JOIN_URI = GBSettings.getAccountServer() + "/users/join";
@@ -20,7 +20,7 @@ public class GBAccountAPI {
     /**
      * Accounts resources API paths
      */
-
+/*
     public static final String EMAIL_ADD_URI = GBSettings.getAccountServer() + "/users/email/add";
     public static final String FIND_ID_URI = GBSettings.getAccountServer() + "/users/id/find";
     public static final String FIND_PW_URI = GBSettings.getAccountServer() + "/users/pw/find";
@@ -40,4 +40,5 @@ public class GBAccountAPI {
     public static final String VERIFY_ACCOUNT_SEARCH_URI = GBSettings.getAccountServer() + "/users/account/verify";
     public static final String MERGE_ACCOUNT_URI = GBSettings.getAccountServer() + "/users/account/change";
     public static final String ADVERTISINGID_COLLECT_URI = GBSettings.getAccountServer() + "/collect/ad-id";
+*/
 }

@@ -38,7 +38,7 @@ public class Response {
 	public static final int API_TOKEN_EXPIRES = -4;
 	
 	public static final String API_RETURN_CODE = "status";
-	public static final String API_RESULT_KEY = "result";
+	public static final String API_RESULT_KEY = "RESULT";
 	public static final String API_ERROR_KEY = "error";
 	public static final String ERROR_CODE_KEY = "errorCode";
 	public static final String ERROR_MESSAGE_KEY = "errorType";
@@ -157,7 +157,7 @@ public class Response {
 	
 	static Response createReponseFromObject(Request request, HttpURLConnection connection, GBObject GBObject) {
 		
-		Integer status = (Integer) GBObject.getProperty(Response.API_RETURN_CODE);
+		Integer status = (Integer) GBObject.getProperty(Response.API_RESULT_KEY);
 		status = (status == null ? Response.API_ON_FAILED : status);
 		
 		/**
@@ -197,7 +197,7 @@ public class Response {
 			throw new GBException(GBExceptionType.JSON_PARSE_ERROR);
 		}
 		
-		if((!json.has(API_RETURN_CODE) || !json.has(API_RESULT_KEY)))
+		if((!json.has(API_RESULT_KEY) || !json.has(API_RESULT_KEY)))
 			throw new GBException(GBExceptionType.NOT_EXISTS_RETURN);
 		
 		return json;

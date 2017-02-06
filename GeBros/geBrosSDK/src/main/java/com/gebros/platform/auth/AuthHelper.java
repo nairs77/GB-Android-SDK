@@ -2,6 +2,7 @@ package com.gebros.platform.auth;
 
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.gebros.platform.listener.GBAuthListener;
 import com.gebros.platform.platform.PlatformType;
@@ -33,5 +34,10 @@ class AuthHelper implements IAuthHelper {
 
     public AuthType getAuthType() {
         return AuthType.GUEST;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
     }
 }

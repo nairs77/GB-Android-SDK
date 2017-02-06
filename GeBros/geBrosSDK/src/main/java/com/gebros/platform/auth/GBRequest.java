@@ -51,11 +51,11 @@ public class GBRequest {
      * Request for Object extends GBObject mapped to @InnerObject Annotation
      */
 
-    public static <T extends GBObject> Request getAbstractRequest(GBSession GBSession, String path, final ObjectCallback<T> callback, final Class<T> GBObjectClass) {
-        return getAbstractRequest(Request.Method.POST, GBSession, path, callback, GBObjectClass);
+    public static <T extends GBObject> Request getAbstractRequest(GBSession GBSession, String path, final ObjectCallback<T> callback, final Class<T> jbObjectClass) {
+        return getAbstractRequest(Request.Method.POST, GBSession, path, callback, jbObjectClass);
     }
 
-    public static <T extends GBObject> Request getAbstractRequest(Request.Method method, GBSession GBSession, String path, final ObjectCallback<T> callback, final Class<T> GBObjectClass) {
+    public static <T extends GBObject> Request getAbstractRequest(Request.Method method, GBSession GBSession, String path, final ObjectCallback<T> callback, final Class<T> jbObjectClass) {
 
         ResponseCallback wrapper = new ResponseCallback() {
 
@@ -69,28 +69,34 @@ public class GBRequest {
 
                 if (callback != null) {
 
+                    callback.onComplete(null, response);
+
+                    return;
+
+                    /* Below Dead Code */
+
                     /**
                      * JSON Cast to GBObject
                      */
 
-                    T GBModel = null;
-
-                    if(GBObjectClass.getAnnotation(InnerObject.class) == null)
-                        GBModel = response.getGBObject().cast(GBObjectClass);
-                    else
-                        GBModel = response.getGBObject().getInnerObject(GBObjectClass);
+//                    T gbModel = null;
+//
+//                    if(jbObjectClass.getAnnotation(InnerObject.class) == null)
+//                        gbModel = response.getGBObject().cast(jbObjectClass);
+//                    else
+//                        gbModel = response.getGBObject().getInnerObject(jbObjectClass);
 
                     /**
                      * Store to local memory
                      */
 
-                    GBData.getInstance().castAndStoreGBObject(GBModel);
+//                    GBData.getInstance().castAndStoreGBObject(gbModel);
 
                     /**
                      * Notify API complete event
                      */
 
-                    callback.onComplete(GBModel, response);
+//                    callback.onComplete(gbModel, response);
                 }
             }
 

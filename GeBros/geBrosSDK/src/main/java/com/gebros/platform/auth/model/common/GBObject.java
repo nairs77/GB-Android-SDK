@@ -56,16 +56,16 @@ public interface GBObject {
 			return create(json, GBObject.class);
 		}
 
-		public static <T> GBObjectList<T> createList(JSONArray array, Class<T> GBObjectClass) {
-            return new GBObjectListImpl<T>(array, GBObjectClass);
+		public static <T> GBObjectList<T> createList(JSONArray array, Class<T> gbObjectClass) {
+            return new GBObjectListImpl<T>(array, gbObjectClass);
         }
 
-        public static <T> GBObjectList<T> createList(Class<T> GBObjectClass) {
-            return createList(new JSONArray(), GBObjectClass);
+        public static <T> GBObjectList<T> createList(Class<T> gbObjectClass) {
+            return createList(new JSONArray(), gbObjectClass);
         }
 
-		public static <T extends GBObject> T create(JSONObject json, Class<T> GBObjectClass) {
-			return createGBObjectProxy(GBObjectClass, json);
+		public static <T extends GBObject> T create(JSONObject json, Class<T> gbObjectClass) {
+			return createGBObjectProxy(gbObjectClass, json);
 		}
 
 		private static <T extends GBObject> T createGBObjectProxy(Class<T> gbObjectClass, JSONObject state) {
@@ -121,11 +121,11 @@ public interface GBObject {
 			private static final String GETINNERGB_OBJECT_METHOD = "getInnerObject";
 			private static final String GET_ERROR_INFO = "getAPIError";
 
-			private final Class<?> GBObjectClass;
+			private final Class<?> gbObjectClass;
 
-			public GBObjectProxy(JSONObject state, Class<?> GBObjectClass) {
+			public GBObjectProxy(JSONObject state, Class<?> gbObjectClass) {
 				super(state);
-				this.GBObjectClass = GBObjectClass;
+				this.gbObjectClass = gbObjectClass;
 			}
 
 			@Override
@@ -135,7 +135,7 @@ public interface GBObject {
 
 					return String.format(
 							"GBObject={\nGBObjectClass:\"%s\", \nstate:%s}",
-							GBObjectClass.getSimpleName(), state.toString(1));
+							gbObjectClass.getSimpleName(), state.toString(1));
 
 				} catch (JSONException e) {
 					return null;
@@ -224,9 +224,9 @@ public interface GBObject {
 						throw new GBRuntimeException(GBExceptionType.ANNOTATIONS_INVALID);
 
 					InnerObject objectNameOverride = gbObjectClass.getAnnotation(InnerObject.class);
-					String GBObjectName = objectNameOverride.value();
+					String jbObjectName = objectNameOverride.value();
 
-					return Factory.createGBObjectProxy(gbObjectClass, this.state.optJSONObject(Response.API_RESULT_KEY).optJSONObject(GBObjectName));
+					return Factory.createGBObjectProxy(gbObjectClass, this.state.optJSONObject(Response.API_RESULT_KEY).optJSONObject(jbObjectName));
 
 				}else if (methodName.equals(CAST_METHOD)) {
 
@@ -234,7 +234,7 @@ public interface GBObject {
 					Class<? extends GBObject> GBObjectClass = (Class<? extends GBObject>) args[0];
 
 					// GBObject
-					if (GBObjectClass != null && GBObjectClass.isAssignableFrom(this.GBObjectClass)) {
+					if (GBObjectClass != null && GBObjectClass.isAssignableFrom(this.gbObjectClass)) {
 						return proxy;
 					}
 

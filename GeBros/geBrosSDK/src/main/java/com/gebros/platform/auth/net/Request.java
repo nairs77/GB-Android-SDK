@@ -250,7 +250,7 @@ public class Request implements AbstractRequest {
         connection.setDoInput(true);
         connection.setDoOutput(true);
 	}
-
+/*
 	protected void setAuthorizationHeaders(HttpURLConnection connection) {
 		String[] headers = {
 				GBSettings.getClientSecret(),
@@ -278,7 +278,7 @@ public class Request implements AbstractRequest {
 		String apiHeader = createAuthorizationHeaderValues(headers);
 		connection.setRequestProperty(AUTHORIZATION_HEADER_KEY, apiHeader);
 	}
-
+*/
 //	@RequiresPermission(allOf = {
 //			Manifest.permission.READ_PHONE_STATE,
 //			Manifest.permission.ACCESS_WIFI_STATE})
@@ -341,12 +341,12 @@ public class Request implements AbstractRequest {
 
         if(requestType.equals(RequestType.AUTHORIZATION)) {
 
-        	setAuthorizationHeaders(connection);
+        	//setAuthorizationHeaders(connection);
         	setDeviceResourcesHeaders(connection);
 
         } else if(requestType.equals(RequestType.GUEST)) {
 
-        	setAuthorizationHeaders(connection);
+        	//setAuthorizationHeaders(connection);
         	setDeviceResourcesHeaders(connection);
 
         } else if(requestType.equals(RequestType.API)) {
@@ -357,7 +357,7 @@ public class Request implements AbstractRequest {
         	if(!gbSession.isOpened())
         		throw new GBException(GBExceptionType.SESSION_INVALID);
 
-        	setApiResourceHeaders(connection);
+        	//setApiResourceHeaders(connection);
         	setDeviceResourcesHeaders(connection);
         }
 

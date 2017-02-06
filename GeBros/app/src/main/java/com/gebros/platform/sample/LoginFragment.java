@@ -1,6 +1,7 @@
 package com.gebros.platform.sample;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -70,10 +71,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mBtnLogin.setOnClickListener(this);
         mBtnProfile.setOnClickListener(this);
 
-        setSessionState(GBSession.getActiveSession().getState());
+        //setSessionState(GBSession.getActiveSession().getState());
         return loginView;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public void onClick(View view) {
@@ -124,12 +129,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(final GBSession newSession) {
                 if (newSession.isOpened()) {
-                    GBLog.d(TAG + "Session Open.. token = %s", newSession.getAccessToken());
+                    GBLog.d(TAG + "Session Open.. token = %s", newSession.getUserKey());
                 //    Toast.makeText(getActivity(), "[Login onSuccess]Session Open.. token = "+newSession.getAccessToken(), Toast.LENGTH_LONG).show();
                     setSessionState(newSession.getState());
                     hideProgress();
                     mBtnProfile.setVisibility(View.VISIBLE);
-                    GetProfile();
+                    //GetProfile();
+                    mTvUserkey.setText(newSession.getUserKey());
                 } else {
                     Toast.makeText(getActivity(), "[Login onSuccess]Session not open.. state = "+newSession.getState(), Toast.LENGTH_LONG).show();
                 }
