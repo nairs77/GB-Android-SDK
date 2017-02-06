@@ -3,7 +3,15 @@ package com.gebros.platform.auth;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.facebook.accountkit.AccessToken;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.accountkit.LoginResult;
+import com.facebook.FacebookException;
+import com.facebook.FacebookRequestError;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.gebros.platform.listener.GBAuthListener;
 import com.gebros.platform.log.GBLog;
 
@@ -76,10 +84,10 @@ public class FacebookAuthHelper extends AuthHelper {
     /**
      * Facebook callback
      */
-    private final FacebookCallback<LoginResult> facebookCallback = new FacebookCallback<LoginResult>() {
+    private final FacebookCallback<com.facebook.login.LoginResult> facebookCallback = new FacebookCallback<com.facebook.login.LoginResult>() {
 
         @Override
-        public void onSuccess(LoginResult loginResult) {
+        public void onSuccess(com.facebook.login.LoginResult loginResult) {
             GBLog.d(TAG + "Facebook login success.");
             mAccessToken = loginResult.getAccessToken();
             getUserInfo(mAccessToken);
@@ -105,7 +113,7 @@ public class FacebookAuthHelper extends AuthHelper {
 
     public void getUserInfo(AccessToken token){
 
-        GraphRequest request = GraphRequest.newMeRequest(token, new GraphJSONObjectCallback() {
+        GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
 
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {

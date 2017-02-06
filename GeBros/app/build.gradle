@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.gebros.sample"
         minSdkVersion 15
@@ -21,14 +21,14 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    })
     compile 'it.neokree:MaterialTabs:0.11'
     compile project(':geBrosSDK')
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
-    testCompile 'junit:junit:4.12'
-//    compile project(':account-kit-sdk-4.19.0')
-//    compile project(':facebook-android-sdk-4.19.0')
+//    testCompile 'junit:junit:4.12'
+    compile project(':account-kit-sdk-4.19.0')
+    compile project(':facebook-android-sdk-4.19.0')
 }
