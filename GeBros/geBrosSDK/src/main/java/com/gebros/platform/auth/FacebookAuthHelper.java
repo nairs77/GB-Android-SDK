@@ -96,7 +96,7 @@ class FacebookAuthHelper extends AuthHelper {
     }
 
     @Override
-    public void logout(GBAuthListener listener) {
+    public void logout(Activity activity, GBAuthListener listener) {
     }
 
     @Override

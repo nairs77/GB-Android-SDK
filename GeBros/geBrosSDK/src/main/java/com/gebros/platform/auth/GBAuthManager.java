@@ -164,7 +164,7 @@ public class GBAuthManager {
      */
 
     public static void Logout(Activity activity, GBAuthListener listener) {
-        mAuthHelper.logout(listener);
+        mAuthHelper.logout(activity, listener);
     }
 
     /**
@@ -177,11 +177,12 @@ public class GBAuthManager {
     public static void DeleteAccount(Activity activity, GBAuthListener listener) {
         // TODO: Request Delete Account
         //mAuthClient.requestWithdraw(listener);
-        mAuthHelper.logout(listener);
+        mAuthHelper.logout(activity, listener);
     }
 
     public static void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mAuthHelper.onActivityResult(requestCode, resultCode, data);
+        if (mAuthHelper != null)
+            mAuthHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

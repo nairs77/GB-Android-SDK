@@ -16,7 +16,7 @@ interface IAuthHelper {
 
     /**
      *
-     * @param activity
+     * @param activity      The activity which is starting the login process
      * @param listener
      */
     public void login(Activity activity, GBAuthListener listener);
@@ -24,7 +24,7 @@ interface IAuthHelper {
 
     /**
      *
-     * @param activity
+     * @param activity      The activity which is starting the login process
      * @param accountInfo
      * @param listener
      */
@@ -35,7 +35,7 @@ interface IAuthHelper {
      *
      * @param listener
      */
-    public void logout(GBAuthListener listener);
+    public void logout(Activity activity, GBAuthListener listener);
 
     /**
      *

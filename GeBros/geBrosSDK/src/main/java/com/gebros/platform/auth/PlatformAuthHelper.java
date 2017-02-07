@@ -58,7 +58,7 @@ class PlatformAuthHelper extends AuthHelper {
     }
 
     @Override
-    public void logout(final GBAuthListener listener) {
+    public void logout(Activity activity, final GBAuthListener listener) {
         mClient.doPlatformLogout(null, new IPlatformListener.OnAuthListener() {
             @Override
             public void onSuccess(LoginResult result) {

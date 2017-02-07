@@ -125,7 +125,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void Login() {
-        GBAuthManager.LoginWithAuthType(getActivity(), AuthType.FACEBOOK, new GBAuthListener() {
+        GBAuthManager.LoginWithAuthType(getActivity(), AuthType.GOOGLE, new GBAuthListener() {
             @Override
             public void onSuccess(final GBSession newSession) {
                 if (newSession.isOpened()) {

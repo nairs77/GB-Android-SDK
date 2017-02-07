@@ -28,7 +28,7 @@ class AuthHelper implements IAuthHelper {
         mImpl.authorize(getAuthType(), accountInfo, listener);
     }
 
-    public void logout(GBAuthListener listener) {
+    public void logout(Activity activity, GBAuthListener listener) {
         mImpl.requestLogout(listener);
     }
 
@@ -36,7 +36,6 @@ class AuthHelper implements IAuthHelper {
         return AuthType.GUEST;
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
