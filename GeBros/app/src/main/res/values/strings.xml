@@ -4,6 +4,7 @@
     <string name="app_name_baidu"> Hello Baidu!</string>
     <string name="app_name_xiaomi"> Hello Xiaomi!</string>
     <string name="facebook_application_id">379212652436292</string>
+    <string name="server_client_id">982313098239-tjfs8fid6g43p7cnuim9v1e7fhjh7u5i.apps.googleusercontent.com</string>
     <string name="label_facebook_login">Facebook Login</string>
     <string name="app_closed">조이시티 연동 샘플 앱을 종료하시겠습니까?</string>
     <string name="menu_profile">내정보 API</string>

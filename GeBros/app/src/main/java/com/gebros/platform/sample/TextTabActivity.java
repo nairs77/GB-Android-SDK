@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.gebros.platform.ActivityResultHelper;
 import com.gebros.platform.auth.GBAuthManager;
 
 import it.neokree.materialtabs.MaterialTab;
@@ -27,6 +28,7 @@ public class TextTabActivity extends AppCompatActivity implements MaterialTabLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         GBAuthManager.onActivityResult(requestCode, resultCode, data);
+        ActivityResultHelper.handleOnActivityResult(requestCode, resultCode, data);
     }
 
     @Override
