@@ -137,7 +137,7 @@ public class IabHelper {
      */
     public IabHelper(Context context, String publicKey) {
         GBLog.d(TAG + "IABHelper created");
-        mContext = context.getApplicationContext();
+        mContext = context;//context.getApplicationContext();
         mPublicKey = publicKey;
     }
 
@@ -223,7 +223,7 @@ public class IabHelper {
             }
         };
 
-        Intent serviceIntent = new Intent("billing.InAppBillingService.BIND");
+        Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
         serviceIntent.setPackage("com.android.vending");
        
         if (!mContext.getPackageManager().queryIntentServices(serviceIntent, 0).isEmpty()) {

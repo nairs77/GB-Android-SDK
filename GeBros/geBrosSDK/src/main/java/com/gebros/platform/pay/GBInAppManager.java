@@ -27,7 +27,8 @@ public class GBInAppManager {
 
     private static final String TAG = String.format("[" + GBInAppManager.class.getSimpleName() + "]");
     static final GBInAppImpl inAppImpl = new GBInAppImpl();
-    static PlatformIabHelper mIabHelper = null;
+    //static PlatformIabHelper mIabHelper = null;
+    static IIabHelper mIabHelper = null;
     static String sUserKey;
 
     /**
@@ -55,6 +56,11 @@ public class GBInAppManager {
         initBillingService(listener);
     }
 
+    public static void InitInAppService(GBInAppListener.OnIabSetupFinishedListener listener) {
+        inAppImpl.initialize();
+        initBillingService(listener);
+    }
+
     /**
      *
      * @param skus          SKU(Store Keepting Unity) Array (product id)
@@ -77,32 +83,32 @@ public class GBInAppManager {
     /**
      *
      * @param activity      Activity
-     * @param toUserKey     UserKey for Person who will receive a present
+     * @param userKey       UserKey for Person who will receive a item
      * @param item          Purchase item info
      * @param listener      Notify listener when Purchase is complete.
      */
-    public static void BuyItem(final Activity activity, String toUserKey, final GBInAppItem item, final GBInAppListener.OnPurchaseFinishedListener listener) {
+    public static void BuyItem(final Activity activity, final String userKey, final GBInAppItem item, final GBInAppListener.OnPurchaseFinishedListener listener) {
 
         GBLog.d(TAG + "Request BuyItem = %s", sUserKey);
 
-        inAppImpl.requestPaymentIabToken(sUserKey, toUserKey, item, new GBEventReceiver() {
+        inAppImpl.requestPaymentIabToken(userKey, item, new GBEventReceiver() {
 
             @Override
             public void onSuccessEvent(GBEvent event, JSONObject json) {
 
-                GBLog.d(TAG + "json = %s", json.toString());
-                String extraData = json.optString(GBInAppImpl.PAYMENTKEY_PARAMETER_KEY);
-
-                StringBuilder sb = new StringBuilder(extraData);
-
-                if (GBSettings.getMarket() == Market.MYCARD) {
-                    sb.append(",");
-                    sb.append(json.optString(GBInAppImpl.AUTH_CODE_PARAMETER_KEY));
-                }
-                extraData = sb.toString();
-
-                GBLog.d(TAG + "payment Key = %s", extraData);
-                launchPurchaseFlow(activity, sUserKey, item, extraData, listener);
+//                GBLog.d(TAG + "json = %s", json.toString());
+//                String extraData = json.optString(GBInAppImpl.PAYMENTKEY_PARAMETER_KEY);
+//
+//                StringBuilder sb = new StringBuilder(extraData);
+//
+//                if (GBSettings.getMarket() == Market.MYCARD) {
+//                    sb.append(",");
+//                    sb.append(json.optString(GBInAppImpl.AUTH_CODE_PARAMETER_KEY));
+//                }
+//                extraData = sb.toString();
+//
+//                GBLog.d(TAG + "payment Key = %s", extraData);
+                launchPurchaseFlow(activity, userKey, item, listener);
             }
 
             @Override
@@ -158,44 +164,66 @@ public class GBInAppManager {
         }
     }
 
-    final static void launchPurchaseFlow(final Activity activity, final String userKey, GBInAppItem item, final String extraData, final GBInAppListener.OnPurchaseFinishedListener listener) {
+    //final static void launchPurchaseFlow(final Activity activity, final String userKey, GBInAppItem item, final String extraData, final GBInAppListener.OnPurchaseFinishedListener listener) {
+    final static void launchPurchaseFlow(final Activity activity, final String userKey, GBInAppItem item, final GBInAppListener.OnPurchaseFinishedListener listener) {
 
         try {
-            mIabHelper.launchPurchaseFlow(activity, userKey, item, new GBInAppListener.OnPurchaseFinishedListener() {
+            //mIabHelper.launchPurchaseFlow(activity, userKey, item, new GBInAppListener.OnPurchaseFinishedListener() {
+            mIabHelper.launchPurchaseFlow(activity, userKey, item, new IIabCallback.OnPurchaseListener() {
                 @Override
-                public void onCancel(boolean isUserCancelled) {
-                    GBLog.d(TAG + "User Cancelled!!!");
-                    listener.onCancel(isUserCancelled);
+                public void success(IabPurchase purchase) {
+
                 }
 
                 @Override
-                public void onSuccess(IabPurchase purchase) {
-                    String payload = purchase.getDeveloperPayload();
-                    String orderId = purchase.getOrderId();
+                public void cancelled(IabPurchase purchase) {
 
-                    final IabPurchase purchaseInfo = purchase;
-
-
-                    // - 2015. 5.12 for promo code
-                    GBLog.d(TAG + "For Promo code payload:"+payload+" , orderId:"+orderId);
-                    if (GBValidator.isNullOrEmpty(payload) && GBValidator.isNullOrEmpty(orderId)) {
-
-                        GBLog.d(TAG + "For Promo code");
-                        purchaseInfo.setPaymentKey(extraData);
-
-                        String customOrderId = extraData + "." + userKey;
-                        purchaseInfo.setCustomOrderId(customOrderId);
-                    }
-
-                    saveReceipt(userKey, purchaseInfo, listener);
                 }
 
                 @Override
-                public void onFail(IabResult result) {
-                    GBLog.d(TAG + "result =%s", result.getMessage());
-                    listener.onFail(result);
+                public void alreadyOwned(IabPurchase purchase) {
+
                 }
-            }, extraData);
+
+                @Override
+                public void fail(IabResult result) {
+
+                }
+            }, null);
+//                @Override
+//                public void onCancel(boolean isUserCancelled) {
+//                    GBLog.d(TAG + "User Cancelled!!!");
+//                    listener.onCancel(isUserCancelled);
+//                }
+//
+//                @Override
+//                public void onSuccess(IabPurchase purchase) {
+//                    String payload = purchase.getDeveloperPayload();
+//                    String orderId = purchase.getOrderId();
+//
+//                    final IabPurchase purchaseInfo = purchase;
+//
+///*
+//                    // - 2015. 5.12 for promo code
+//                    GBLog.d(TAG + "For Promo code payload:"+payload+" , orderId:"+orderId);
+//                    if (GBValidator.isNullOrEmpty(payload) && GBValidator.isNullOrEmpty(orderId)) {
+//
+//                        GBLog.d(TAG + "For Promo code");
+//                        purchaseInfo.setPaymentKey(extraData);
+//
+//                        String customOrderId = extraData + "." + userKey;
+//                        purchaseInfo.setCustomOrderId(customOrderId);
+//                    }
+//*/
+//                    saveReceipt(userKey, purchaseInfo, listener);
+//                }
+//
+//                @Override
+//                public void onFail(IabResult result) {
+//                    GBLog.d(TAG + "result =%s", result.getMessage());
+//                    listener.onFail(result);
+//                }
+//            }, null);
         } catch (GBException e) {
             e.printStackTrace();
         }
@@ -289,7 +317,8 @@ public class GBInAppManager {
 
     private static class PlatformIabHelperFactory {
 
-        static PlatformIabHelper create(Market market) {
+        //static PlatformIabHelper create(Market market) {
+        static IIabHelper create(Market market) {
 
 /*
             if (market == PlatformType.Market.CHINA360) {
@@ -307,8 +336,7 @@ public class GBInAppManager {
             }
 */
             if (market == Market.GOOGLE) {
-                return null;
-               //return new GoogleIabHelper(GBSdk.getApplicationContext(), inAppImpl.getGooglePublicKey());
+               return new GoogleIabHelper(GBSdk.getApplicationContext(), inAppImpl);//inAppImpl.getGooglePublicKey());
             } else if (market == Market.ONESTORE) {
 
             } else if (market == Market.MYCARD) {

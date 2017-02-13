@@ -94,6 +94,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 Logout();
 
         } else if (clickedViewId == mBtnProfile.getId()) {
+            //LinkAccount();
 /*
             GBGameManager.GameExitService(getActivity(), new GBGameListener() {
                 @Override

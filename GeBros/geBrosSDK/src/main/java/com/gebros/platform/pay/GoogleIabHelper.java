@@ -15,17 +15,16 @@ import java.util.List;
  * Created by gebros.nairs77@gmail.com on 5/20/16.
  */
 class GoogleIabHelper implements IIabHelper {
-
     private static final String TAG = "[GoogleIabService]";
     public static final int REQUEST_CODE_GOOGLE_PAYMENT = 9998;
 
     private IabHelper mIabHelper;
     private WeakReference<Context> contextRef;
 
-
-    public GoogleIabHelper(Context context, String publicKey) {
+//    public GoogleIabHelper(Context context, String publicKey) {
+    public GoogleIabHelper(Context context, GBInAppImpl impl) {
         contextRef = new WeakReference<Context>(context);
-        mPublicKey = publicKey;
+        mPublicKey = impl.getnPublicKey();
     }
 
     public boolean isIabServiceInitialized() {
@@ -58,6 +57,7 @@ class GoogleIabHelper implements IIabHelper {
         }
     }
 
+    @Override
     public void launchPurchaseFlow(Activity activity, String userKey, GBInAppItem item, IIabCallback.OnPurchaseListener purChasesListener, String extraData) {
         mIabHelper.launchPurchaseFlow(activity, item.getSku(), item.getItemType(), REQUEST_CODE_GOOGLE_PAYMENT, new OnIabPurchaseFinishedListener(purChasesListener), extraData);
     }

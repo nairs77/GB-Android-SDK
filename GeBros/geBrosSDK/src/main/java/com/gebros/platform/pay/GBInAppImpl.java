@@ -38,6 +38,14 @@ final class GBInAppImpl {
     public static final String AUTH_CODE_PARAMETER_KEY = "auth_code";
     public static final String CALLBACK_URL_PARAMETER_KEY = "callbackurl";
 
+    private static final String ACCOUNT_SEQ_KEY = "accountSeq";
+    private static final String MARKET_CODE_KEY = "marketCode";
+    private static final String GAME_CODE_KEY = "gameCode";
+    private static final String PRODUT_ID_KEY = "productID";
+    private static final String PRICE_KEY = "price";
+
+
+
     public static final String SERVICE_STATUS = "service_status";
     private static final String IP_PARAMETER_KEY = "ip";
 
@@ -89,6 +97,10 @@ final class GBInAppImpl {
     public void initialize() {
         GBLog.d(TAG + "Start Market Init (Info)");
 
+/*
+        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
+                .addParameters(GAME_CODE_KEY, GBSettings.getGameCode());
+
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
                 .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
                 .addParameters(MARKET_CODE_PARAMETER_KEY, GBSettings.getMarketCode());
@@ -109,7 +121,8 @@ final class GBInAppImpl {
         }
 
         GBLog.d(TAG + "End Market Init (Info)");
-
+*/
+        requestPaymentMarketInfo();
     }
 
     public void requestPaymentMarketInfo() {
@@ -131,8 +144,7 @@ final class GBInAppImpl {
         GBLog.d("Market Info = %s", GBInAppApi.JOYCITY_BILL_MARKETINFO_API);
 
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
-                .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
-                .addParameters(MARKET_CODE_PARAMETER_KEY, GBSettings.getMarketCode());
+                .addParameters(GAME_CODE_KEY, GBSettings.getGameCode());
 
         RequestRunner<JSONObject> runner = new JSONRequestRunner(builder);
         runner.call(new GBResponseHandler(new GBEvent[]{GBEvent.MARKET_INFO_IAB, GBEvent.MARKET_INFO_IAB_FAILED}, wrappedCallback));
@@ -143,18 +155,17 @@ final class GBInAppImpl {
      * in case, MyCard
      *
      * @param userKey       userkey for Buyer's
-     * @param toUserKey     userkey for person who will receive a present
      * @param item          item info
      * @param receiver      Notify listener when Event is complete.
      */
-    public void requestPaymentIabToken(String userKey, String toUserKey, GBInAppItem item, GBEventReceiver receiver) {
+    public void requestPaymentIabToken(String userKey, GBInAppItem item, GBEventReceiver receiver) {
 
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_TOKEN_API).method(HttpMethod.POST)
-                .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
-                .addParameters(USERKEY_PARAMETER_KEY, userKey)
-                .addParameters(MARKET_CODE_PARAMETER_KEY, GBSettings.getMarketCode())
-                .addParameters(TO_USERKEY_PARAMETER_KEY, toUserKey)
-                .addParameters(EXTRA_PARAMETER_KEY, item.toJSONString());
+                .addParameters(ACCOUNT_SEQ_KEY, userKey)
+                .addParameters(MARKET_CODE_KEY, GBSettings.getMarketCode())
+                .addParameters(GAME_CODE_KEY, GBSettings.getGameCode())
+                .addParameters(PRODUT_ID_KEY, item.getItemName())
+                .addParameters(PRICE_KEY, item.getPrice());
 
         RequestRunner<JSONObject> runner = new JSONRequestRunner(builder);
         runner.call(new GBResponseHandler(new GBEvent[]{GBEvent.PAYMENT_IAB_TOKEN, GBEvent.PAYMENT_IAB_TOKEN_FAILED}, receiver));
@@ -281,6 +292,16 @@ final class GBInAppImpl {
     }
 
     private void getMarketInfo(JSONObject object) {
+        JSONObject marketInfoObj = object;
+
+        Market market = GBSettings.getMarket();
+
+        if(marketInfoObj != null) {
+            if(market == Market.GOOGLE) {
+                gPublicKey = marketInfoObj.optString("PUBLIC_KEY");
+            }
+        }
+/*
         JSONObject marketInfoObj = object.optJSONObject("market_info");
         //int marketCode = Joycity.getMarketCode();
         Market market = GBSettings.getMarket();
@@ -335,6 +356,7 @@ final class GBInAppImpl {
 
             }
         }
+*/
     }
 
     // - Getter

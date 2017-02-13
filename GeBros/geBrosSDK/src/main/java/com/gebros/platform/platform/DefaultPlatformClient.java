@@ -24,8 +24,6 @@ class DefaultPlatformClient extends BasePlatformClient {
         return PlatformType.DEFAULT;
     }
 
-    public AuthType getAuthType() { return AuthType.GOOGLE; }
-
     @Override
     public void doPlatformActive(Activity activity, IPlatformListener.OnInitLister listener) {
 
@@ -69,7 +67,10 @@ class DefaultPlatformClient extends BasePlatformClient {
      */
     @Override
     public void onActivityCreate(Activity activity, Bundle savedInstanceState) {
-        doPlatformInit(activity, null);
+        if (!isInitialized()) {
+            doPlatformInit(activity, null);
+            isInitialized = true;
+        }
     }
 
     @Override

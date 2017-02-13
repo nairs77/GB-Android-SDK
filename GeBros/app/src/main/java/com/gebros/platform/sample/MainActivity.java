@@ -155,7 +155,7 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
     private void _gameSettings(int selectedPos) {
         if (selectedPos == 1) {
             mClientSecretKey = "9519d7e94d0b316d8e5122c67aeddfa4";
-            mGameCode = 8887;
+            mGameCode = 1;
 
             Toast.makeText(this, "Start GB Sample Test", Toast.LENGTH_SHORT).show();
         } else if (selectedPos == 2) {

@@ -22,19 +22,20 @@ public class GBResponseHandler implements ResponseListener<JSONObject> {
 
     @Override
     public void onComplete(JSONObject result) {
-        int apiStatus = result.optInt("status");
+        int apiStatus = result.optInt("RESULT");
         if(apiStatus == API_FAILED) {
             int errorCode = result.optJSONObject("error").optInt("errorCode");
             String errorMessage = result.optJSONObject("error").optString("errorType");
             receiver.onFailedEvent(pairEvent[FAILED_EVENT], errorCode, errorMessage);
         } else if(apiStatus == API_SUCCESS) {
-            try {
-                receiver.onSuccessEvent(pairEvent[SUCCESS_EVENT], result.getJSONObject("result"));
-                // Broadcast event
-                //JoycityServiceHandler.getInstance().broadcastEvent(pairEvent[SUCCESS_EVENT], result.getJSONObject("result"));
-            } catch (JSONException e) {
-                receiver.onFailedEvent(pairEvent[FAILED_EVENT], 0, e.getMessage());
-            }
+            receiver.onSuccessEvent(pairEvent[SUCCESS_EVENT], result);
+//            try {
+//                receiver.onSuccessEvent(pairEvent[SUCCESS_EVENT], result.getJSONObject("result"));
+//                // Broadcast event
+//                //JoycityServiceHandler.getInstance().broadcastEvent(pairEvent[SUCCESS_EVENT], result.getJSONObject("result"));
+//            } catch (JSONException e) {
+//                receiver.onFailedEvent(pairEvent[FAILED_EVENT], 0, e.getMessage());
+//            }
         }
 /*
         int apiStatus = result.optInt("status");

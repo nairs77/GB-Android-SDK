@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gebros.platform.GBSettings;
+import com.gebros.platform.auth.GBSession;
 import com.gebros.platform.auth.ProfileApi;
 import com.gebros.platform.listener.GBInAppListener;
 import com.gebros.platform.log.GBLog;
@@ -37,8 +38,8 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
 
     {
         {
-            add(new GBInAppItem("0.55", "com.hoga.fwsd.30_gem", "30Gem", "inapp"));
-            add(new GBInAppItem("1.00", "com.hoga.fwsd.50_gem", "50Gem", "inapp"));
+//            add(new GBInAppItem("0.55", "com.hoga.fwsd.30_gem", "30Gem", "inapp"));
+            add(new GBInAppItem("1.00", "sample_coin_10", "Sample Coin", "inapp"));
             add(new GBInAppItem("1.50", "com.hoga.fwsd.100_gem", "100Gem", "inapp"));
             add(new GBInAppItem("1.55", "com.hoga.fwsd.300_gem", "300Gem", "inapp"));
             add(new GBInAppItem("1.99", "com.hoga.fwsd.500_gem", "500Gem", "inapp"));
@@ -96,6 +97,19 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
         int clickedViewId = view.getId();
 
         if (clickedViewId == mBtnBuyItem.getId()) {
+            GBInAppManager.InitInAppService(new GBInAppListener.OnIabSetupFinishedListener() {
+                @Override
+                public void onSuccess() {
+                    Toast.makeText(getActivity(), "[InitInAppService onSuccess]", Toast.LENGTH_LONG).show();
+                    BuyItem();
+                }
+
+                @Override
+                public void onFail() {
+                    Toast.makeText(getActivity(), "[InitInAppService onFail]", Toast.LENGTH_LONG).show();
+                }
+            });
+/*
             RestoreItems();
             GBInAppManager.InitInAppService(ProfileApi.getLocalUser().getUserKey(), new GBInAppListener.OnIabSetupFinishedListener() {
                 @Override
@@ -109,7 +123,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
                     Toast.makeText(getActivity(), "[InitInAppService onFail]", Toast.LENGTH_LONG).show();
                 }
             });
-
+*/
         }
     }
 
@@ -131,7 +145,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
     private void BuyItem() {
         GBLog.d(TAG + " BuyItem::::::::::");
         GBMessageUtils.toast(getActivity(), "자~~ 구매 합니다.");
-        GBInAppManager.BuyItem(getActivity(), "", mCurrentItem, new GBInAppListener.OnPurchaseFinishedListener() {
+        GBInAppManager.BuyItem(getActivity(), GBSession.getActiveSession().getUserKey(), mCurrentItem, new GBInAppListener.OnPurchaseFinishedListener() {
             @Override
             public void onSuccess(IabPurchase purchaseInfo) {
                 GBLog.d(TAG + "PurchaseInfo = %s", purchaseInfo.getPaymentKey());

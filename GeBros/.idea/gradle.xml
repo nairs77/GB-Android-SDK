@@ -10,9 +10,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/geBrosSDK" />
-            <option value="$PROJECT_DIR$/play-services-auth-9.6.1" />
-            <option value="$PROJECT_DIR$/play-services-base-9.6.1" />
-            <option value="$PROJECT_DIR$/play-services-basement-9.6.1" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
