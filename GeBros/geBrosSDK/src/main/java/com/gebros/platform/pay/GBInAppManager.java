@@ -42,7 +42,7 @@ public class GBInAppManager {
 //        inAppImpl.setClient(client);
 
         inAppImpl.initialize(client);
-
+        initBillingService(null);
     }
 
     /**
@@ -108,7 +108,8 @@ public class GBInAppManager {
 //                extraData = sb.toString();
 //
 //                GBLog.d(TAG + "payment Key = %s", extraData);
-                launchPurchaseFlow(activity, userKey, item, listener);
+                String devPayload = json.optString("PAYMENT_KEY");
+                launchPurchaseFlow(activity, userKey, item, devPayload, listener);
             }
 
             @Override
@@ -164,15 +165,30 @@ public class GBInAppManager {
         }
     }
 
-    //final static void launchPurchaseFlow(final Activity activity, final String userKey, GBInAppItem item, final String extraData, final GBInAppListener.OnPurchaseFinishedListener listener) {
-    final static void launchPurchaseFlow(final Activity activity, final String userKey, GBInAppItem item, final GBInAppListener.OnPurchaseFinishedListener listener) {
+    final static void launchPurchaseFlow(final Activity activity, final String userKey, GBInAppItem item, final String extraData, final GBInAppListener.OnPurchaseFinishedListener listener) {
 
         try {
-            //mIabHelper.launchPurchaseFlow(activity, userKey, item, new GBInAppListener.OnPurchaseFinishedListener() {
             mIabHelper.launchPurchaseFlow(activity, userKey, item, new IIabCallback.OnPurchaseListener() {
                 @Override
                 public void success(IabPurchase purchase) {
+                    String payload = purchase.getDeveloperPayload();
+                    String orderId = purchase.getOrderId();
 
+                    final IabPurchase purchaseInfo = purchase;
+
+/*
+                    // - 2015. 5.12 for promo code
+                    GBLog.d(TAG + "For Promo code payload:"+payload+" , orderId:"+orderId);
+                    if (GBValidator.isNullOrEmpty(payload) && GBValidator.isNullOrEmpty(orderId)) {
+
+                        GBLog.d(TAG + "For Promo code");
+                        purchaseInfo.setPaymentKey(extraData);
+
+                        String customOrderId = extraData + "." + userKey;
+                        purchaseInfo.setCustomOrderId(customOrderId);
+                    }
+*/
+                    saveReceipt(userKey, purchaseInfo, listener);
                 }
 
                 @Override
@@ -189,7 +205,7 @@ public class GBInAppManager {
                 public void fail(IabResult result) {
 
                 }
-            }, null);
+            }, extraData);
 //                @Override
 //                public void onCancel(boolean isUserCancelled) {
 //                    GBLog.d(TAG + "User Cancelled!!!");

@@ -6,7 +6,7 @@ package com.gebros.platform.pay;
 
 public enum Market {
     GOOGLE(1, 1),
-    APPLE(2, 0),
+    APPLE(2, 2),
     NAVER(4, 3),
     ONESTORE(5, 3),
     LG_UPLUS(6, 4),

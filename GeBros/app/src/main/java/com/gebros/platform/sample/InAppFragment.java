@@ -97,18 +97,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
         int clickedViewId = view.getId();
 
         if (clickedViewId == mBtnBuyItem.getId()) {
-            GBInAppManager.InitInAppService(new GBInAppListener.OnIabSetupFinishedListener() {
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(getActivity(), "[InitInAppService onSuccess]", Toast.LENGTH_LONG).show();
-                    BuyItem();
-                }
-
-                @Override
-                public void onFail() {
-                    Toast.makeText(getActivity(), "[InitInAppService onFail]", Toast.LENGTH_LONG).show();
-                }
-            });
+            BuyItem();
 /*
             RestoreItems();
             GBInAppManager.InitInAppService(ProfileApi.getLocalUser().getUserKey(), new GBInAppListener.OnIabSetupFinishedListener() {

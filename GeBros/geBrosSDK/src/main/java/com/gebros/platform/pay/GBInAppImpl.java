@@ -34,7 +34,7 @@ final class GBInAppImpl {
     private static final String TO_USERKEY_PARAMETER_KEY = "to_userkey";
     private static final String EXTRA_PARAMETER_KEY = "extra_data";
     private static final String MARKET_CODE_PARAMETER_KEY = "market_code";
-    public static final String PAYMENTKEY_PARAMETER_KEY = "payment_key";
+    //public static final String PAYMENTKEY_PARAMETER_KEY = "payment_key";
     public static final String AUTH_CODE_PARAMETER_KEY = "auth_code";
     public static final String CALLBACK_URL_PARAMETER_KEY = "callbackurl";
 
@@ -43,7 +43,6 @@ final class GBInAppImpl {
     private static final String GAME_CODE_KEY = "gameCode";
     private static final String PRODUT_ID_KEY = "productID";
     private static final String PRICE_KEY = "price";
-
 
 
     public static final String SERVICE_STATUS = "service_status";
@@ -273,17 +272,12 @@ final class GBInAppImpl {
 
     private JSONObject requestSaveReceiptInternal(final String userKey, final IabPurchase purchase) {
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_RECEIPT_API).method(HttpMethod.POST)
-                .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
-                .addParameters(USERKEY_PARAMETER_KEY, userKey)
-                .addParameters("market_code", GBSettings.getMarketCode())
-                .addParameters("payment_key", purchase.getPaymentKey())
-                .addParameters("product_id", purchase.getSku())
-                .addParameters("order_id", purchase.getOrderId())
-                .addParameters("receipt", purchase.getToken())
-                .addParameters("ip", GBDeviceUtils.getIpAddress())
-                .addParameters("money_type", purchase.getMoenyType())
-                .addParameters("product_price", purchase.getPrice())
-                .addParameters("transaction", purchase.getReceipt());
+                .addParameters(ACCOUNT_SEQ_KEY, userKey)
+                .addParameters("marketCode", GBSettings.getMarketCode())
+                .addParameters("paymentKey", purchase.getPaymentKey())
+                .addParameters("productID", purchase.getSku())
+                .addParameters("marketCode", GBSettings.getMarketCode())
+                .addParameters("receipt", purchase.getToken());
 
         RequestRunner<JSONObject> runner = new JSONRequestRunner(builder);
         return runner.get();
