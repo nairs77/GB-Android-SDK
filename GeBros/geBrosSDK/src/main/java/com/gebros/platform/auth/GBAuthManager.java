@@ -37,30 +37,6 @@ public class GBAuthManager {
     public static void Initialize(IPlatformClient client) {
         mAuthClient = new GBAuthImpl();
         mAuthClient.initialize(client);
-
-/*
-        GBSession lastSession = GBSession.getActiveSession();
-        SessionJoinSource source = lastSession.getSource();
-
-        if (client.getAuthType() == AuthType.CHINA360 ||
-                client.getAuthType() == AuthType.BAIDU ||
-                client.getAuthType() == AuthType.XIAOMI ||
-                client.getAuthType() == AuthType.UC ||
-                client.getAuthType() == AuthType.WANDOUJIA ||
-                client.getAuthType() == AuthType.HUAWEI) {
-            mAuthHelper = IAuthHelperFactory.create(client.getAuthType(), mAuthClient);
-        } else {
-            if (source == SessionJoinSource.NONE) {
-                mAuthHelper = IAuthHelperFactory.create(AuthType.GUEST, mAuthClient);
-
-            } else {
-                // Auto Login
-                mAuthHelper = IAuthHelperFactory.create(AuthType.valueOf(source.getId()), mAuthClient);
-            }
-        }
-*/
-
-        //GBAccountStore.getInstance().
     }
 
 
@@ -72,8 +48,8 @@ public class GBAuthManager {
      */
 
     public static void Login(@NonNull Activity activity, final GBAuthListener listener) {
-        AuthType authType = GBSession.getActiveSession().getAuthType();
 
+        AuthType authType = GBSession.getActiveSession().getAuthType();
 
         if (authType == AuthType.NONE ||
                 authType == AuthType.CHINA360 ||
@@ -117,30 +93,6 @@ public class GBAuthManager {
         mAuthHelper = IAuthHelperFactory.create(authType, mAuthClient);
         mAuthHelper.login(activity, listener);
     }
-
-//    public static void LoginWithAuthType(Activity activity, AuthType authType, final GBAuthListener listener) {
-//        IAuthService theService = GBAccountStore.getInstance().getServiceWithAuthType(authType);
-//        IAuthAccount localAccount = theService.getServiceAccount();
-//
-//        if (localAccount != null) {
-//            localAccount.login(activity, new IAuthListener() {
-//                @Override
-//                public void onSuccess(IAuthAccount newAccount) {
-//
-//                    GBAccountStore.getInstance().registerAccount(newAccount, true);
-//
-//                    listener.onSuccess(null);
-//                }
-//
-//                @Override
-//                public void onFail(GBException e) {
-//
-//                }
-//            });
-//        }
-//
-//    }
-
 
 
     /**
