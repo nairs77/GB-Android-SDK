@@ -20,6 +20,7 @@ class DefaultPlatformClient extends BasePlatformClient {
 
     public boolean isInitialized() { return isInitialized; }
 
+    public AuthType getAuthType() { return AuthType.GOOGLE; }
     public PlatformType getType() {
         return PlatformType.DEFAULT;
     }

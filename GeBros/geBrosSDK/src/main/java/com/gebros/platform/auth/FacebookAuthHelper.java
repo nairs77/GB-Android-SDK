@@ -35,7 +35,7 @@ import static com.gebros.platform.auth.GBAuthImpl.CHANNEL_ID_KEY;
  * Created by nairs77 on 2017. 2. 3..
  */
 
-class FacebookAuthHelper extends AuthHelper {
+class FacebookAuthHelper extends GBAuthHelper {
 
     private static final String TAG = FacebookAuthHelper.class.getCanonicalName();
 
@@ -106,8 +106,8 @@ class FacebookAuthHelper extends AuthHelper {
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        return mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

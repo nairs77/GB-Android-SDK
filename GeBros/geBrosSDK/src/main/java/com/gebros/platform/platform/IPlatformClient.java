@@ -12,14 +12,14 @@ import com.gebros.platform.pay.GBInAppItem;
  */
 public interface IPlatformClient {
 
-    abstract void setMarketInfo(String marketInfo);
+//    abstract void setMarketInfo(String marketInfo);
+//
+//    abstract boolean getDebugMode();
 
-    abstract boolean getDebugMode();
+//    abstract boolean isInitialized();
 
-    abstract boolean isInitialized();
-
-    abstract PlatformType getType();
-
+//    abstract PlatformType getType();
+//
     abstract AuthType getAuthType();
 
     abstract void doPlatformActive(Activity activity, IPlatformListener.OnInitLister listener);

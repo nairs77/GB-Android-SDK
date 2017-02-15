@@ -1,6 +1,7 @@
 package com.gebros.platform.pay;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.gebros.platform.GBSdk;
 import com.gebros.platform.GBSettings;
@@ -17,6 +18,7 @@ import com.gebros.platform.util.GBValidator;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class GBInAppManager {
      */
     public static void InitInAppService(String userKey, GBInAppListener.OnIabSetupFinishedListener listener) {
         sUserKey = userKey;
-        inAppImpl.initialize();
+        //inAppImpl.initialize();
         initBillingService(listener);
     }
 
@@ -140,6 +142,19 @@ public class GBInAppManager {
         });
     }
 
+    public static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (mIabHelper != null) {
+            try {
+                return mIabHelper.handleActivityResult(requestCode, resultCode, data);
+            } catch (GBException e) {
+
+            }
+        }
+
+        return false;
+    }
+
     static void initBillingService(final GBInAppListener.OnIabSetupFinishedListener listener) {
 
         if (mIabHelper == null) {
@@ -212,64 +227,25 @@ public class GBInAppManager {
 
                 }
             }, extraData);
-//                @Override
-//                public void onCancel(boolean isUserCancelled) {
-//                    GBLog.d(TAG + "User Cancelled!!!");
-//                    listener.onCancel(isUserCancelled);
-//                }
-//
-//                @Override
-//                public void onSuccess(IabPurchase purchase) {
-//                    String payload = purchase.getDeveloperPayload();
-//                    String orderId = purchase.getOrderId();
-//
-//                    final IabPurchase purchaseInfo = purchase;
-//
-///*
-//                    // - 2015. 5.12 for promo code
-//                    GBLog.d(TAG + "For Promo code payload:"+payload+" , orderId:"+orderId);
-//                    if (GBValidator.isNullOrEmpty(payload) && GBValidator.isNullOrEmpty(orderId)) {
-//
-//                        GBLog.d(TAG + "For Promo code");
-//                        purchaseInfo.setPaymentKey(extraData);
-//
-//                        String customOrderId = extraData + "." + userKey;
-//                        purchaseInfo.setCustomOrderId(customOrderId);
-//                    }
-//*/
-//                    saveReceipt(userKey, purchaseInfo, listener);
-//                }
-//
-//                @Override
-//                public void onFail(IabResult result) {
-//                    GBLog.d(TAG + "result =%s", result.getMessage());
-//                    listener.onFail(result);
-//                }
-//            }, null);
+
         } catch (GBException e) {
             e.printStackTrace();
         }
     }
 
     final static void saveReceipt(final String userKey, final IabPurchase purchase, final GBInAppListener.OnPurchaseFinishedListener listener) {
+        inAppImpl.requestSaveReceipt(userKey, purchase, new GBEventReceiver() {
+            @Override
+            public void onSuccessEvent(GBEvent event, JSONObject json) {
+                listener.onSuccess(purchase);
+            }
 
-        SimpleAsyncTask.doRunUIThread(new ISimpleAsyncTask.OnUIThreadTask() {
-                                          @Override
-                                          public void doRunUIThread() {
-                                              inAppImpl.requestSaveReceipt(userKey, purchase, new GBEventReceiver() {
-                                                  @Override
-                                                  public void onSuccessEvent(GBEvent event, JSONObject json) {
-                                                      listener.onSuccess(purchase);
-                                                  }
+            @Override
+            public void onFailedEvent(GBEvent event, int errorCode, String errorMessage) {
+                listener.onFail(new IabResult(errorCode, errorMessage, GBSdk.getApplicationContext()));
 
-                                                  @Override
-                                                  public void onFailedEvent(GBEvent event, int errorCode, String errorMessage) {
-                                                      listener.onFail(new IabResult(errorCode, errorMessage, GBSdk.getApplicationContext()));
-
-                                                  }
-                                              });
-                                          }
-                                      });
+            }
+        });
     }
 
     final static void _restore_items() {
@@ -283,8 +259,16 @@ public class GBInAppManager {
                         saveReceipt(sUserKey, purchase, new GBInAppListener.OnPurchaseFinishedListener() {
 
                             @Override
-                            public void onSuccess(IabPurchase purchaseInfo) {
-                                GBLog.d(TAG + "test");
+                            public void onSuccess(final IabPurchase purchaseInfo) {
+                                //GBLog.d(TAG + "test");
+                                SimpleAsyncTask.doRunUIThread(new ISimpleAsyncTask.OnUIThreadTask() {
+                                    @Override
+                                    public void doRunUIThread() {
+                                        ArrayList<IabPurchase> purchaseList = new ArrayList<IabPurchase>();
+                                        purchaseList.add(purchaseInfo);
+                                        consumePurchaseItem(purchaseList);
+                                    }
+                                });
                             }
 
                             @Override
@@ -294,6 +278,7 @@ public class GBInAppManager {
 
                             @Override
                             public void onCancel(boolean isUserCancelled) {
+
                                 GBLog.d(TAG + "test");
                             }
                         });
@@ -304,9 +289,22 @@ public class GBInAppManager {
 
             @Override
             public void onFail(IabResult result) {
-
+                GBLog.d(TAG + "test");
             }
         });
+    }
+
+    final static void consumePurchaseItem(ArrayList<IabPurchase> purchaseList) {
+        try {
+            mIabHelper.consume(purchaseList, new IIabCallback.OnConsumeListener() {
+                @Override
+                public void OnConsumeFinishedListener(List<IabPurchase> purchaseList, List<IabResult> results) {
+
+                }
+            });
+        } catch (GBException e) {
+
+        }
     }
 
     static private List<String> getPaymentKeys(String keyStr) {

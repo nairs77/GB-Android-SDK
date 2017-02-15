@@ -24,7 +24,7 @@ import com.google.android.gms.common.ConnectionResult;
 /**
  * Created by gebros.nairs77@gmail.com on 5/24/16.
  */
-class GoogleAuthHelper extends AuthHelper implements GoogleApiClient.OnConnectionFailedListener {
+class GoogleAuthHelper extends GBAuthHelper implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = GoogleAuthHelper.class.getSimpleName();
 
@@ -74,6 +74,11 @@ class GoogleAuthHelper extends AuthHelper implements GoogleApiClient.OnConnectio
 
     public void logout(Activity activity, GBAuthListener listener) {
 
+    }
+
+    @Override
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        return false;
     }
 
     @Override

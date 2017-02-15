@@ -25,7 +25,7 @@ import java.util.Map;
 public class GBAuthManager {
 
     static GBAuthImpl mAuthClient;
-    static IAuthHelper mAuthHelper;
+    static GBAuthHelper mAuthHelper;
 
     public static final String TAG = GBAuthManager.class.getCanonicalName();
 
@@ -37,7 +37,6 @@ public class GBAuthManager {
     public static void Initialize(IPlatformClient client) {
         mAuthClient = new GBAuthImpl();
         mAuthClient.initialize(client);
-
 
 /*
         GBSession lastSession = GBSession.getActiveSession();
@@ -180,9 +179,11 @@ public class GBAuthManager {
         mAuthHelper.logout(activity, listener);
     }
 
-    public static void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         if (mAuthHelper != null)
-            mAuthHelper.onActivityResult(requestCode, resultCode, data);
+            return mAuthHelper.onActivityResult(requestCode, resultCode, data);
+
+        return false;
     }
 
     /**
@@ -260,7 +261,7 @@ public class GBAuthManager {
 
     private static class IAuthHelperFactory {
 
-        static IAuthHelper create(AuthType authType, GBAuthImpl impl) {
+        static GBAuthHelper create(AuthType authType, GBAuthImpl impl) {
             if (authType == AuthType.CHINA360 ||
                     authType == AuthType.BAIDU ||
                     authType == AuthType.XIAOMI ||

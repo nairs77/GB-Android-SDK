@@ -96,7 +96,8 @@ final class GBInAppImpl {
     public void initialize() {
         GBLog.d(TAG + "Start Market Init (Info)");
 
-        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
+        GBLog.d(TAG + "code = %d", GBSettings.getGameCode());
+         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
                 .addParameters(GAME_CODE_KEY, GBSettings.getGameCode());
 /*
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
@@ -197,9 +198,10 @@ final class GBInAppImpl {
                         break;
                     }
 
-                    int apiStatus = result.optInt("status");
+                    int apiStatus = result.optInt("RESULT");
 
                     if(apiStatus == 0) {
+/*
                         errorCode = result.optJSONObject("error").optInt("errorCode");
                         errorMessage = result.optJSONObject("error").optString("errorType");
 
@@ -228,6 +230,12 @@ final class GBInAppImpl {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+*/
+                        errorCode = -1;
+                        errorMessage = "IAP Failed";
+
+                        isSuccess = false;
+                        break;
                     } else {
                         isSuccess = true;
                         break;
@@ -273,7 +281,7 @@ final class GBInAppImpl {
                 .addParameters("marketCode", GBSettings.getMarketCode())
                 .addParameters("paymentKey", purchase.getPaymentKey())
                 .addParameters("productID", purchase.getSku())
-                .addParameters("marketCode", GBSettings.getMarketCode())
+                .addParameters("gameCode", GBSettings.getGameCode())
                 .addParameters("receipt", purchase.getToken());
 
         RequestRunner<JSONObject> runner = new JSONRequestRunner(builder);

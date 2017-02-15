@@ -43,7 +43,4 @@ interface IAuthHelper {
      * @return
      */
     public AuthType getAuthType();
-
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data);
 }

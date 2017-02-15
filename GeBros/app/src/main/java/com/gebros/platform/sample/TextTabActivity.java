@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.gebros.platform.ActivityResultHelper;
 import com.gebros.platform.auth.GBAuthManager;
+import com.gebros.platform.pay.GBInAppManager;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -27,8 +28,15 @@ public class TextTabActivity extends AppCompatActivity implements MaterialTabLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        GBAuthManager.onActivityResult(requestCode, resultCode, data);
-        ActivityResultHelper.handleOnActivityResult(requestCode, resultCode, data);
+
+        boolean isResult = ActivityResultHelper.handleOnActivityResult(requestCode, resultCode, data);
+
+        if (!isResult)
+            isResult = GBAuthManager.onActivityResult(requestCode, resultCode, data);
+
+        if (!isResult)
+            isResult = GBInAppManager.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override

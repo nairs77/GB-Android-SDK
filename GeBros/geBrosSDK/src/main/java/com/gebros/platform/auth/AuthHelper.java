@@ -36,7 +36,7 @@ class AuthHelper implements IAuthHelper {
         return AuthType.GUEST;
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        return false;
     }
 }

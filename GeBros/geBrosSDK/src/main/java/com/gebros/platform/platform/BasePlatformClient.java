@@ -23,30 +23,15 @@ public abstract class BasePlatformClient implements IPlatformClient {
 
     private static final String TAG = BasePlatformClient.class.getCanonicalName();
 
-    private static final String CLIENT_SECRET_PARAMETER_KEY = "client_secret";
-    private static final String USERKEY_PARAMETER_KEY = "userkey";
+//    private static final String CLIENT_SECRET_PARAMETER_KEY = "client_secret";
+//    private static final String USERKEY_PARAMETER_KEY = "userkey";
 
     protected boolean isInitialized = false;
     protected GBConfig mConfig;
 
-    private String mMarketInfo;
-    protected boolean mDebugMode;
+    abstract boolean isInitialized();
 
-    public abstract boolean isInitialized();
-
-    public PlatformType getType() {
-        return PlatformType.DEFAULT;
-    }
-
-    public AuthType getAuthType() { return AuthType.GOOGLE; }
-
-    public void setMarketInfo(String marketInfo) {
-        mMarketInfo = marketInfo;
-    }
-
-    public boolean getDebugMode() {
-        return mDebugMode;
-    }
+    abstract PlatformType getType();
 
     public abstract void doPlatformActive(Activity activity, IPlatformListener.OnInitLister listener);
 

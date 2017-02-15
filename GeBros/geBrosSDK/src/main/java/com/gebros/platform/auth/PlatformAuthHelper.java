@@ -1,6 +1,7 @@
 package com.gebros.platform.auth;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.gebros.platform.concurrent.ISimpleAsyncTask;
 import com.gebros.platform.concurrent.SimpleAsyncTask;
@@ -14,7 +15,7 @@ import com.gebros.platform.platform.PlatformType;
  * Created by gebros.nairs77@gmail.com on 5/24/16.
  */
 
-class PlatformAuthHelper extends AuthHelper {
+class PlatformAuthHelper extends GBAuthHelper {
 
     protected IPlatformClient mClient;
 
@@ -76,5 +77,10 @@ class PlatformAuthHelper extends AuthHelper {
                 listener.onCancel(isUserCancel);
             }
         });
+    }
+
+    @Override
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+        return false;
     }
 }
