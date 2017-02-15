@@ -351,7 +351,7 @@ public class IabHelper {
 
         try {
             GBLog.d(TAG + "Constructing buy intent for " + sku + ", item type: " + itemType);
-            String developerPayload = extraData+"#"+sku;
+            String developerPayload = extraData;//extraData+"#"+sku;
             Bundle buyIntentBundle = mService.getBuyIntent(3, mContext.getPackageName(), sku, itemType, developerPayload);
             buyIntentBundle.putString("PURCHASE_SKU", sku);
             int response = getResponseCodeFromBundle(buyIntentBundle);

@@ -96,14 +96,13 @@ final class GBInAppImpl {
     public void initialize() {
         GBLog.d(TAG + "Start Market Init (Info)");
 
-/*
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
                 .addParameters(GAME_CODE_KEY, GBSettings.getGameCode());
-
+/*
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
                 .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
                 .addParameters(MARKET_CODE_PARAMETER_KEY, GBSettings.getMarketCode());
-
+*/
         RequestRunner<JSONObject> runner = new JSONRequestRunner(builder);
         JSONObject object = runner.get();
 
@@ -111,17 +110,15 @@ final class GBInAppImpl {
 
             GBLog.d("result = %s", object.toString());
             // TODO : Error Parsing
-            getMarketInfo(object.optJSONObject("result"));
-
-            mClient.setMarketInfo(object.toString());
+            getMarketInfo(object);
             mInitialized = true;
         } else {
             requestPaymentMarketInfo();
         }
 
         GBLog.d(TAG + "End Market Init (Info)");
-*/
-        requestPaymentMarketInfo();
+
+//        requestPaymentMarketInfo();
     }
 
     public void requestPaymentMarketInfo() {

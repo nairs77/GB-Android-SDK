@@ -23,6 +23,7 @@ import com.gebros.platform.exception.GBException;
 import com.gebros.platform.exception.GBExceptionType;
 import com.gebros.platform.internal.JR;
 import com.gebros.platform.listener.GBAuthListener;
+import com.gebros.platform.listener.GBInAppListener;
 import com.gebros.platform.listener.GBProfileListener;
 import com.gebros.platform.log.GBLog;
 import com.gebros.platform.pay.GBInAppManager;
@@ -137,6 +138,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     mBtnProfile.setVisibility(View.VISIBLE);
                     //GetProfile();
                     mTvUserkey.setText(newSession.getUserKey());
+
+                    GBInAppManager.InitInAppService(newSession.getUserKey(), new GBInAppListener.OnIabSetupFinishedListener() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(getActivity(), "[InitInAppService onSuccess]", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFail() {
+                            Toast.makeText(getActivity(), "[InitInAppService onFail]", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 } else {
                     Toast.makeText(getActivity(), "[Login onSuccess]Session not open.. state = "+newSession.getState(), Toast.LENGTH_LONG).show();
                 }

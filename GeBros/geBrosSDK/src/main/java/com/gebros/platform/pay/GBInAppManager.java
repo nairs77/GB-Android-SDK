@@ -42,7 +42,7 @@ public class GBInAppManager {
 //        inAppImpl.setClient(client);
 
         inAppImpl.initialize(client);
-        initBillingService(null);
+        //initBillingService(null);
     }
 
     /**
@@ -66,18 +66,22 @@ public class GBInAppManager {
      * @param skus          SKU(Store Keepting Unity) Array (product id)
      * @param listener      Notify listener when QueryInventory is complete.
      */
-    public static void QueryInventory(List<String> skus, GBInAppListener.OnQueryInventoryFinishedListener listener) {
-        GBInAppManager.QueryInventory(skus, new GBInAppListener.OnQueryInventoryFinishedListener() {
-            @Override
-            public void onSuccess() {
+    public static void QueryInventory(List<String> skus, final GBInAppListener.OnQueryInventoryFinishedListener listener) {
+        try {
+            mIabHelper.queryInventoryAsync(skus, new IIabCallback.OnQueryInventoryListener() {
+                @Override
+                public void success(IabInventory inventory) {
+                    listener.onSuccess(inventory);
+                }
 
-            }
+                @Override
+                public void fail(IabResult result) {
+                    listener.onFail(result);
+                }
+            });
+        } catch (GBException e) {
 
-            @Override
-            public void onFail() {
-
-            }
-        });
+        }
     }
 
     /**
@@ -149,6 +153,8 @@ public class GBInAppManager {
                 public void success(IabResult result) {
                     if (listener != null)
                         listener.onSuccess();
+
+                    _restore_items();
 
                 }
 
@@ -243,56 +249,6 @@ public class GBInAppManager {
         } catch (GBException e) {
             e.printStackTrace();
         }
-        /*
-        try {
-            mIabHelper.launchPurchaseFlow(activity, userKey, item, new GBInAppListener.OnPurchaseFinishedListener() {
-
-
-
-                @Override
-                public void success(IabPurchase purchase) {
-                    String payload = purchase.getDeveloperPayload();
-                    String orderId = purchase.getOrderId();
-
-                    final IabPurchase purchaseInfo = purchase;
-
-
-                    // - 2015. 5.12 for promo code
-                    GBLog.d(TAG + "For Promo code payload:"+payload+" , orderId:"+orderId);
-                    if (GBValidator.isNullOrEmpty(payload) && GBValidator.isNullOrEmpty(orderId)) {
-
-                        GBLog.d(TAG + "For Promo code");
-                        purchaseInfo.setPaymentKey(extraData);
-
-                        String customOrderId = extraData + "." + userKey;
-                        purchaseInfo.setCustomOrderId(customOrderId);
-                    }
-
-                    saveReceipt(userKey, purchaseInfo, listener);
-
-                }
-
-                @Override
-                public void cancelled(IabPurchase purchase) {
-
-                }
-
-                @Override
-                public void alreadyOwned(IabPurchase purchase) {
-
-                }
-
-                @Override
-                public void fail(IabResult result) {
-
-                }
-            }, extraData);
-
-        } catch (GBException e) {
-
-        }
-        */
-
     }
 
     final static void saveReceipt(final String userKey, final IabPurchase purchase, final GBInAppListener.OnPurchaseFinishedListener listener) {
@@ -314,6 +270,43 @@ public class GBInAppManager {
                                               });
                                           }
                                       });
+    }
+
+    final static void _restore_items() {
+        GBInAppManager.QueryInventory(null, new GBInAppListener.OnQueryInventoryFinishedListener() {
+            @Override
+            public void onSuccess(IabInventory inv) {
+                if (inv != null && inv.getAllPurchases() != null) {
+
+                    for (IabPurchase purchase : inv.getAllPurchases()) {
+
+                        saveReceipt(sUserKey, purchase, new GBInAppListener.OnPurchaseFinishedListener() {
+
+                            @Override
+                            public void onSuccess(IabPurchase purchaseInfo) {
+                                GBLog.d(TAG + "test");
+                            }
+
+                            @Override
+                            public void onFail(IabResult result) {
+                                GBLog.d(TAG + "test");
+                            }
+
+                            @Override
+                            public void onCancel(boolean isUserCancelled) {
+                                GBLog.d(TAG + "test");
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(IabResult result) {
+
+            }
+        });
     }
 
     static private List<String> getPaymentKeys(String keyStr) {

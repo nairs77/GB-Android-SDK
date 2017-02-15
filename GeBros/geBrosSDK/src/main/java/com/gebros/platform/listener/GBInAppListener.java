@@ -1,5 +1,6 @@
 package com.gebros.platform.listener;
 
+import com.gebros.platform.pay.IabInventory;
 import com.gebros.platform.pay.IabPurchase;
 import com.gebros.platform.pay.IabResult;
 
@@ -25,9 +26,9 @@ public interface GBInAppListener {
      */
     public interface OnQueryInventoryFinishedListener {
 
-        public void onSuccess();
+        public void onSuccess(IabInventory inv);
 
-        public void onFail();
+        public void onFail(IabResult result);
 
     }
 

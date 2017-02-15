@@ -24,7 +24,7 @@ class GoogleIabHelper implements IIabHelper {
 //    public GoogleIabHelper(Context context, String publicKey) {
     public GoogleIabHelper(Context context, GBInAppImpl impl) {
         contextRef = new WeakReference<Context>(context);
-        mPublicKey = impl.getnPublicKey();
+        mPublicKey = impl.getGooglePublicKey();
     }
 
     public boolean isIabServiceInitialized() {

@@ -13,6 +13,12 @@ android {
     }
 
     signingConfigs {
+        debug {
+            storeFile file("../debug.keystore");
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
         release {
             storeFile file("../gebros.jks");
             storePassword "wlqmfhtm"
@@ -22,6 +28,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled false
             signingConfig signingConfigs.release

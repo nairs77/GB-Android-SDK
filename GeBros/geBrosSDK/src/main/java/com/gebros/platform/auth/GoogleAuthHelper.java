@@ -60,12 +60,14 @@ class GoogleAuthHelper extends AuthHelper implements GoogleApiClient.OnConnectio
         ActivityResultHelper.startActivityForResult(activity, REQUEST_CODE_GOOGLE_SIGNIN_ID_TOKEN, signIntent, new ActivityResultHelper.ActivityResultListener() {
             @Override
             public void onActivityResult(int resultCode, Intent data) {
-                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (resultCode == Activity.RESULT_OK) {
+                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 
-                if (result != null)
-                    mImpl.authorize(getAuthType(), result.getSignInAccount().getIdToken(), result.getSignInAccount().getEmail(), listener);
-                else
+                    if (result != null)
+                        mImpl.authorize(getAuthType(), result.getSignInAccount().getIdToken(), result.getSignInAccount().getEmail(), listener);
+                } else {
                     listener.onFail(GBException.getGBExceptionTemplate(GBExceptionType.GOOGLE_ERROR));
+                }
             }
         });
     }
