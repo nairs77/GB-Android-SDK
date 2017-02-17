@@ -29,11 +29,6 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-//import android.support.annotation.RequiresPermission;
-//import com.joycity.platform.account.internal.GBLogger;
-//import com.joycity.platform.account.internal.Logger;
-
-
 public class Request implements AbstractRequest {
 
 	protected final static String TAG = Request.class.getCanonicalName() + ":";

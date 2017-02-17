@@ -5,7 +5,7 @@ package com.gebros.platform.auth.ui.common;
  */
 public interface GBViewEventListener {
 
-    public enum JoycityViewEvent {
+    public enum GBViewEvent {
         SUCCESS_AGREEMENT,
         QUICK_LOGIN,
         ACCOUNT_LOGIN,
@@ -16,5 +16,5 @@ public interface GBViewEventListener {
         DETAIL_PRIVACY_MOVE_AGREEMENT;
     }
 
-    void onReceiveEvent(JoycityViewEvent event);
+    void onReceiveEvent(GBViewEvent event);
 }

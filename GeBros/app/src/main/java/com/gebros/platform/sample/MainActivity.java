@@ -104,39 +104,6 @@ public class MainActivity extends Activity implements Spinner.OnItemSelectedList
 
     private void startTest() {
         _configureAppTest();
-/*
-        final Handler handler = new Handler();
-
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                GB.RequestGlobalServerInfo(mServerAddress, mGameCode, new GBEventReceiver() {
-                    //"https://GB-cn-qa.joycityplay.com/gbranch/branch/getzone"
-                    @Override
-                    public void onSuccessEvent(GBEvent event, JSONObject json) {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                _configureAppTest();
-                                GBMessageUtils.toast(MainActivity.this, "Connected Server !!!");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailedEvent(GBEvent event, final int errorCode, final String errorMessage) {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                String errorMsg = String.format("error = %s(%d)", errorMessage, errorCode);
-                                GBMessageUtils.toast(MainActivity.this, errorMsg);
-                            }
-                        });
-                    }
-                });
-            }
-        })).start();
-*/
     }
 
     private void _configureAppTest() {

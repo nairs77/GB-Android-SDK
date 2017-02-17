@@ -15,9 +15,9 @@ public class GBInAppApi {
     private static final String BUY_INTENT = "/BuyIntent";
     private static final String SAVE_RECEIPT = "/SaveReceipt";
 
-    public static final String JOYCITY_BILL_MARKETINFO_API = GBSettings.getIabServer() + INIT;
-    public static final String JOYCITY_BILL_TOKEN_API = GBSettings.getIabServer() + BUY_INTENT;
-    public static final String JOYCITY_BILL_RECEIPT_API = GBSettings.getIabServer() + SAVE_RECEIPT;
-    public static final String JOYCITY_BILL_RESTORE_API = GBSettings.getIabServer() + "/pay/fail/restore";
+    public static final String GB_BILL_MARKETINFO_API = GBSettings.getIabServer() + INIT;
+    public static final String GB_BILL_TOKEN_API = GBSettings.getIabServer() + BUY_INTENT;
+    public static final String GB_BILL_RECEIPT_API = GBSettings.getIabServer() + SAVE_RECEIPT;
+    public static final String GB_BILL_RESTORE_API = GBSettings.getIabServer() + "/pay/fail/restore";
 
 }

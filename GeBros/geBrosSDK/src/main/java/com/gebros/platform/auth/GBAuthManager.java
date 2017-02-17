@@ -173,10 +173,10 @@ public class GBAuthManager {
         if (GBDeviceUtils.isServiceLocaleKorea()) {
             // TODO : 약관동의 화면
             GBLog.d(TAG + "KOREA!!!");
-            listener.onReceiveEvent(GBViewEventListener.JoycityViewEvent.SUCCESS_AGREEMENT);
+            listener.onReceiveEvent(GBViewEventListener.GBViewEvent.SUCCESS_AGREEMENT);
         } else {
             GBLog.d(TAG + "NOT KOREA!!!");
-            listener.onReceiveEvent(GBViewEventListener.JoycityViewEvent.SUCCESS_AGREEMENT);
+            listener.onReceiveEvent(GBViewEventListener.GBViewEvent.SUCCESS_AGREEMENT);
         }
     }
 

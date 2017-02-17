@@ -97,10 +97,10 @@ final class GBInAppImpl {
         GBLog.d(TAG + "Start Market Init (Info)");
 
         GBLog.d(TAG + "code = %d", GBSettings.getGameCode());
-         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
+         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.GB_BILL_MARKETINFO_API).method(HttpMethod.POST)
                 .addParameters(GAME_CODE_KEY, GBSettings.getGameCode());
 /*
-        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
+        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.GB_BILL_MARKETINFO_API).method(HttpMethod.POST)
                 .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
                 .addParameters(MARKET_CODE_PARAMETER_KEY, GBSettings.getMarketCode());
 */
@@ -138,9 +138,9 @@ final class GBInAppImpl {
             }
         };
 
-        GBLog.d("Market Info = %s", GBInAppApi.JOYCITY_BILL_MARKETINFO_API);
+        GBLog.d("Market Info = %s", GBInAppApi.GB_BILL_MARKETINFO_API);
 
-        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_MARKETINFO_API).method(HttpMethod.POST)
+        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.GB_BILL_MARKETINFO_API).method(HttpMethod.POST)
                 .addParameters(GAME_CODE_KEY, GBSettings.getGameCode());
 
         RequestRunner<JSONObject> runner = new JSONRequestRunner(builder);
@@ -157,7 +157,7 @@ final class GBInAppImpl {
      */
     public void requestPaymentIabToken(String userKey, GBInAppItem item, GBEventReceiver receiver) {
 
-        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_TOKEN_API).method(HttpMethod.POST)
+        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.GB_BILL_TOKEN_API).method(HttpMethod.POST)
                 .addParameters(ACCOUNT_SEQ_KEY, userKey)
                 .addParameters(MARKET_CODE_KEY, GBSettings.getMarketCode())
                 .addParameters(GAME_CODE_KEY, GBSettings.getGameCode())
@@ -266,7 +266,7 @@ final class GBInAppImpl {
     }
 
     public void requestRestoreItems(String userKey, GBEventReceiver receiver) {
-        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_RESTORE_API).method(HttpMethod.POST)
+        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.GB_BILL_RESTORE_API).method(HttpMethod.POST)
                 .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
                 .addParameters(USERKEY_PARAMETER_KEY, userKey)
                 .addParameters("market_code", GBSettings.getMarketCode());
@@ -276,7 +276,7 @@ final class GBInAppImpl {
     }
 
     private JSONObject requestSaveReceiptInternal(final String userKey, final IabPurchase purchase) {
-        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.JOYCITY_BILL_RECEIPT_API).method(HttpMethod.POST)
+        AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.GB_BILL_RECEIPT_API).method(HttpMethod.POST)
                 .addParameters(ACCOUNT_SEQ_KEY, userKey)
                 .addParameters("marketCode", GBSettings.getMarketCode())
                 .addParameters("paymentKey", purchase.getPaymentKey())
@@ -300,62 +300,6 @@ final class GBInAppImpl {
                 gPublicKey = marketInfoObj.optString("PUBLIC_KEY");
             }
         }
-/*
-        JSONObject marketInfoObj = object.optJSONObject("market_info");
-        //int marketCode = Joycity.getMarketCode();
-        Market market = GBSettings.getMarket();
-
-        if(marketInfoObj != null) {
-            String key = GBSettings.getClientSecret();
-            mInAppMode = marketInfoObj.optInt(SERVICE_STATUS);
-            if(market == Market.GOOGLE) {
-                gPublicKey = marketInfoObj.optString("public_key");
-                //gPackageName = marketInfoObj.optString("package_name");
-                try {
-                    gPublicKey = GBAppUtils.deCrypt(gPublicKey, key);
-                    //gPackageName = CryptUtil.deCrypt(gPackageName, key);
-                } catch (Exception e) {
-                    GBLog.d(TAG + "exception: "+e);
-                }
-            } else if(market == Market.ONESTORE) {
-                tAppId = marketInfoObj.optString("appid");
-                tApiVersion = marketInfoObj.optString("api_version");
-                GBLog.d(TAG + " receiveEvent: XORtAppId: "+tAppId+" XORtAppVersion: "+tApiVersion);
-                try {
-                    tAppId = GBAppUtils.deCrypt(tAppId, key);
-                    tApiVersion = GBAppUtils.deCrypt(tApiVersion, key);
-                } catch (Exception e) {
-                    GBLog.d(TAG + "exception: "+e);
-                }
-                GBLog.d(TAG + " receiveEvent: decryptTAppId: "+tAppId+" decryptAppVersion:"+tApiVersion);
-            } else if(market == Market.NAVER) {
-                nAppCode = marketInfoObj.optString("appCode");
-                nIapKey = marketInfoObj.optString("iapKey");
-                nPublicKey = marketInfoObj.optString("publicKey");
-                try {
-                    nAppCode = GBAppUtils.deCrypt(nAppCode, key);
-                    nIapKey = GBAppUtils.deCrypt(nIapKey, key);
-                    nPublicKey = GBAppUtils.deCrypt(nPublicKey, key);
-                } catch (Exception e) {
-                    GBLog.d(TAG + "exception: "+e);
-                }
-            } else if (market == Market.MYCARD) {
-                myCardFacID = marketInfoObj.optString("factoryId");
-                myCardServiceID = marketInfoObj.optString("factoryServiceId");
-                try {
-                    myCardFacID = GBAppUtils.deCrypt(myCardFacID, key);
-                    myCardServiceID = GBAppUtils.deCrypt(myCardServiceID, key);
-                } catch (Exception e) {
-                    GBLog.d(TAG + "exception: " + e);
-                }
-                myCardRequestURL = marketInfoObj.optString("weburl");
-            } else if (market == Market.CHINA360 || market == Market.UC) {
-                mNotifyCallbackURL = marketInfoObj.optString(CALLBACK_URL_PARAMETER_KEY);
-            } else if (market == Market.BAIDU) {
-
-            }
-        }
-*/
     }
 
     // - Getter
@@ -371,36 +315,36 @@ final class GBInAppImpl {
         return gPublicKey;
     }
 
-    public String gettAppId() {
-        return tAppId;
-    }
-
-    public String gettApiVersion() {
-        return tApiVersion;
-    }
-
-    public String getnAppCode() {
-        return nAppCode;
-    }
-
-    public String getnIapKey() {
-        return nIapKey;
-    }
-
-    public String getnPublicKey() {
-        return nPublicKey;
-    }
-
-    public String getMyCardFacID() {
-        return myCardFacID;
-    }
-
-    public String getMyCardServiceID() {
-        return myCardServiceID;
-    }
-
-    public String getMyCardRequestURL() {
-        return myCardRequestURL;
-    }
+//    public String gettAppId() {
+//        return tAppId;
+//    }
+//
+//    public String gettApiVersion() {
+//        return tApiVersion;
+//    }
+//
+//    public String getnAppCode() {
+//        return nAppCode;
+//    }
+//
+//    public String getnIapKey() {
+//        return nIapKey;
+//    }
+//
+//    public String getnPublicKey() {
+//        return nPublicKey;
+//    }
+//
+//    public String getMyCardFacID() {
+//        return myCardFacID;
+//    }
+//
+//    public String getMyCardServiceID() {
+//        return myCardServiceID;
+//    }
+//
+//    public String getMyCardRequestURL() {
+//        return myCardRequestURL;
+//    }
 
 }

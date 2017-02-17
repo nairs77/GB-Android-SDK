@@ -58,15 +58,15 @@ public class GBProfileActivity extends BaseFragmentPagerActivity implements View
 
         mViewPager.setOnPageChangeListener(this);
 
-        closeBtn = (RelativeLayout) findViewById(JR.id("joycity_main_close_btn"));
+        closeBtn = (RelativeLayout) findViewById(JR.id("GB_main_close_btn"));
         closeBtn.setOnClickListener(this);
 
-        tabProfileBtn = (RelativeLayout) findViewById(JR.id("joycity_main_tab_profile_btn"));
-        tabProfileOffIv = (ImageView) findViewById(JR.id("joycity_main_tab_profile_off_iv"));
-        tabProfileOnLayout = (RelativeLayout) findViewById(JR.id("joycity_main_tab_profile_on_ly"));
-        tabSettingBtn = (RelativeLayout) findViewById(JR.id("joycity_main_tab_setting_btn"));
-        tabSettingOffIv = (ImageView) findViewById(JR.id("joycity_main_tab_setting_off_iv"));
-        tabSettingOnLayout = (RelativeLayout) findViewById(JR.id("joycity_main_tab_setting_on_ly"));
+        tabProfileBtn = (RelativeLayout) findViewById(JR.id("GB_main_tab_profile_btn"));
+        tabProfileOffIv = (ImageView) findViewById(JR.id("GB_main_tab_profile_off_iv"));
+        tabProfileOnLayout = (RelativeLayout) findViewById(JR.id("GB_main_tab_profile_on_ly"));
+        tabSettingBtn = (RelativeLayout) findViewById(JR.id("GB_main_tab_setting_btn"));
+        tabSettingOffIv = (ImageView) findViewById(JR.id("GB_main_tab_setting_off_iv"));
+        tabSettingOnLayout = (RelativeLayout) findViewById(JR.id("GB_main_tab_setting_on_ly"));
 
         tabProfileBtn.setOnClickListener(this);
         tabSettingBtn.setOnClickListener(this);

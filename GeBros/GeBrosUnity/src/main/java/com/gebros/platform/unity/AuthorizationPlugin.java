@@ -223,59 +223,7 @@ public final class AuthorizationPlugin extends BasePlugin {
             }
         });
     }
-/*
-    private void RequestMergeAccountWithCallback(String userkey, String callbackObjectName) {
-        this.callbackObjectName = callbackObjectName;
-        GB.getInstance().requestMergeAccount(userkey, new JoycityEventReceiver() {
 
-            @Override
-            public void onSuccessEvent(JoycityEvent event, JSONObject json) {
-                Logger.d(TAG + "requestMergeAccount onSuccessEvent event = %s, json = %s", event, json);
-
-                JSONObject response = new JSONObject();
-                JSONObject result_response = new JSONObject();
-
-                try {
-                    response.put("status", 1);
-                    response.put("eventKey", "OnDuplicateAccountFinished");
-                    response.put("data",  json);
-                    result_response.put("result", response);
-                } catch (JSONException e) {
-                    Logger.d(TAG + "JSONException = %s", e.getMessage());
-                }
-
-                UnityPlayer.UnitySendMessage(getCallbackObjectName(), ASYNC_CALL_SUCCEEDED, result_response.toString());
-            }
-
-            @Override
-            public void onFailedEvent(JoycityEvent event, int errorCode,
-                                      String errorMessage) {
-                Logger.d(TAG + "requestMergeAccount onFailedEvent event = %s, errorCode = %d, errorMessage = %s",
-                        event, errorCode, errorMessage);
-                JSONObject error_response = new JSONObject();
-                JSONObject response = new JSONObject();
-                JSONObject result_response = new JSONObject();
-
-                try {
-                    response.put("status", 0);
-                    response.put("eventKey", "OnDuplicateAccountFinished");
-                    error_response.put("error_code", errorCode);
-                    error_response.put("error_message", errorMessage);
-                    response.put("error",  error_response);
-                    result_response.put("result", response);
-                } catch (JSONException e) {
-                    Logger.d(TAG + "JSONException = %s", e.getMessage());
-                }
-
-                UnityPlayer.UnitySendMessage(getCallbackObjectName(), ASYNC_CALL_FAILED, result_response.toString());
-            }
-        });
-    }
-
-    private void showMain() {
-        Application.main(getActivity());
-    }
-*/
     private void showClickWrap(final String callbackObjectName) {
         //callbackObjectNames.add(callbackObjectName);
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
@@ -284,12 +232,12 @@ public final class AuthorizationPlugin extends BasePlugin {
 
         GBAuthManager.ShowClickWrap(getActivity(), new GBViewEventListener() {
             @Override
-            public void onReceiveEvent(JoycityViewEvent event) {
+            public void onReceiveEvent(GBViewEvent event) {
                 GBLog.d(TAG + ", showClickWrap event = %s", event);///
                 JSONObject eventResult = new JSONObject();
 
                 try {
-                    eventResult.put(EVENT_KEY, JoycityViewEvent.SUCCESS_AGREEMENT);
+                    eventResult.put(EVENT_KEY, GBViewEvent.SUCCESS_AGREEMENT);
                 } catch (JSONException e) {
                     GBLog.d(TAG + "JSONException = %s", e.getMessage());
                 }

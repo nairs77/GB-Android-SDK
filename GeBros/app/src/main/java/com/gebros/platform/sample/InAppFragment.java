@@ -164,6 +164,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
             @Override
             public void onSuccess(final List<String> paymentKeys) {
                 GBLog.d(TAG + "Restore items = %s", paymentKeys.toString());
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

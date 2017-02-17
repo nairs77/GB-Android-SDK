@@ -13,7 +13,7 @@ import com.gebros.platform.util.GBValidator;
  */
 final class GBSessionProxy {
 
-    static final String CACHED_SESSION_KEY = "cache.com.gebros.platform.session";//"com.joycity.platform.account.sdk.PreferenceKey";
+    static final String CACHED_SESSION_KEY = "cache.com.gebros.platform.session";
 
     static final String ACCESS_TOKEN_KEY = "accessToken";
     static final String REFRESH_TOKEN_KEY = "refreshToken";

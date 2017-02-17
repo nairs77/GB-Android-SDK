@@ -65,7 +65,7 @@ public class GBAddInfoFragment extends BaseFragment implements View.OnClickListe
 
     public GBAddInfoFragment () {
         fragmentType = FragmentType.ADDINFO_INFO_FRAGMENT;
-        layoutId = JR.layout("joycity_setting_myinfo_addinfo");
+        layoutId = JR.layout("GB_setting_myinfo_addinfo");
     }
 
     public static GBAddInfoFragment newInstance() {
@@ -139,21 +139,21 @@ public class GBAddInfoFragment extends BaseFragment implements View.OnClickListe
         } else if(viewId == menRadio.getId()) {
             isSexChecked = true;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                menRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_on_orange_btn")));
-                womenRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_off_gray_btn")));
+                menRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_on_orange_btn")));
+                womenRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_off_gray_btn")));
             } else {
-                menRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("joycity_radio_on_orange_btn")));
-                womenRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("joycity_radio_off_gray_btn")));
+                menRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("GB_radio_on_orange_btn")));
+                womenRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("GB_radio_off_gray_btn")));
             }
             isMen = true;
         } else if(viewId == womenRadio.getId()) {
             isSexChecked = true;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                menRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_off_gray_btn")));
-                womenRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_on_orange_btn")));
+                menRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_off_gray_btn")));
+                womenRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_on_orange_btn")));
             } else {
-                menRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("joycity_radio_off_gray_btn")));
-                womenRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("joycity_radio_on_orange_btn")));
+                menRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("GB_radio_off_gray_btn")));
+                womenRadio.setBackgroundDrawable(getResources().getDrawable(JR.drawable("GB_radio_on_orange_btn")));
             }
             isMen = false;
         } else if(viewId == enrollBtn.getId()) {
@@ -252,14 +252,14 @@ public class GBAddInfoFragment extends BaseFragment implements View.OnClickListe
                 enrollBtnText.setText(JR.string("ui_common_confirm_btn_title"));
             }
             if(gender.equals("1")) {
-                menRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_on_orange_btn")));
-                womenRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_off_gray_btn")));
+                menRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_on_orange_btn")));
+                womenRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_off_gray_btn")));
                 isMen = true;
                 isSexChecked = true;
             }
             else if(gender.equals("2")) {
-                menRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_off_gray_btn")));
-                womenRadio.setBackground(getResources().getDrawable(JR.drawable("joycity_radio_on_orange_btn")));
+                menRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_off_gray_btn")));
+                womenRadio.setBackground(getResources().getDrawable(JR.drawable("GB_radio_on_orange_btn")));
                 isMen = false;
                 isSexChecked = true;
             }

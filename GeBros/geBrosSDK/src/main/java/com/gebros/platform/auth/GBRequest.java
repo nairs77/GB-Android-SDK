@@ -21,13 +21,6 @@ public class GBRequest {
 
     private static final String TAG = GBRequest.class.getCanonicalName();
 
-/*
-    public static final String FRIENDS_URI = JoycityConfig.getContentsServer() + "/users/friends/list";
-    public static final String ADD_FRIENDS_URI = JoycityConfig.getContentsServer() + "/users/friends/add-relation";
-    public static final String UPDATE_FRIENDS_STATUS_URI = JoycityConfig.getContentsServer() + "/users/friends/update-type";
-    public static final String SEARCH_FRIENDS_URI = JoycityConfig.getContentsServer() + "/users/friends/search";
-    public static final String INVITED_USER_COUNT = JoycityConfig.getContentsServer() + "/invitation/count_list";
-*/
     private static final int REQUEST_RETRY_MAX_COUNT = 5;
     private static int retryAPICount = 0;
 

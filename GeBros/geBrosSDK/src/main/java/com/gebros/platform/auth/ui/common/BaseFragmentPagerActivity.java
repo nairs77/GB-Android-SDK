@@ -24,9 +24,9 @@ public class BaseFragmentPagerActivity extends FragmentActivity implements BaseF
 
     protected String TAG = getClass().getCanonicalName() + ":";
 
-    protected static final String MAIN_LAYOUT_ID = "joycity_main";
-    protected static final String MAIN_CONTENTS_PAGER_ID = "joycity_main_content_pager";
-    protected static final String MAIN_CONTENT_ID = "joycity_main_content";
+    protected static final String MAIN_LAYOUT_ID = "GB_main";
+    protected static final String MAIN_CONTENTS_PAGER_ID = "GB_main_content_pager";
+    protected static final String MAIN_CONTENT_ID = "GB_main_content";
 
     protected FragmentManager fragmentManager;
     protected FragmentManager pagerFragmentManager;

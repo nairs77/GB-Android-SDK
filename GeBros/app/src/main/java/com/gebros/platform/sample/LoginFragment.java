@@ -95,7 +95,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 Logout();
 
         } else if (clickedViewId == mBtnProfile.getId()) {
-            //LinkAccount();
 /*
             GBGameManager.GameExitService(getActivity(), new GBGameListener() {
                 @Override
@@ -191,6 +190,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "[Logout onCancel]isLogoutCancelled = "+isUserCancelled, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void LinkAccount() {
+
     }
 
     private void GetProfile() {

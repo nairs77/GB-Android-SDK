@@ -110,8 +110,9 @@ public final class GBSession implements Parcelable {
     }
 
     public String getUserInfo() { return this.mUserInfo; }
+
     /**
-     * Gets the {@link SessionJoinSource} indicating how this access token was obtained.
+     * Gets the {@link AuthType} indicating how this access token was obtained.
      *
      * @return the enum indicating how the access token was obtained
      */

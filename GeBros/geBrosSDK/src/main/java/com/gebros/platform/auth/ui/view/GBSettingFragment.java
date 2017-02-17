@@ -39,7 +39,7 @@ public class GBSettingFragment extends BaseFragment {
 
     public GBSettingFragment() {
         fragmentType = FragmentType.SETTING_INFO_FRAGMENT;
-        layoutId = JR.layout("joycity_setting");
+        layoutId = JR.layout("GB_setting");
         titleRes = JR.string("ui_setting_setting_top_title");
     }
 
