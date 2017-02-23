@@ -107,6 +107,15 @@ public class GBAuthManager {
         mAuthClient.requestWithAuthType(authType, accessToken, uID, listener);
     }
 
+
+
+    public static void ConnectChannel(Activity activity, AuthType authType, final GBAuthListener listener) {
+        //mAuthHelper.connectChannel(activity, authType, listener);
+        GBAuthHelper authHelper = IAuthHelperFactory.create(authType, mAuthClient);
+
+        //authHelper.login();
+    }
+
     /**
      * Log out the user from a session
      *

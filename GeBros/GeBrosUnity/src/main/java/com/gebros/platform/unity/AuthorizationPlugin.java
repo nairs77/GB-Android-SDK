@@ -1,7 +1,6 @@
 package com.gebros.platform.unity;
 
-import com.gebros.platform.GBSdk;
-import com.gebros.platform.GBSettings;
+import com.gebros.platform.auth.AuthType;
 import com.gebros.platform.auth.GBAuthManager;
 import com.gebros.platform.auth.GBSession;
 import com.gebros.platform.auth.ProfileApi;
@@ -12,8 +11,6 @@ import com.gebros.platform.exception.GBExceptionType;
 import com.gebros.platform.listener.GBAuthListener;
 import com.gebros.platform.listener.GBProfileListener;
 import com.gebros.platform.log.GBLog;
-import com.gebros.platform.platform.PlatformType;
-import com.gebros.platform.util.GBValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,9 +34,9 @@ public final class AuthorizationPlugin extends BasePlugin {
         return AuthorizationPluginHolder.instance;
     }
 
-    public static boolean hasToken() {
-        return !GBValidator.isNullOrEmpty(GBSession.getActiveSession().getAccessToken());
-    }
+//    public static boolean hasToken() {
+//        return !GBValidator.isNullOrEmpty(GBSession.getActiveSession().getAccessToken());
+//    }
 
     public static void setAllowedEULA(boolean isAllowed) {
         //GB.getInstance().setAllowedEULA(isAllowed);
@@ -62,19 +59,19 @@ public final class AuthorizationPlugin extends BasePlugin {
         return true;
     }
 
-    public static String getAccessToken() {
-        if (GBSession.getActiveSession() != null)
-            return GBSession.getActiveSession().getAccessToken();
-        else
-            return "";
-    }
+//    public static String getAccessToken() {
+//        if (GBSession.getActiveSession() != null)
+//            return GBSession.getActiveSession().getAccessToken();
+//        else
+//            return "";
+//    }
 
-    public static String getRefreshToken() {
-        if (GBSession.getActiveSession() != null)
-            return GBSession.getActiveSession().getRefreshToken();
-        else
-            return "";
-    }
+//    public static String getRefreshToken() {
+//        if (GBSession.getActiveSession() != null)
+//            return GBSession.getActiveSession().getRefreshToken();
+//        else
+//            return "";
+//    }
 
     public static void Login(String gameObjectName) {
         GBLog.d(TAG + "Login API - %s", gameObjectName);
@@ -153,12 +150,7 @@ public final class AuthorizationPlugin extends BasePlugin {
         SessionGameObject = callbackObjectName;
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
-        try {
-            GBAuthManager.LoginWithAuthType(authType, getActivity(), mAuthListener);
-        } catch (GBException e) {
-            //TODO : Processing Exception
-            e.printStackTrace();
-        }
+        GBAuthManager.LoginWithAuthType(getActivity(), authType, mAuthListener);
     }
 /*
     private void linkServiceWithCallback(AuthType authType, String callbackObjectName) {

@@ -38,13 +38,13 @@
                 android:text="@string/menu_login" />
 
             <Button
-                android:id="@+id/btn_profile"
+                android:id="@+id/btn_connect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_login"
                 android:layout_margin="5dip"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/menu_main_profile"
+                android:text="@string/menu_main_link"
                 android:visibility="gone"/>
 
             <!-- Show Profile UI -->

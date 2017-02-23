@@ -13,7 +13,7 @@
     <string name="menu_link_google_service">구글 계정 연동</string>
     <string name="menu_main">GeBros 메인</string>
     <string name="menu_main_setting">GeBros 메인 - 셋팅</string>
-    <string name="menu_main_profile">GeBros 메인 - 프로필</string>
+    <string name="menu_main_link">GeBros 연동 - facebook</string>
     <string name="menu_main_games">GeBros 메인 - 게임즈</string>
     <string name="menu_main_account">GeBros 메인 - 계정연동</string>
     <string name="menu_main_customer">GeBros 메인 - 고객센터</string>

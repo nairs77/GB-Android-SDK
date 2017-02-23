@@ -19,9 +19,21 @@ import java.text.SimpleDateFormat;
 
 public class GBLog {
 
-    public enum LogLevel{
+    public enum LogLevel {
         DEBUG,
-        RELEASE,
+        RELEASE;
+
+        public static LogLevel fromInt(int value) {
+            switch (value) {
+                case 0:
+                    return DEBUG;
+                case 1:
+                    return RELEASE;
+
+                default:
+                    return RELEASE;
+            }
+        }
     };
 
     private static String TAG = "[GBLog]";

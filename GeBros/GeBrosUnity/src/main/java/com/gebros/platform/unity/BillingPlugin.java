@@ -95,8 +95,8 @@ public class BillingPlugin extends BasePlugin {
     private void queryInventoryItemInfo(ArrayList<String> items, final String gameObjectName) throws GBException{
 
         // TODO: API 지원 여부를 어디서 판단하는게 좋을까?
-        if (GBSettings.getMarket() != PlatformType.Market.GOOGLE)
-            throw new GBException("Not Supported");
+//        if (GBSettings.getMarket() != PlatformType.Market.GOOGLE)
+//            throw new GBException("Not Supported");
 
         //callbackObjectNames.put(gameObjectName, gameObjectName);
 

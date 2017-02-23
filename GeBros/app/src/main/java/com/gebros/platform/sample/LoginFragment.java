@@ -67,7 +67,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mPlatformTitle = (TextView)loginView.findViewById(R.id.login_platform_title);
         mPlatformTitle.setText(GBSettings.getPlatformType().getName());
         mBtnLogin = (Button)loginView.findViewById(R.id.btn_login);
-        mBtnProfile = (Button)loginView.findViewById(R.id.btn_profile);
+        mBtnProfile = (Button)loginView.findViewById(R.id.btn_connect);
         mTvUserkey = (TextView) loginView.findViewById(R.id.login_user_key_info_tv);
         mBtnLogin.setOnClickListener(this);
         mBtnProfile.setOnClickListener(this);

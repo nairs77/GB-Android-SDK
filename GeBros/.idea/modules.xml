@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GeBros.iml" filepath="$PROJECT_DIR$/GeBros.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GeBrosUnity/GeBrosUnity.iml" filepath="$PROJECT_DIR$/GeBrosUnity/GeBrosUnity.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/geBrosSDK/geBrosSDK.iml" filepath="$PROJECT_DIR$/geBrosSDK/geBrosSDK.iml" />
     </modules>

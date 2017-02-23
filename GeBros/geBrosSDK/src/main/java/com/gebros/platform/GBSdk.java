@@ -23,6 +23,9 @@ public final class GBSdk {
         instance.initialize(activity);
     }
 
+    public static void ConfigureSdkWithInfo(Activity activity, int gameCode, String apiKey, LogLevel logLevel) {
+        instance.configureSDKWithGameInfo(activity, gameCode, apiKey, logLevel);
+    }
     public static void ConfigureSdkWithInfo(Activity activity, int gameCode, String apiKey, Platform platform, LogLevel logLevel) {
         instance.configureSDKWithGameInfo(activity, gameCode, apiKey, platform, logLevel);
     }
