@@ -3,6 +3,7 @@ package com.gebros.platform.auth;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.gebros.platform.concurrent.SimpleAsyncTask;
 import com.gebros.platform.listener.GBAuthListener;
 import com.gebros.platform.platform.PlatformType;
 
@@ -29,7 +30,13 @@ class GBAuthHelper implements IAuthHelper {//extends AuthHelper {
     }
 
     public void logout(Activity activity, GBAuthListener listener) {
-        mImpl.requestLogout(listener);
+        //mImpl.requestLogout(listener);
+
+        GBSession newSession = GBSession.clearSession();
+        GBSession.getActiveSession().setCurrentActiveSession(newSession);
+
+        listener.onSuccess(newSession);
+
     }
 
     public AuthType getAuthType() {

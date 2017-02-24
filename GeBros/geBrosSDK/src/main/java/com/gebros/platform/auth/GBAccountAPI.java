@@ -10,8 +10,8 @@ public class GBAccountAPI {
      * Authentication resources API paths
      */
 
-    public static final String AUTHENTICATION_URI = GBSettings.getAccountServer() + "/Login";
-    public static final String CONNECT_CHANNEL_URI = GBSettings.getAccountServer() + "/ConnectChannel";
+    public static final String AUTHENTICATION_URI = GBSettings.getAccountServer() + "/User/Login";
+    public static final String CONNECT_CHANNEL_URI = GBSettings.getAccountServer() + "/User/ConnectChannel";
 
     public static final String DISCONNECT_URI = GBSettings.getAccountServer() + "/session/logout";
     public static final String WITHDRAW_URI = GBSettings.getAccountServer() + "/users/quit";

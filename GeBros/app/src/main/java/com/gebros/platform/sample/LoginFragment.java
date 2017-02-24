@@ -177,7 +177,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 hideProgress();
                 Toast.makeText(getActivity(), "[Logout onSuccess]Session state = "+newSession.getState(), Toast.LENGTH_LONG).show();
                 mBtnProfile.setVisibility(View.GONE);
-
+                mTvUserkey.setText(newSession.getUserKey());
             }
 
             @Override

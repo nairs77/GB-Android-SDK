@@ -8,13 +8,9 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.gebros.platform.ActivityResultHelper;
-import com.gebros.platform.GBSdk;
-import com.gebros.platform.concurrent.ISimpleAsyncTask;
-import com.gebros.platform.concurrent.SimpleAsyncTask;
 import com.gebros.platform.exception.GBException;
 import com.gebros.platform.exception.GBExceptionType;
 import com.gebros.platform.listener.GBAuthListener;
-import com.gebros.platform.log.GBLog;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -41,6 +37,7 @@ class GoogleAuthHelper extends GBAuthHelper implements GoogleApiClient.OnConnect
         return AuthType.GOOGLE;
     }
 
+    @Override
     public void login(final Activity activity, final GBAuthListener listener) {
 
         if (!_isGooglePlayServicesAvailableState(activity)) {
@@ -70,10 +67,6 @@ class GoogleAuthHelper extends GBAuthHelper implements GoogleApiClient.OnConnect
                 }
             }
         });
-    }
-
-    public void logout(Activity activity, GBAuthListener listener) {
-
     }
 
     @Override

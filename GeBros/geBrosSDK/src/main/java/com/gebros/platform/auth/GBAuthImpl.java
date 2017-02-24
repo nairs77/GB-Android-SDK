@@ -86,7 +86,6 @@ final class GBAuthImpl {
                 });
 
         GBRequest.requestAPI(request);
-
     }
 
     public void requestDeleteAccount(final GBAuthListener listener) {

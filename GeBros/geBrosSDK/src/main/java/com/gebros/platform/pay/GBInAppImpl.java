@@ -234,7 +234,7 @@ final class GBInAppImpl {
                         errorCode = -1;
                         errorMessage = "IAP Failed";
 
-                        isSuccess = false;
+                        isSuccess = true;
                         break;
                     } else {
                         isSuccess = true;

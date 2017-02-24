@@ -1,13 +1,16 @@
 package com.gebros.platform.auth;
 
+import com.google.android.gms.auth.api.Auth;
+
 /**
  * Created by gebros.nairs77@gmail.com on 2017. 2. 3..
  */
 
 public enum AuthType {
-    GUEST(1),
+    GUEST(0),
+    GOOGLE(1),
     FACEBOOK(2),
-    GOOGLE(3),
+    KAKAO(3),
     CHINA360(11),
     BAIDU(12),
     XIAOMI(13),
@@ -32,12 +35,14 @@ public enum AuthType {
 
         switch (loginType) {
 
-            case 1:
+            case 0:
                 return AuthType.GUEST;
             case 2:
                 return AuthType.FACEBOOK;
-            case 3:
+            case 1:
                 return AuthType.GOOGLE;
+            case 3:
+                return AuthType.KAKAO;
             case 11:
                 return AuthType.CHINA360;
             case 12:

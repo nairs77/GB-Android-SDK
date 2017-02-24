@@ -11,9 +11,9 @@ public class GBInAppApi {
     private static final String CLIENT_SECRET_PARAMETER_KEY = "client_secret";
     private static final String USERKEY_PARAMETER_KEY = "userkey";
 
-    private static final String INIT = "/Initialize";
-    private static final String BUY_INTENT = "/BuyIntent";
-    private static final String SAVE_RECEIPT = "/SaveReceipt";
+    private static final String INIT = "/Pay/Initialize";
+    private static final String BUY_INTENT = "/Pay/BuyIntent";
+    private static final String SAVE_RECEIPT = "/Pay/SaveReceipt";
 
     public static final String GB_BILL_MARKETINFO_API = GBSettings.getIabServer() + INIT;
     public static final String GB_BILL_TOKEN_API = GBSettings.getIabServer() + BUY_INTENT;

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.gebros.platform.ActivityResultHelper;
 import com.gebros.platform.GBSdk;
 import com.gebros.platform.GBActivityHelper;
+import com.gebros.platform.auth.GBAuthManager;
+import com.gebros.platform.pay.GBInAppManager;
 import com.unity3d.player.UnityPlayerActivity;
 
 /**
@@ -44,16 +46,16 @@ public class GBUnityActivity extends UnityPlayerActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        if (!ActivityResultHelper.handleOnActivityResult(requestCode, resultCode, data))
-//            GBActivityHelper.onActivityResult(this, requestCode, resultCode, data);
+        boolean isResult = ActivityResultHelper.handleOnActivityResult(requestCode, resultCode, data);
+
+        if (!isResult)
+            isResult = GBAuthManager.onActivityResult(requestCode, resultCode, data);
+
+        if (!isResult)
+            isResult = GBInAppManager.onActivityResult(requestCode, resultCode, data);
     }
     /*
 //    @Override

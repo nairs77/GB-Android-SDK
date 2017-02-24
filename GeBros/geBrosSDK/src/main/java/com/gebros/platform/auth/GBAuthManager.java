@@ -90,6 +90,7 @@ public class GBAuthManager {
 
     public static void LoginWithAuthType(Activity activity, AuthType authType, final GBAuthListener listener) {
 
+        GBLog.d(TAG + "AuthType = " + authType);
         mAuthHelper = IAuthHelperFactory.create(authType, mAuthClient);
         mAuthHelper.login(activity, listener);
     }
