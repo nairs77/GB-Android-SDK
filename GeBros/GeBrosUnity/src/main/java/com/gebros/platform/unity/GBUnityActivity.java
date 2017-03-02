@@ -57,10 +57,4 @@ public class GBUnityActivity extends UnityPlayerActivity {
         if (!isResult)
             isResult = GBInAppManager.onActivityResult(requestCode, resultCode, data);
     }
-    /*
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//    //    GBPermissionHelper.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
-    */
 }

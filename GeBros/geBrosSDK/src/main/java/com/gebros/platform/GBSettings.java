@@ -67,10 +67,10 @@ public final class GBSettings {
 
     }
 
-    static String ACCOUNTS_SERVER = "http://52.192.103.46:8000";//"http://10.255.253.104:8000";
+    static String ACCOUNTS_SERVER = "http://sys.gebros.com:8000";//"http://10.255.253.104:8000";
     static String CONTENTS_SERVER = "";//"http://10.255.253.104:8000";
     static String PUSH_SERVER = "";
-    static String IAB_SERVER ="http://52.192.103.46:7000";
+    static String IAB_SERVER ="http://sys.gebros.com:7000";
     static String COMMON_API_SERVER ="";
     static String GAME_SERVER = "";
     static String GAME_CDN_SERVER = "";
