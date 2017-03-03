@@ -1,6 +1,7 @@
 package com.gebros.platform.unity;
 
 import com.gebros.platform.GBSettings;
+import com.gebros.platform.auth.GBSession;
 import com.gebros.platform.exception.GBException;
 import com.gebros.platform.listener.GBInAppListener;
 import com.gebros.platform.log.GBLog;
@@ -49,7 +50,11 @@ public class BillingPlugin extends BasePlugin {
         //BillingPlugin.getInstance().queryInventoryItemInfo(items, gameObjectName);
     }
 
-    //public static void BuyItem(String sku, int price, String itemInfo, String gameObjectName) {
+    public static void BuyItem(String sku, String price, String gameObjectName) {
+        BillingPlugin.getInstance().buyItemWithInfo(sku, price, gameObjectName);
+    }
+
+
     public static void BuyItem(String itemInfo, String gameObjectName) {
 
         try {
@@ -179,6 +184,29 @@ public class BillingPlugin extends BasePlugin {
 
         });
 */
+    }
+
+    private void buyItemWithInfo(String sku, String price, final String gameObjectName) {
+        callbackObjectNames.put(gameObjectName, gameObjectName);
+
+        String userKey = GBSession.getActiveSession().getUserKey();
+
+        GBInAppManager.BuyItem(getActivity(), userKey, new GBInAppItem(price, sku, "", "inapp"), new GBInAppListener.OnPurchaseFinishedListener() {
+            @Override
+            public void onSuccess(IabPurchase purchaseInfo) {
+
+            }
+
+            @Override
+            public void onFail(IabResult result) {
+
+            }
+
+            @Override
+            public void onCancel(boolean isUserCancelled) {
+
+            }
+        });
     }
 
     private void buyItemWithInfo(String sku, String price, String itemInfo, String toUserKey, final String gameObjectName) {
