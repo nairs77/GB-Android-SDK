@@ -29,6 +29,10 @@ class GBAuthHelper implements IAuthHelper {//extends AuthHelper {
         mImpl.authorize(getAuthType(), accountInfo, listener);
     }
 
+    public void connectChannel(Activity activity, GBAuthListener listener) {
+
+    }
+
     public void logout(Activity activity, GBAuthListener listener) {
         //mImpl.requestLogout(listener);
 

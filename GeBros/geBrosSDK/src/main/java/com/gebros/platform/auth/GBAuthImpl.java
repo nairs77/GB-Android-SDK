@@ -46,8 +46,10 @@ final class GBAuthImpl {
 //    private static final String PW_PARAM_KEY = "pw";
 //    private static final String JOIN_DEVICE_COLLECT_STATE = "device_collect_state";
 
+    public static final String ACCOUNT_SEQ_KEY = "accountSeq";
     public static final String CHNNEL_KEY = "channel";
     public static final String CHANNEL_ID_KEY = "channelID";
+    public static final String CHECKSUM_KEY = "checksum";
 
     private static IPlatformClient mClient;
 
@@ -155,8 +157,50 @@ final class GBAuthImpl {
         authorize(authType, accountInfo, listener);
     }
 
+    public void connectChannel(final AuthType authType, String accessToken, String uID, final GBAuthListener listener) {
+        Map<String, Object> accountInfo = new HashMap<String, Object>();
+
+
+        GBSession activeSession = GBSession.getActiveSession();
+
+        accountInfo.put(ACCOUNT_SEQ_KEY, activeSession.getUserKey());
+        accountInfo.put(CHNNEL_KEY, authType.getLoginType());
+        accountInfo.put(CHANNEL_ID_KEY, uID);
+        accountInfo.put("gameCode", 1);
+        accountInfo.put(CHECKSUM_KEY, activeSession.getCheckSum());
+
+        connectChannel(authType, accountInfo, listener);
+    }
+
     public void authorize(final AuthType authType, Map<String, Object> accountInfo, final GBAuthListener listener) {
         Request request = GBRequest.getAuthorizationRequest(GBAccountAPI.AUTHENTICATION_URI, accountInfo, new ObjectCallback<GBToken>() {
+
+            @Override
+            public void onComplete(GBToken tokens, Response response) {
+                //GBSession newSession = doUpdateSession(tokens, AuthType.valueOf(authType.getLoginType()));
+                GBSession newSession = _doUpdateSession(response.getState());
+                GBSession.getActiveSession().setCurrentActiveSession(newSession);
+
+                listener.onSuccess(newSession);
+                GBLog.d("token = %s", newSession.getUserKey());
+            }
+
+            @Override
+            public void onError(Response response) {
+                //handleException(response);
+                //GBLog.d("error code = %d", response.getAPIError().getErrorCode());
+                doExpireSession();
+                listener.onFail(handleException(response));
+            }
+
+        });
+        GBLog.i(TAG + " authorizationCallback !!!!!!!!!!!!!!!!!!!!!!!!!!"+GBSession.getActiveSession().getAuthType());
+        GBLog.i(TAG + " authorizationCallback authType!!!!!!!!!!!!!!!!!!!!!!!!!!"+authType.toString());
+        GBRequest.requestAPI(request);
+    }
+
+    public void connectChannel(final AuthType authType, Map<String, Object> accountInfo, final GBAuthListener listener) {
+        Request request = GBRequest.getAuthorizationRequest(GBAccountAPI.CONNECT_CHANNEL_URI, accountInfo, new ObjectCallback<GBToken>() {
 
             @Override
             public void onComplete(GBToken tokens, Response response) {
@@ -345,7 +389,7 @@ final class GBAuthImpl {
 
         try {
             jsonObject.put(GBSessionProxy.SESSION_STATE_KEY, GBSession.SessionState.OPEN);
-            jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, new Date().getTime());
+//            jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, new Date().getTime());
             return GBSession.createFromJSONObject(jsonObject);
 
         } catch (JSONException e) {

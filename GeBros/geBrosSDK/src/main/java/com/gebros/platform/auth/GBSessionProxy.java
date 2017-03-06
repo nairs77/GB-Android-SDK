@@ -22,8 +22,10 @@ final class GBSessionProxy {
     static final String SESSION_STATE_KEY = "state";
 
     static final String ACCOUNT_SEQ_KEY = "ACCOUNT_SEQ";
-    static final String SESSION_AUTH_TYPE_KEY = "CHANNEL_TYPE";
-    static final String SESSION_USER_INFO = "CHANNEL_USER_ID";
+    static final String CHANNEL_TYPE_KEY = "CHANNEL_TYPE";
+    static final String CHANNEL_USER_ID = "CHANNEL_USER_ID";
+    static final String CHECKSUM_KEY = "CHECKSUM";
+
 
     private static volatile GBSessionProxy instance;
 

@@ -95,6 +95,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 Logout();
 
         } else if (clickedViewId == mBtnProfile.getId()) {
+
+            GBAuthManager.ConnectChannel(getActivity(), AuthType.FACEBOOK, new GBAuthListener() {
+                @Override
+                public void onSuccess(GBSession newSession) {
+                    setSessionState(newSession.getState());
+                    //hideProgress();
+                    mBtnProfile.setVisibility(View.GONE);
+                    //GetProfile();
+                    mTvUserkey.setText(newSession.getUserKey());
+                }
+
+                @Override
+                public void onFail(GBException e) {
+
+                }
+
+                @Override
+                public void onCancel(boolean isUserCancelled) {
+
+                }
+            });
 /*
             GBGameManager.GameExitService(getActivity(), new GBGameListener() {
                 @Override

@@ -70,6 +70,11 @@ class GoogleAuthHelper extends GBAuthHelper implements GoogleApiClient.OnConnect
     }
 
     @Override
+    public void connectChannel(Activity activity, GBAuthListener listener) {
+        super.connectChannel(activity, listener);
+    }
+
+    @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         return false;
     }

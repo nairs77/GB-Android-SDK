@@ -26,6 +26,7 @@ public class GBAuthManager {
 
     static GBAuthImpl mAuthClient;
     static GBAuthHelper mAuthHelper;
+    static GBAuthHelper mChannelAuthHelper;
 
     public static final String TAG = GBAuthManager.class.getCanonicalName();
 
@@ -111,10 +112,9 @@ public class GBAuthManager {
 
 
     public static void ConnectChannel(Activity activity, AuthType authType, final GBAuthListener listener) {
-        //mAuthHelper.connectChannel(activity, authType, listener);
-        GBAuthHelper authHelper = IAuthHelperFactory.create(authType, mAuthClient);
+        mChannelAuthHelper = IAuthHelperFactory.create(authType, mAuthClient);
+        mChannelAuthHelper.connectChannel(activity, listener);
 
-        //authHelper.login();
     }
 
     /**
@@ -142,8 +142,12 @@ public class GBAuthManager {
     }
 
     public static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mAuthHelper != null)
+        if (mAuthHelper != null) {
+            if (mChannelAuthHelper != null)
+                return mChannelAuthHelper.onActivityResult(requestCode, resultCode, data);
+
             return mAuthHelper.onActivityResult(requestCode, resultCode, data);
+        }
 
         return false;
     }

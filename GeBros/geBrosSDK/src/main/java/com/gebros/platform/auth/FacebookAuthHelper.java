@@ -51,6 +51,7 @@ class FacebookAuthHelper extends GBAuthHelper {
     public AccessToken mAccessToken;
     //public static String facebookToken;
     private GBAuthListener mListener;
+    private boolean mConnectedChannel;
 
     private CallbackManager mCallbackManager;
 
@@ -80,7 +81,7 @@ class FacebookAuthHelper extends GBAuthHelper {
 
         } else if (activeSession.getState() == GBSession.SessionState.READY) {
             Map<String, Object> accountInfo = new HashMap<String, Object>();
-            accountInfo.put(CHANNEL_ID_KEY, activeSession.getUserInfo());
+            accountInfo.put(CHANNEL_ID_KEY, activeSession.getChannelID());// activeSession.getUserInfo());
             loginWithAccountInfo(activity, accountInfo, listener);
         }
     }
@@ -93,6 +94,19 @@ class FacebookAuthHelper extends GBAuthHelper {
                 mImpl.authorize(getAuthType(), "", (String)accountInfo.get(CHANNEL_ID_KEY), mListener);
             }
         });
+    }
+
+    @Override
+    public void connectChannel(Activity activity, GBAuthListener listener) {
+
+        if (listener != null)
+            mListener = listener;
+
+        mConnectedChannel = true;
+        mCallbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().logInWithReadPermissions(activity, PERMISSIONS);
+        LoginManager.getInstance().registerCallback(mCallbackManager, facebookCallback);
     }
 
     @Override
@@ -159,9 +173,6 @@ class FacebookAuthHelper extends GBAuthHelper {
 
                     _expires();
 
-//                    Joyple.getInstance().hideProgress();
-//                    joypleStatusCallback.callback(JoypleSession.getActiveSession(), State.ACCESS_FAILED, JoypleException.getJoypleExceptionTemplate(JoypleExceptionType.FACEBOOK_ERROR));
-
                     return;
                 }
 
@@ -176,12 +187,22 @@ class FacebookAuthHelper extends GBAuthHelper {
 //                    else
 //                        checkAccount(mActivity, AuthType.FACEBOOK, accessToken.getUserId(), email);
 
-                    SimpleAsyncTask.doRunUIThread(new ISimpleAsyncTask.OnUIThreadTask() {
-                        @Override
-                        public void doRunUIThread() {
-                            mImpl.authorize(getAuthType(), token.getToken(), token.getUserId(), mListener);
-                        }
-                    });
+                    if (mConnectedChannel) {
+                        SimpleAsyncTask.doRunUIThread(new ISimpleAsyncTask.OnUIThreadTask() {
+                            @Override
+                            public void doRunUIThread() {
+                                mImpl.connectChannel(getAuthType(), token.getToken(), token.getUserId(), mListener);
+                            }
+                        });
+                    } else {
+                        SimpleAsyncTask.doRunUIThread(new ISimpleAsyncTask.OnUIThreadTask() {
+                            @Override
+                            public void doRunUIThread() {
+                                mImpl.authorize(getAuthType(), token.getToken(), token.getUserId(), mListener);
+                            }
+                        });
+                    }
+
 
                 }
             }

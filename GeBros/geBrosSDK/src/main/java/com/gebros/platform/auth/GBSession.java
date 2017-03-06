@@ -75,9 +75,9 @@ public final class GBSession implements Parcelable {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put(GBSessionProxy.ACCOUNT_SEQ_KEY, this.mUserKey);
-        jsonObject.put(GBSessionProxy.SESSION_USER_INFO, this.mUserInfo);
+        jsonObject.put(GBSessionProxy.CHANNEL_USER_ID, this.mUserInfo);
         jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, this.mLastAccessTime.getTime());
-        jsonObject.put(GBSessionProxy.SESSION_AUTH_TYPE_KEY, mAuthType.getLoginType());
+        jsonObject.put(GBSessionProxy.CHANNEL_TYPE_KEY, mAuthType.getLoginType());
 
         if (mAuthType == AuthType.NONE)
             jsonObject.put(GBSessionProxy.SESSION_STATE_KEY, SessionState.NONE);
@@ -111,6 +111,30 @@ public final class GBSession implements Parcelable {
 
     public String getUserInfo() { return this.mUserInfo; }
 
+    public String getChannelID() {
+        try {
+            JSONObject jsonObject = new JSONObject(mUserInfo);
+
+            return jsonObject.getString(GBSessionProxy.CHANNEL_USER_ID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public String getCheckSum() {
+        try {
+            JSONObject jsonObject = new JSONObject(mUserInfo);
+
+            return jsonObject.getString(GBSessionProxy.CHECKSUM_KEY);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     /**
      * Gets the {@link AuthType} indicating how this access token was obtained.
      *
@@ -139,9 +163,9 @@ public final class GBSession implements Parcelable {
 
     static GBSession createFromJSONObject(JSONObject jsonObject) throws JSONException {
         String userKey = jsonObject.getString(GBSessionProxy.ACCOUNT_SEQ_KEY);
-        String userInfo = jsonObject.getString(GBSessionProxy.SESSION_USER_INFO);
-        AuthType authType = AuthType.valueOf(jsonObject.getInt(GBSessionProxy.SESSION_AUTH_TYPE_KEY));
-        Date lastRefresh = new Date(jsonObject.getLong(GBSessionProxy.SESSION_ACCESS_KEY));
+        String userInfo = jsonObject.toString();   //jsonObject.getString(GBSessionProxy.SESSION_USER_INFO);
+        AuthType authType = AuthType.valueOf(jsonObject.getInt(GBSessionProxy.CHANNEL_TYPE_KEY));
+        Date lastRefresh = new Date();//new Date(jsonObject.getLong(GBSessionProxy.SESSION_ACCESS_KEY));
         SessionState state = SessionState.valueOf(jsonObject.getString(GBSessionProxy.SESSION_STATE_KEY));
 
         return new GBSession(

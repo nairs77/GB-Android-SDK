@@ -70,9 +70,9 @@ class GBSessionCache {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put(GBSessionProxy.ACCOUNT_SEQ_KEY, "");
-            jsonObject.put(GBSessionProxy.SESSION_USER_INFO, "");
-            jsonObject.put(GBSessionProxy.SESSION_AUTH_TYPE_KEY, AuthType.NONE.getLoginType());
-            jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, new Date(0).getTime());
+            jsonObject.put(GBSessionProxy.CHANNEL_USER_ID, "");
+            jsonObject.put(GBSessionProxy.CHANNEL_TYPE_KEY, AuthType.NONE.getLoginType());
+//            jsonObject.put(GBSessionProxy.SESSION_ACCESS_KEY, new Date(0).getTime());
             jsonObject.put(GBSessionProxy.SESSION_STATE_KEY, GBSession.SessionState.NONE);
             return GBSession.createFromJSONObject(jsonObject);
         } catch (JSONException e) {

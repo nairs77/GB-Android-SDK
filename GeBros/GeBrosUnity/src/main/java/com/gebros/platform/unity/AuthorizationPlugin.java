@@ -49,6 +49,14 @@ public final class AuthorizationPlugin extends BasePlugin {
             return false;
     }
 
+    public static boolean isReady() {
+        return GBSession.getActiveSession().getState() == GBSession.SessionState.READY ? true : false;
+    }
+
+    public static boolean isConnectedChannel() {
+        return GBSession.getActiveSession().getAuthType() == AuthType.FACEBOOK ? true : false;
+    }
+
     public static boolean isAllowedEULA() {
         //return GB.getInstance().isAllowedEULA();
         return true;
@@ -87,6 +95,11 @@ public final class AuthorizationPlugin extends BasePlugin {
         AuthType type = AuthType.valueOf(authType);
         AuthorizationPlugin.getInstance().loginWithCallback(type, gameObjectName);
     }
+
+    public static void ConnectChannel(int authType, String gameObjectName) {
+        AuthType type = AuthType.valueOf(authType);
+        AuthorizationPlugin.getInstance().connectChannelWithCallback(type, gameObjectName);
+    }
 /*
     public static void LoginByUI(String gameObjectName) {
         AuthorizationPlugin.getInstance().loginByUI(gameObjectName);
@@ -101,18 +114,6 @@ public final class AuthorizationPlugin extends BasePlugin {
         AuthorizationPlugin.getInstance().logoutWithCallback(gameObjectName);
     }
 
-//    public static void DeleteAccount(String gameObjectName) {
-//        AuthorizationPlugin.getInstance().withdrawWithCallback(gameObjectName);
-//    }
-//
-    public static void RequestProfile(String gameObjectName) {
-        AuthorizationPlugin.getInstance().requestProfileWithCallback(gameObjectName);
-    }
-//
-//    public static void ShowGBMain() {
-//        AuthorizationPlugin.getInstance().showMain();
-//    }
-//
     public static void ShowClickWrap(String gameObjectName) {
         AuthorizationPlugin.getInstance().showClickWrap(gameObjectName);
     }
@@ -152,68 +153,19 @@ public final class AuthorizationPlugin extends BasePlugin {
 
         GBAuthManager.LoginWithAuthType(getActivity(), authType, mAuthListener);
     }
-/*
-    private void linkServiceWithCallback(AuthType authType, String callbackObjectName) {
-        this.callbackObjectName = callbackObjectName;
-        GB.getInstance().linkServiceWithAuthType(authType, thirdConnectServiceCallback);
+
+    private void connectChannelWithCallback(AuthType authType, String callbackObjectName) {
+        SessionGameObject = callbackObjectName;
+        //GB.getInstance().linkServiceWithAuthType(authType, thirdConnectServiceCallback);
+        GBAuthManager.ConnectChannel(getActivity(), authType, mAuthListener);
     }
-    private void loginByUI(String callbackObjectName) {
-        this.callbackObjectName = callbackObjectName;
-        GB.getInstance().loginByUI(UnityPlayer.currentActivity, GBStatusCallback);
-    }
-*/
+
     private void logoutWithCallback(String callbackObjectName) {
         //callbackObjectNames.add(callbackObjectName);
         SessionGameObject = callbackObjectName;
         callbackObjectNames.put(callbackObjectName, callbackObjectName);
 
         GBAuthManager.Logout(getActivity(), mAuthListener);
-    }
-/*
-    private void withdrawWithCallback(String callbackObjectName) {
-        this.callbackObjectName = callbackObjectName;
-        GB.getInstance().withdraw();
-
-    }
-*/
-    private void requestProfileWithCallback(final String callbackObjectName) {
-        //callbackObjectNames.add(callbackObjectName);
-        callbackObjectNames.put(callbackObjectName, callbackObjectName);
-
-        ProfileApi.RequestProfile(new GBProfileListener() {
-            @Override
-            public void onSuccess(JSONObject result) {
-                JSONObject response = new JSONObject();
-                JSONObject event_response = new JSONObject();
-                try {
-                    event_response.put(DATA_KEY, result);
-                    response.put(RESULT_KEY, event_response);
-                } catch (JSONException e) {
-                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
-                }
-
-                SendUnityMessage(callbackObjectNames.remove(callbackObjectName), ASYNC_RESULT_SUCCESS, response.toString());
-            }
-
-            @Override
-            public void onFail(GBException ex) {
-                JSONObject response = new JSONObject();
-                JSONObject event_response = new JSONObject();
-                JSONObject error_response = new JSONObject();
-
-                try {
-                    error_response.put(API_RESPONSE_ERROR_CODE_KEY, ex.getErrorCode());
-                    error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, ex.getMessage());
-
-                    event_response.put(ERROR_KEY, error_response);
-                    response.put(RESULT_KEY, event_response);
-                } catch (JSONException e) {
-                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
-                }
-
-                SendUnityMessage(callbackObjectNames.remove(callbackObjectName), ASYNC_RESULT_FAIL, response.toString());
-            }
-        });
     }
 
     private void showClickWrap(final String callbackObjectName) {
@@ -256,7 +208,7 @@ public final class AuthorizationPlugin extends BasePlugin {
             JSONObject session_response = new JSONObject();
 
             try {
-                session_response.put(SESSION_KEY, newSession.getState().name());
+                session_response.put(SESSION_KEY, newSession.getUserInfo());
                 response.put(RESULT_KEY, session_response);
             } catch (JSONException e) {
                 e.printStackTrace();

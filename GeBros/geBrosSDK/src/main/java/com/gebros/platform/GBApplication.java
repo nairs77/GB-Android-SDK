@@ -15,6 +15,7 @@ public class GBApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        FacebookSdk.sdkInitialize(this);
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
