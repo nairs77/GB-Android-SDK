@@ -147,6 +147,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void Login() {
+
+        boolean isReady = GBSession.getActiveSession().getState() == GBSession.SessionState.READY ? true : false;
         GBAuthManager.LoginWithAuthType(getActivity(), AuthType.GOOGLE, new GBAuthListener() {
             @Override
             public void onSuccess(final GBSession newSession) {

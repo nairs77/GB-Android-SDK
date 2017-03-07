@@ -33,7 +33,7 @@ dependencies {
 }
 
 task clearJar(type: Delete) {
-    delete 'build/release/gebros-unity-plugin.jar'
+    delete 'build/debug/gebros-unity-plugin.jar'
 }
 
 task makeJar(type: Copy) {

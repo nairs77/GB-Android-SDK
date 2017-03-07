@@ -52,6 +52,9 @@ public class GBAuthManager {
 
         AuthType authType = GBSession.getActiveSession().getAuthType();
 
+        mAuthHelper = IAuthHelperFactory.create(authType, mAuthClient);
+        mAuthHelper.login(activity, listener);
+/*
         if (authType == AuthType.NONE ||
                 authType == AuthType.CHINA360 ||
                 authType == AuthType.BAIDU ||
@@ -63,6 +66,7 @@ public class GBAuthManager {
         } else {
             AutoLogin(activity, listener);
         }
+*/
     }
 
     /**
@@ -160,7 +164,7 @@ public class GBAuthManager {
      */
 
     static void AutoLogin(Activity activity, GBAuthListener listener) {
-        //mAuthClient.autoLogin(listener);
+
     }
 
     /**

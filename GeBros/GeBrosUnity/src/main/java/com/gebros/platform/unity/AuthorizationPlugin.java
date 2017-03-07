@@ -53,8 +53,8 @@ public final class AuthorizationPlugin extends BasePlugin {
         return GBSession.getActiveSession().getState() == GBSession.SessionState.READY ? true : false;
     }
 
-    public static boolean isConnectedChannel() {
-        return GBSession.getActiveSession().getAuthType() == AuthType.FACEBOOK ? true : false;
+    public static String getActiveSession() {
+        return GBSession.getActiveSession().getUserInfo();
     }
 
     public static boolean isAllowedEULA() {
