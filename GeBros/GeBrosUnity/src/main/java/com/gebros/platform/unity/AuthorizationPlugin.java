@@ -3,13 +3,11 @@ package com.gebros.platform.unity;
 import com.gebros.platform.auth.AuthType;
 import com.gebros.platform.auth.GBAuthManager;
 import com.gebros.platform.auth.GBSession;
-import com.gebros.platform.auth.ProfileApi;
 import com.gebros.platform.auth.ui.GBProfileViewType;
 import com.gebros.platform.auth.ui.common.GBViewEventListener;
 import com.gebros.platform.exception.GBException;
 import com.gebros.platform.exception.GBExceptionType;
 import com.gebros.platform.listener.GBAuthListener;
-import com.gebros.platform.listener.GBProfileListener;
 import com.gebros.platform.log.GBLog;
 
 import org.json.JSONException;
@@ -205,10 +203,18 @@ public final class AuthorizationPlugin extends BasePlugin {
 
             GBLog.d(TAG + "onSuccess - Auth Listener !!!!");
             JSONObject response = new JSONObject();
+/*
             JSONObject session_response = new JSONObject();
 
             try {
                 session_response.put(SESSION_KEY, newSession.getUserInfo());
+                response.put(RESULT_KEY, session_response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+*/
+            try {
+                JSONObject session_response = new JSONObject(newSession.getUserInfo());
                 response.put(RESULT_KEY, session_response);
             } catch (JSONException e) {
                 e.printStackTrace();

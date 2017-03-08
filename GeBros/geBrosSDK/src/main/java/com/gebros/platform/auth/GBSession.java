@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.gebros.platform.log.GBLog;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -167,6 +169,8 @@ public final class GBSession implements Parcelable {
         AuthType authType = AuthType.valueOf(jsonObject.getInt(GBSessionProxy.CHANNEL_TYPE_KEY));
         Date lastRefresh = new Date();//new Date(jsonObject.getLong(GBSessionProxy.SESSION_ACCESS_KEY));
         SessionState state = SessionState.valueOf(jsonObject.getString(GBSessionProxy.SESSION_STATE_KEY));
+
+        GBLog.d("createFromJsonObject = %s", userInfo);
 
         return new GBSession(
                 userKey,
