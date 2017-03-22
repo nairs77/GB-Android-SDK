@@ -3,8 +3,10 @@ package com.gebros.platform.net;
 import com.gebros.platform.concurrent.ManagedAsyncTask;
 import com.gebros.platform.log.GBLog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.IOException;
 import java.util.Map;
@@ -77,8 +79,28 @@ public class JSONRequestRunner extends RequestRunner<JSONObject> {
 			
 			try {
 				String response = template.getResponse();
+
+				Object token = new JSONTokener(response).nextValue();
+
+				if (token instanceof JSONArray){
+					JSONArray array = new JSONArray(response);
+					JSONObject newObject = new JSONObject();
+					try {
+						newObject.put("RESULT", 1);
+						newObject.put("paymentKeys", array);
+						listener.onComplete(newObject);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					JSONObject object = new JSONObject(response);
+					listener.onComplete(object);
+				}
+
+/*
 				JSONObject object = new JSONObject(response);
 				listener.onComplete(object);
+*/
 			} catch (IOException e) {
 				listener.onException(new OkHttpException(e.getMessage()));
 			} catch (JSONException e) {

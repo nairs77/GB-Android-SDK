@@ -16,9 +16,13 @@ import com.gebros.platform.platform.IPlatformClient;
 import com.gebros.platform.platform.PlatformType;
 import com.gebros.platform.util.GBValidator;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +42,7 @@ public class GBInAppManager {
      * @param client
      */
     public static void Initialize(IPlatformClient client) {
-//        inAppImpl.initialize();
+//        inAppImpl.initialißze();
 //    //    inAppImpl = new GBInAppImpl(client);
 //    //    inAppImpl.initialize();
 //        inAppImpl.setClient(client);
@@ -73,11 +77,13 @@ public class GBInAppManager {
             mIabHelper.queryInventoryAsync(skus, new IIabCallback.OnQueryInventoryListener() {
                 @Override
                 public void success(IabInventory inventory) {
+
                     listener.onSuccess(inventory);
                 }
 
                 @Override
                 public void fail(IabResult result) {
+
                     listener.onFail(result);
                 }
             });
@@ -87,35 +93,20 @@ public class GBInAppManager {
     }
 
     /**
-     *
      * @param activity      Activity
-     * @param userKey       UserKey for Person who will receive a item
      * @param item          Purchase item info
      * @param listener      Notify listener when Purchase is complete.
      */
-    public static void BuyItem(final Activity activity, final String userKey, final GBInAppItem item, final GBInAppListener.OnPurchaseFinishedListener listener) {
+    public static void BuyItem(final Activity activity, final GBInAppItem item, final GBInAppListener.OnPurchaseFinishedListener listener) {
 
         GBLog.d(TAG + "Request BuyItem = %s", sUserKey);
 
-        inAppImpl.requestPaymentIabToken(userKey, item, new GBEventReceiver() {
+        inAppImpl.requestPaymentIabToken(sUserKey, item, new GBEventReceiver() {
 
             @Override
             public void onSuccessEvent(GBEvent event, JSONObject json) {
-
-//                GBLog.d(TAG + "json = %s", json.toString());
-//                String extraData = json.optString(GBInAppImpl.PAYMENTKEY_PARAMETER_KEY);
-//
-//                StringBuilder sb = new StringBuilder(extraData);
-//
-//                if (GBSettings.getMarket() == Market.MYCARD) {
-//                    sb.append(",");
-//                    sb.append(json.optString(GBInAppImpl.AUTH_CODE_PARAMETER_KEY));
-//                }
-//                extraData = sb.toString();
-//
-//                GBLog.d(TAG + "payment Key = %s", extraData);
                 String devPayload = json.optString("PAYMENT_KEY");
-                launchPurchaseFlow(activity, userKey, item, devPayload, listener);
+                launchPurchaseFlow(activity, sUserKey, item, devPayload, listener);
             }
 
             @Override
@@ -130,9 +121,26 @@ public class GBInAppManager {
         inAppImpl.requestRestoreItems(sUserKey, new GBEventReceiver() {
             @Override
             public void onSuccessEvent(GBEvent event, JSONObject json) {
-                String keyStr = json.optString("payment_key");
-                List<String> keyList = getPaymentKeys(keyStr);
-                listener.onSuccess(keyList);
+
+                GBLog.d(TAG + "RestoreItems --- onSuccessEvent");
+
+                ArrayList<String> paymentKeys = new ArrayList<String>();
+
+                try {
+
+                    JSONArray jsonArray = json.getJSONArray("paymentKeys");
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        paymentKeys.add(object.getString("PAYMENT_KEY"));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                GBLog.d(TAG + "RestoreItems --- " + paymentKeys.toString());
+                listener.onSuccess(paymentKeys);
             }
 
             @Override
@@ -197,18 +205,6 @@ public class GBInAppManager {
 
                     final IabPurchase purchaseInfo = purchase;
 
-/*
-                    // - 2015. 5.12 for promo code
-                    GBLog.d(TAG + "For Promo code payload:"+payload+" , orderId:"+orderId);
-                    if (GBValidator.isNullOrEmpty(payload) && GBValidator.isNullOrEmpty(orderId)) {
-
-                        GBLog.d(TAG + "For Promo code");
-                        purchaseInfo.setPaymentKey(extraData);
-
-                        String customOrderId = extraData + "." + userKey;
-                        purchaseInfo.setCustomOrderId(customOrderId);
-                    }
-*/
                     saveReceipt(userKey, purchaseInfo, listener);
                 }
 
@@ -238,6 +234,15 @@ public class GBInAppManager {
             @Override
             public void onSuccessEvent(GBEvent event, JSONObject json) {
                 listener.onSuccess(purchase);
+
+                SimpleAsyncTask.doRunUIThread(new ISimpleAsyncTask.OnUIThreadTask() {
+                    @Override
+                    public void doRunUIThread() {
+                        ArrayList<IabPurchase> purchaseList = new ArrayList<IabPurchase>();
+                        purchaseList.add(purchase);
+                        consumePurchaseItem(purchaseList);
+                    }
+                });
             }
 
             @Override

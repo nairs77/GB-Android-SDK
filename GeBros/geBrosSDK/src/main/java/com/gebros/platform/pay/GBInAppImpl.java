@@ -267,9 +267,9 @@ final class GBInAppImpl {
 
     public void requestRestoreItems(String userKey, GBEventReceiver receiver) {
         AbstractRequest.Builder builder = new AbstractRequest.Builder(GBInAppApi.GB_BILL_RESTORE_API).method(HttpMethod.POST)
-                .addParameters(CLIENT_SECRET_PARAMETER_KEY, GBSettings.getClientSecret())
-                .addParameters(USERKEY_PARAMETER_KEY, userKey)
-                .addParameters("market_code", GBSettings.getMarketCode());
+                .addParameters(ACCOUNT_SEQ_KEY, userKey)
+                .addParameters("marketCode", GBSettings.getMarketCode())
+                .addParameters("gameCode", GBSettings.getGameCode());
 
         RequestRunner<JSONObject> runner = new JSONRequestRunner(builder);
         runner.call(new GBResponseHandler(new GBEvent[]{GBEvent.PAYMENT_FAIL_RESTORE_IAB, GBEvent.PAYMENT_FAIL_RESTORE_IAB_FAILED}, receiver));

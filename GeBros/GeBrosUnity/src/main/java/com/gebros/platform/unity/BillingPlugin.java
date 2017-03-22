@@ -5,11 +5,14 @@ import com.gebros.platform.auth.GBSession;
 import com.gebros.platform.exception.GBException;
 import com.gebros.platform.listener.GBInAppListener;
 import com.gebros.platform.log.GBLog;
+import com.gebros.platform.pay.IabInventory;
 import com.gebros.platform.pay.IabPurchase;
 import com.gebros.platform.pay.IabResult;
 import com.gebros.platform.pay.GBInAppItem;
 import com.gebros.platform.pay.GBInAppManager;
+import com.gebros.platform.pay.IabSkuDetails;
 import com.gebros.platform.platform.PlatformType;
+import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,11 +49,13 @@ public class BillingPlugin extends BasePlugin {
     public static void QueryInventoryItemInfo(String sku_array, final String gameObjectName) {
         String[] skus = sku_array.split(",");
 
+        GBLog.d(TAG + "sku = " + sku_array);
+
         ArrayList<String> items = new ArrayList<String>(Arrays.asList(skus));
-        //BillingPlugin.getInstance().queryInventoryItemInfo(items, gameObjectName);
+        BillingPlugin.getInstance().queryInventoryItemInfo(items, gameObjectName);
     }
 
-    public static void BuyItem(String sku, String price, String gameObjectName) {
+    public static void BuyItem(String sku, int price, String gameObjectName) {
         BillingPlugin.getInstance().buyItemWithInfo(sku, price, gameObjectName);
     }
 
@@ -97,124 +102,148 @@ public class BillingPlugin extends BasePlugin {
         });
     }
 
-    private void queryInventoryItemInfo(ArrayList<String> items, final String gameObjectName) throws GBException{
+    private void queryInventoryItemInfo(ArrayList<String> items, final String gameObjectName) {
 
-        // TODO: API 지원 여부를 어디서 판단하는게 좋을까?
-//        if (GBSettings.getMarket() != PlatformType.Market.GOOGLE)
-//            throw new GBException("Not Supported");
+        callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        //callbackObjectNames.put(gameObjectName, gameObjectName);
+        GBLog.d(TAG + "items = " + items.get(0));
 
-        //GBInAppManager.QueryInventory(items, );
-/*
-        JoycityIabService.getInstance().queryInventoryItems(true, items, new JoycityIabService.OnQueryInventoryFinishedListener() {
+        GBInAppManager.QueryInventory(items, new GBInAppListener.OnQueryInventoryFinishedListener() {
+            @Override
+            public void onSuccess(IabInventory inv) {
+                JSONObject response = new JSONObject();
+                JSONObject items_response = new JSONObject();
+                JSONObject iab_response = new JSONObject();
+
+                try {
+                    if (inv != null) {
+
+                        List<String> purchases = inv.getAllQueriedSkus(true);
+
+                        int count = 0;
+                        int purchasesCount = purchases.size();
+
+                        items_response.put("count", purchasesCount);
+
+                        if (purchasesCount > 0) {
+                            for (String purchase : purchases) {
+                                IabSkuDetails item = inv.getSkuDetails(purchase);
+                                JSONObject item_response = new JSONObject();
+
+                                item_response.put("title", item.getTitle());
+                                item_response.put("description", item.getDescription());
+                                item_response.put("product_id", item.getSku());
+
+                                JSONObject o = new JSONObject(item.getJson());
+
+                                String price_symbol = item.getPrice();
+                                item_response.put("price", price_symbol.substring(1));
+                                item_response.put("currency_symbol", price_symbol.substring(0, 1));
+                                item_response.put("currency", o.optString("price_currency_code"));
+                                items_response.put("item" + String.valueOf(count), item_response);
+
+                            }
+                            count++;
+                        }
+                    }
+                    iab_response.put(DATA_KEY, items_response);
+                    response.put(RESULT_KEY, iab_response);
+
+                } catch (JSONException e) {
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
+                }
+
+                GBLog.d(TAG + "response = " + response.toString());
+                UnityPlayer.UnitySendMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_SUCCESS, response.toString());
+            }
 
             @Override
-            public void onQueryInventoryFinished(IabResult result, IabInventory inv) {
-                // TODO Auto-generated method stub
-                Logger.d(TAG + "Query inventory item info finished.");
-
-                String callResponseName = (result.isSuccess() == true) ? ASYNC_CALL_SUCCEEDED : ASYNC_CALL_FAILED;
-
+            public void onFail(IabResult result) {
                 JSONObject response = new JSONObject();
                 JSONObject iab_response = new JSONObject();
                 JSONObject error_response = new JSONObject();
 
                 try {
-
-                    if (!result.isSuccess()) {
-                        error_response.put(API_RESPONSE_ERROR_CODE_KEY, result.getResponse());
-                        error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, result.getMessage());
-                        iab_response.put(ERROR_KEY, error_response);
-
-                        response.put(RESULT_KEY, error_response);
-                    } else {
-                        JSONObject items_response = new JSONObject();
-
-                        if (inv != null) {
-
-                            List<String> purchases = inv.getAllQueriedSkus(true);
-
-                            int count = 0;
-                            int purchasesCount = purchases.size();
-
-                            items_response.put("count", purchasesCount);
-
-                            if (purchasesCount > 0) {
-                                for (String purchase : purchases) {
-                                    IabSkuDetails item = inv.getSkuDetails(purchase);
-                                    JSONObject item_response = new JSONObject();
-
-                                    if (Joycity.getMarket() == Market.ONESTORE) {
-                                        item_response.put("title", item.getTitle());
-                                        item_response.put("product_id", item.getSku());
-                                        item_response.put("price", item.getPrice());
-                                        item_response.put("type", item.getType());
-                                        item_response.put("item_type", item.getItemType());
-                                        item_response.put("validity", item.getmValidity());
-                                    } else {
-                                        item_response.put("title", item.getTitle());
-                                        item_response.put("description", item.getDescription());
-                                        item_response.put("product_id", item.getSku());
-
-                                        JSONObject o = new JSONObject(item.getJson());
-
-                                        String price_symbol = item.getPrice();
-                                        item_response.put("price", price_symbol.substring(1));
-                                        item_response.put("currency_symbol", price_symbol.substring(0, 1));
-                                        item_response.put("currency", o.optString("price_currency_code"));
-                                        items_response.put("item"+String.valueOf(count), item_response);
-                                    }
-                                    count++;
-                                }
-                            }
-                        }
-
-                        iab_response.put(DATA_KEY, items_response);
-                    }
-
-                    response.put(RESULT_KEY, iab_response);
-
+                    error_response.put(API_RESPONSE_ERROR_CODE_KEY, result.getResponse());
+                    error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, result.getMessage());
+                    iab_response.put(ERROR_KEY, error_response);
+                    response.put(RESULT_KEY, error_response);
                 } catch (JSONException e) {
-                    Logger.d(TAG + "JSONException = %s", e.getMessage());
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
+
                 }
 
-                UnityPlayer.UnitySendMessage(gameObjectName, callResponseName, response.toString());
+                GBLog.d(TAG + "response = " + response.toString());
+                UnityPlayer.UnitySendMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_FAIL, response.toString());
             }
-
         });
-*/
     }
 
-    private void buyItemWithInfo(String sku, String price, final String gameObjectName) {
+    private void buyItemWithInfo(String sku, int price, final String gameObjectName) {
         callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        String userKey = GBSession.getActiveSession().getUserKey();
-
-        GBInAppManager.BuyItem(getActivity(), userKey, new GBInAppItem(price, sku, "", "inapp"), new GBInAppListener.OnPurchaseFinishedListener() {
+        GBInAppManager.BuyItem(getActivity(), new GBInAppItem(String.valueOf(price), sku, "", "inapp"), new GBInAppListener.OnPurchaseFinishedListener() {
             @Override
             public void onSuccess(IabPurchase purchaseInfo) {
+                JSONObject response = new JSONObject();
+                JSONObject iab_response = new JSONObject();
+                try {
+                    String paymentKey = purchaseInfo.getPaymentKey();//getDeveloperPayload();
+                    JSONObject payment = new JSONObject();
+                    payment.put("payment_key", paymentKey);
+                    iab_response.put(DATA_KEY, payment);
+                    response.put(RESULT_KEY, iab_response);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
 
+                SendUnityMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_SUCCESS, response.toString());
             }
 
             @Override
             public void onFail(IabResult result) {
+                JSONObject response = new JSONObject();
+                JSONObject iab_response = new JSONObject();
+                JSONObject error_response = new JSONObject();
 
+                try {
+                    error_response.put(API_RESPONSE_ERROR_CODE_KEY, result.getResponse());
+                    error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, result.getMessage());
+                    iab_response.put(ERROR_KEY, error_response);
+                    response.put(RESULT_KEY, iab_response);
+                } catch (JSONException e) {
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
+                }
+
+                SendUnityMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_FAIL, response.toString());
             }
 
             @Override
             public void onCancel(boolean isUserCancelled) {
+                JSONObject response = new JSONObject();
+                JSONObject iab_response = new JSONObject();
+                JSONObject error_response = new JSONObject();
 
+                // TODO : User Cancelled!!!
+                try {
+                    error_response.put(API_RESPONSE_ERROR_CODE_KEY, IabResult.BILLING_RESPONSE_RESULT_USER_CANCELED);
+                    error_response.put(API_RESPONSE_ERROR_MESSAGE_KEY, "User canceled");
+                    iab_response.put(ERROR_KEY, error_response);
+                    response.put(RESULT_KEY, iab_response);
+                } catch (JSONException e) {
+                    GBLog.d(TAG + "JSONException = %s", e.getMessage());
+                }
+
+                SendUnityMessage(callbackObjectNames.remove(gameObjectName), ASYNC_RESULT_FAIL, response.toString());
             }
         });
     }
 
     private void buyItemWithInfo(String sku, String price, String itemInfo, String toUserKey, final String gameObjectName) {
 
-        //callbackObjectNames.add(gameObjectName);
         callbackObjectNames.put(gameObjectName, gameObjectName);
 
-        GBInAppManager.BuyItem(getActivity(), toUserKey, new GBInAppItem(price, sku, itemInfo, "inapp"), new GBInAppListener.OnPurchaseFinishedListener() {
+        GBInAppManager.BuyItem(getActivity(), new GBInAppItem(price, sku, itemInfo, "inapp"), new GBInAppListener.OnPurchaseFinishedListener() {
 
             @Override
             public void onSuccess(IabPurchase purchaseInfo) {

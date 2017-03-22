@@ -1,7 +1,5 @@
 package com.gebros.platform.auth;
 
-import com.google.android.gms.auth.api.Auth;
-
 /**
  * Created by gebros.nairs77@gmail.com on 2017. 2. 3..
  */

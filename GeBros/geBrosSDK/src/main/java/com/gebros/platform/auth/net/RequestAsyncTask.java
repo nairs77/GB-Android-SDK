@@ -50,7 +50,7 @@ public class RequestAsyncTask extends AsyncTask<Void, Void, Response> {
 			return;
 		}
 		
-		if(response.getStatus() == Response.API_ON_FAILED) {
+		if(response.getStatus() <= Response.API_ON_FAILED) {
 			onFailed(response.setException(new GBException(GBExceptionType.SERVER_RESPONSE_FAILED)));
 			return;
 		}

@@ -3,6 +3,7 @@ package com.gebros.platform;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.gebros.platform.log.GBLog;
 import com.gebros.platform.platform.IPlatformClient;
@@ -24,24 +25,6 @@ final class GBSdkImpl {
 
     public void initialize(Activity activity) {
         GBSettingsProxy.getInstance().loadSettings();
-
-
-
-//        GBAuthManager.Initialize(activity);
-//        GBInAppManager.Initialize(activity);
-/*
-        mPlatformClient = PlatformFactory.create(new Platform.Builder("", "").PlatformType(PlatformType.DEFAULT).build());
-        mPlatformClient.doPlatformActive(activity, new IPlatformListener.OnInitLister() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFail() {
-            }
-        });
-*/
     }
 
     public void configureSDKWithGameInfo(Activity activity, int gameCode, String clientSecretkey, Platform platform, GBLog.LogLevel logLevel) {
@@ -56,10 +39,10 @@ final class GBSdkImpl {
             GBLog.enableLog();
 
         mPlatformClient = PlatformFactory.create(platform);
+        mPlatformClient.doPlatformInit(activity, null);
     }
 
     public void configureSDKWithGameInfo(Activity activity, int gameCode, String clientSecretkey, GBLog.LogLevel logLevel) {
-
         Platform platform = new Platform.Builder(PlatformType.DEFAULT).build();
         configureSDKWithGameInfo(activity, gameCode, clientSecretkey, platform, logLevel);
     }
@@ -70,6 +53,7 @@ final class GBSdkImpl {
 
     public void onActivityCreate(Activity activity, Bundle savedInstanceState) {
         //GB.instance.getPlatformClient().onActivityCreate(activity, savedInstanceState);
+
         if (getPlatformClient() != null)
             getPlatformClient().onActivityCreate(activity, savedInstanceState);
     }

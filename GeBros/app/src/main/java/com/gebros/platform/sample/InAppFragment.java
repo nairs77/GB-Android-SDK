@@ -20,8 +20,10 @@ import com.gebros.platform.listener.GBInAppListener;
 import com.gebros.platform.log.GBLog;
 import com.gebros.platform.pay.GBInAppItem;
 import com.gebros.platform.pay.GBInAppManager;
+import com.gebros.platform.pay.IabInventory;
 import com.gebros.platform.pay.IabPurchase;
 import com.gebros.platform.pay.IabResult;
+import com.gebros.platform.pay.IabSkuDetails;
 import com.gebros.platform.util.GBMessageUtils;
 
 import java.util.ArrayList;
@@ -97,22 +99,8 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
         int clickedViewId = view.getId();
 
         if (clickedViewId == mBtnBuyItem.getId()) {
-            BuyItem();
-/*
+            //BuyItem();
             RestoreItems();
-            GBInAppManager.InitInAppService(ProfileApi.getLocalUser().getUserKey(), new GBInAppListener.OnIabSetupFinishedListener() {
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(getActivity(), "[InitInAppService onSuccess]", Toast.LENGTH_LONG).show();
-                    BuyItem();
-                }
-
-                @Override
-                public void onFail() {
-                    Toast.makeText(getActivity(), "[InitInAppService onFail]", Toast.LENGTH_LONG).show();
-                }
-            });
-*/
         }
     }
 
@@ -134,7 +122,8 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
     private void BuyItem() {
         GBLog.d(TAG + " BuyItem::::::::::");
         GBMessageUtils.toast(getActivity(), "자~~ 구매 합니다.");
-        GBInAppManager.BuyItem(getActivity(), GBSession.getActiveSession().getUserKey(), mCurrentItem, new GBInAppListener.OnPurchaseFinishedListener() {
+
+        GBInAppManager.BuyItem(getActivity(), mCurrentItem, new GBInAppListener.OnPurchaseFinishedListener() {
             @Override
             public void onSuccess(IabPurchase purchaseInfo) {
                 GBLog.d(TAG + "PurchaseInfo = %s", purchaseInfo.getPaymentKey());
@@ -146,7 +135,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
             public void onFail(IabResult result) {
                 GBLog.d(TAG + "Purchasing Failed!!! Error Code = %d , message = %s", result.getResponse(), result.getMessage());
                 Toast.makeText(getActivity(), "[BuyItem onFail]errorCode = " + result.getResponse()+" , errorMsd = " + result.getMessage(), Toast.LENGTH_LONG).show();
-            //    GBMessageUtils.alert(getActivity(), String.format("Purchasing Failed!!! Error Code (%d), message = %s", result.getResponse(), result.getMessage()));
+            //    anGBMessageUtils.alert(getActivity(), String.format("Purchasing Failed!!! Error Code (%d), message = %s", result.getResponse(), result.getMessage()));
             }
 
             @Override
@@ -163,7 +152,7 @@ public class InAppFragment extends Fragment implements View.OnClickListener, Spi
         GBInAppManager.ReStoreItems(new GBInAppListener.OnRestoreItemsFinishedListener() {
             @Override
             public void onSuccess(final List<String> paymentKeys) {
-                GBLog.d(TAG + "Restore items = %s", paymentKeys.toString());
+                GBLog.d(TAG + "Restore items = %s", paymentKeys.get(0));
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override

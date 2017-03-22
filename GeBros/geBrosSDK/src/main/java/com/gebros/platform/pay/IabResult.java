@@ -273,21 +273,21 @@ public class IabResult {
     public static String getResponseDesc(int code, Context context) {
 
         String[] iab_msgs = ("0:OK/"+
-        		context.getResources().getString(JR.string("errorui_iab_cancelbuy_item_table_title"))+"/"+
+        		"This item cannot be purchased."+"/"+
         		"2:Unknown/" +
-                "3:"+context.getResources().getString(JR.string("errorui_iab_purchase_restart_label_title")) + "/" +
-                "4:"+context.getResources().getString(JR.string("errorui_iab_cannotbuy_item_label_title"))+"/" +
+                "3:"+"An error occurred when attempting to purchase. Please restart the game." + "/" +
+                "4:"+"This item has already been purchased."+"/" +
                 "5:Developer Error/"+
-                "6:"+context.getResources().getString(JR.string("errorui_iab_purchase_restart_label_title")) + "/" +
-                context.getResources().getString(JR.string("errorui_iab_existbuy_item_label_title"))+"/" +
-                "8:"+context.getResources().getString(JR.string("errorui_iab_cannotbuy_item_label_title"))+"/" +
-                context.getResources().getString(JR.string("errorui_iab_notsupport_market_label_title"))+"/" +
-                "10:"+context.getResources().getString(JR.string("errorui_iab_purchase_restart_label_title"))).split("/");
+                "6:"+"This item cannot be purchased" + "/" +
+                "7:"+"This item has already been purchased."+"/" +
+                "8:"+"This item cannot be purchased."+"/" +
+                "9:"+"Unsupported market. Please contact customer support."+"/" +
+                "10:"+"An error occurred when attempting to purchase. Please restart the game.").split("/");
         String[] iabhelper_msgs = ("0:OK/-1001:Remote exception during initialization/" +
                 "-1002:Bad response received/" +
                 "-1003:IabPurchase signature verification failed/" +
                 "-1004:Send intent failed/" +
-                "-1005:"+context.getResources().getString(JR.string("errorui_iab_cancelbuy_item_table_title"))+"/"+
+                "-1005:"+"This item cannot be purchased"+"/"+
                 "-1006:Unknown purchase response/" +
                 "-1007:Missing token/" +
                 "-1008:Unknown error/" +
@@ -303,4 +303,5 @@ public class IabResult {
         else
             return iab_msgs[code];
     }
+
 }

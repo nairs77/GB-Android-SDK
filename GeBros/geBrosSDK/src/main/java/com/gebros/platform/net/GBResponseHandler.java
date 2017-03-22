@@ -22,6 +22,7 @@ public class GBResponseHandler implements ResponseListener<JSONObject> {
 
     @Override
     public void onComplete(JSONObject result) {
+
         int apiStatus = result.optInt("RESULT");
         if(apiStatus == API_FAILED) {
             int errorCode = result.optJSONObject("error").optInt("errorCode");

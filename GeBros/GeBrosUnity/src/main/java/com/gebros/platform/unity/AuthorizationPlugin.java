@@ -51,8 +51,8 @@ public final class AuthorizationPlugin extends BasePlugin {
         return GBSession.getActiveSession().getState() == GBSession.SessionState.READY ? true : false;
     }
 
-    public static String getActiveSession() {
-        return GBSession.getActiveSession().getUserInfo();
+    public static boolean isConnectedChannel() {
+        return (GBSession.getActiveSession().getAuthType() == AuthType.FACEBOOK) ? true : false;
     }
 
     public static boolean isAllowedEULA() {
@@ -64,20 +64,6 @@ public final class AuthorizationPlugin extends BasePlugin {
         //return GB.getInstance().isAlreadyLogin();
         return true;
     }
-
-//    public static String getAccessToken() {
-//        if (GBSession.getActiveSession() != null)
-//            return GBSession.getActiveSession().getAccessToken();
-//        else
-//            return "";
-//    }
-
-//    public static String getRefreshToken() {
-//        if (GBSession.getActiveSession() != null)
-//            return GBSession.getActiveSession().getRefreshToken();
-//        else
-//            return "";
-//    }
 
     public static void Login(String gameObjectName) {
         GBLog.d(TAG + "Login API - %s", gameObjectName);
@@ -203,19 +189,13 @@ public final class AuthorizationPlugin extends BasePlugin {
 
             GBLog.d(TAG + "onSuccess - Auth Listener !!!!");
             JSONObject response = new JSONObject();
-/*
-            JSONObject session_response = new JSONObject();
+            JSONObject data = new JSONObject();
 
             try {
-                session_response.put(SESSION_KEY, newSession.getUserInfo());
-                response.put(RESULT_KEY, session_response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-*/
-            try {
                 JSONObject session_response = new JSONObject(newSession.getUserInfo());
-                response.put(RESULT_KEY, session_response);
+                data.put("state", "OPEN");
+                data.put(DATA_KEY, session_response);
+                response.put(RESULT_KEY, data);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -228,8 +208,8 @@ public final class AuthorizationPlugin extends BasePlugin {
 
             GBLog.d(TAG + "onFail - Auth Listener !!!!");
 
-
-            sessionErrorHandling(ex.getAPIError().getErrorCode(), ex.getAPIError().getDetailError());
+            sessionErrorHandling(ex.getExceptionType().getErrorCode(), ex.getExceptionType().getErrorMessage());
+            //sessionErrorHandling(ex.getAPIError().getErrorCode(), ex.getAPIError().getDetailError());
 /*
             JSONObject response = new JSONObject();
             JSONObject session_response = new JSONObject();
